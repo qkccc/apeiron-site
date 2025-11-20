@@ -19,7 +19,7 @@ const auth = getAuth(app);
 
 // ★ 共通の裏アカウント設定
 // ※ Firebaseコンソールで作ったメールアドレスと同じにしてください
-const ADMIN_EMAIL = "kaiyuu2429@gmail.com";
+const ADMIN_EMAIL = "kaiyuu2420@gmail.com";
 
 
 // --- ページごとの処理 ---
