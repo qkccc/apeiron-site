@@ -44,7 +44,6 @@ header {
     justify-content: space-between;
     align-items: center;
     background: rgba(10, 10, 10, 0.95);
-    /* 背景を少し濃く */
     backdrop-filter: blur(10px);
     z-index: 1000;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -96,11 +95,15 @@ nav a.active {
     letter-spacing: clamp(5px, 1vw, 15px);
     background: linear-gradient(135deg, #D4AF37 0%, #8a6e18 100%);
     -webkit-background-clip: text;
-    background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 20px;
     text-shadow: 0 0 40px var(--accent-glow);
     line-height: 1.1;
+}
+
+/* 標準プロパティも追加して警告を消す */
+.hero h1 {
+    background-clip: text;
 }
 
 .hero p {
@@ -281,11 +284,76 @@ nav a.active {
     border-radius: 0 8px 8px 0;
 }
 
-.timeline-content strong {
-    color: var(--accent);
-    font-size: 1.1rem;
-    display: block;
-    margin-bottom: 5px;
+/* --- History Log Design (New) --- */
+.history-log {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    /* 行間 */
+}
+
+.log-item {
+    display: flex;
+    align-items: baseline;
+    /* 文字のベースラインを揃える */
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.log-badge {
+    flex-shrink: 0;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    min-width: 60px;
+    text-align: center;
+}
+
+/* バッジの種類 */
+.lb-join {
+    background: var(--accent);
+    color: #000;
+    box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+}
+
+.lb-est {
+    background: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+}
+
+/* 設立 */
+.lb-event {
+    background: #333;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+/* イベント */
+
+.log-text {
+    color: #e0e0e0;
+    font-size: 1rem;
+}
+
+.log-sub {
+    color: #888;
+    font-size: 0.85rem;
+    margin-left: 5px;
+}
+
+/* スマホで見やすく */
+@media (max-width: 768px) {
+    .log-item {
+        gap: 8px;
+    }
+
+    .log-text {
+        font-size: 0.95rem;
+    }
 }
 
 
@@ -425,44 +493,31 @@ footer {
     margin-top: 50px;
 }
 
-/* =========================================
-   スマホ対応 (Max-Width: 768px)
-   ========================================= */
 @media (max-width: 768px) {
-
-    /* --- ヘッダー調整 --- */
     header {
         padding: 15px 20px;
         flex-direction: column;
-        /* 縦並びにする */
         gap: 15px;
     }
 
     nav ul {
         gap: 15px;
         flex-wrap: wrap;
-        /* メニューが多い場合に折り返す */
         justify-content: center;
     }
 
-    /* --- コンテンツ被り防止 & 余白調整 --- */
-    /* トップページ(Hero)の余白 */
     .hero {
         padding-top: 160px;
-        /* ヘッダーの高さ分を空ける */
         height: auto;
         min-height: 60vh;
         font-size: 3rem;
     }
 
-    /* 他ページのコンテナ余白追加 */
     .section-container {
         padding: 60px 5%;
         padding-top: 40px;
-        /* HTMLのmargin-top:100pxに加えて微調整 */
     }
 
-    /* --- レイアウト調整 --- */
     .top-info-section {
         grid-template-columns: 1fr;
     }
@@ -471,9 +526,7 @@ footer {
         font-size: 1.5rem;
     }
 
-    /* --- メンバー見切れ修正 --- */
     .member-grid {
-        /* カードの最小幅を小さくして画面内に収める */
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
         gap: 15px;
     }
@@ -485,6 +538,5 @@ footer {
     .member-img {
         width: 80px;
         height: 80px;
-        /* 画像も少し小さく */
     }
 }
