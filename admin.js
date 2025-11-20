@@ -38,12 +38,12 @@ if (loginBtn) {
 // 2. 管理ページ (admin.html) の処理
 const logoutBtn = document.getElementById('logoutBtn');
 
-// タイトルに "Dashboard" が含まれる場合のみ実行
 if (document.title.includes("Dashboard")) {
     // ログインチェック
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            console.log("Logged in access approved.");
+            console.log("Access approved.");
+            // ログイン済みならページを表示するだけ（追加処理なし）
         } else {
             // ログインしていない -> 強制的にログイン画面へ
             window.location.href = "login.html";
@@ -58,62 +58,4 @@ if (document.title.includes("Dashboard")) {
             });
         });
     }
-
-    // --- 簡易リンク追加機能 (LocalStorage) ---
-    const linkList = document.getElementById('linkList');
-    const addLinkBtn = document.getElementById('addLinkBtn');
-
-    // 保存されたデータを読み込んで表示する関数
-    function loadLinks() {
-        // ブラウザの保存領域からデータを取得 (ない場合は空のリスト)
-        const links = JSON.parse(localStorage.getItem('adminLinks') || '[]');
-
-        linkList.innerHTML = "";
-        links.forEach((link, index) => {
-            const li = document.createElement('li');
-            li.className = 'link-item';
-            li.innerHTML = `
-                <div style="overflow: hidden;">
-                    <strong style="color:#fff;">${link.title}</strong><br>
-                    <a href="${link.url}" target="_blank" style="color:#D4AF37; font-size:0.8rem; display:block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${link.url}</a>
-                </div>
-                <button class="btn-delete" onclick="deleteLink(${index})">削除</button>
-            `;
-            linkList.appendChild(li);
-        });
-    }
-
-    // 追加ボタンを押した時の処理
-    if (addLinkBtn) {
-        addLinkBtn.addEventListener('click', () => {
-            const title = document.getElementById('linkTitle').value;
-            const url = document.getElementById('linkUrl').value;
-
-            // 入力が空なら何もしない
-            if (!title || !url) return;
-
-            // 既存データを取得して、新しいのを追加して保存
-            const links = JSON.parse(localStorage.getItem('adminLinks') || '[]');
-            links.push({ title, url });
-            localStorage.setItem('adminLinks', JSON.stringify(links));
-
-            // 入力欄をクリア
-            document.getElementById('linkTitle').value = "";
-            document.getElementById('linkUrl').value = "";
-
-            // リストを再描画
-            loadLinks();
-        });
-    }
-
-    // 削除機能 (HTMLのonclickから呼べるようにwindowに登録)
-    window.deleteLink = (index) => {
-        const links = JSON.parse(localStorage.getItem('adminLinks') || '[]');
-        links.splice(index, 1); // 指定したインデックスを1つ削除
-        localStorage.setItem('adminLinks', JSON.stringify(links));
-        loadLinks();
-    };
-
-    // 初回読み込み実行
-    loadLinks();
 }
