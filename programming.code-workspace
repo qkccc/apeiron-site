@@ -1,0 +1,69 @@
+{
+    "folders": [
+		{
+			"path": "\\\\wsl.localhost\\Ubuntu\\home\\kaiyuu0624\\programming"
+		},
+		{
+			"path": "../../情報工学実験2"
+		},
+		{
+			"path": "../../asobi"
+		},
+		{
+			"path": "\\\\wsl.localhost\\Ubuntu\\home\\kaiyuu0624\\object"
+		},
+		{
+			"path": "../../情報工学実験2/実験2/code/code/python"
+		},
+		{
+			"path": "\\\\wsl.localhost\\Ubuntu\\home\\kaiyuu0624\\jikken2"
+		},
+		{
+			"path": "../../../Desktop/my-discord-bot"
+		},
+		{
+			"path": "../../../Desktop/ShadowverseBot"
+		},
+		{
+			"path": "../../../OneDrive - 東京理科大学/大学2.2/オブジェクト指向開発/kadai10"
+		},
+		{
+			"path": "../../../python"
+		},
+		{
+			"path": "../../MATLAB"
+		},
+		{
+			"path": "../../情報工学実験3"
+		},
+		{
+			"path": "\\\\wsl.localhost\\Ubuntu\\home\\kaiyuu0624\\jikken3"
+		},
+		{
+			"path": "../../../ouyou"
+		},
+		{
+			"path": "../../../Desktop/ubuntu"
+		},
+		{
+			"path": "\\\\wsl.localhost\\Ubuntu\\home\\kaiyuu0624\\docker\\tus_yuurikai_system-main"
+		},
+		{
+			"path": "\\\\wsl.localhost\\Ubuntu\\home\\kaiyuu0624\\docker\\tus_yuurikai_system"
+		},
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../MAPDP"
+		}
+	],
+    "settings": {
+        "files.associations": {
+            "random": "c",
+            "*.tcc": "c",
+            "istream": "c",
+            "ostream": "c"
+        }
+    }
+}
