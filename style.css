@@ -96,6 +96,7 @@ nav a.active {
     letter-spacing: clamp(5px, 1vw, 15px);
     background: linear-gradient(135deg, #D4AF37 0%, #8a6e18 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 20px;
     text-shadow: 0 0 40px var(--accent-glow);
