@@ -31,7 +31,7 @@
 
         .container {
             padding: 40px;
-            max-width: 1000px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
@@ -48,68 +48,6 @@
             margin-bottom: 15px;
             border-bottom: 1px solid #333;
             padding-bottom: 10px;
-        }
-
-        /* スプレッドシート埋め込み用 */
-        .spreadsheet-container {
-            position: relative;
-            width: 100%;
-            height: 0;
-            padding-bottom: 60%;
-            /* アスペクト比 */
-            overflow: hidden;
-            border: 1px solid #333;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .spreadsheet-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* 検索機能用 */
-        .search-box {
-            width: 100%;
-            padding: 12px;
-            background: #000;
-            border: 1px solid #D4AF37;
-            color: #fff;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            color: #fff;
-            font-size: 0.9rem;
-        }
-
-        .data-table th {
-            text-align: left;
-            border-bottom: 1px solid #666;
-            padding: 10px;
-            color: #888;
-        }
-
-        .data-table td {
-            border-bottom: 1px solid #333;
-            padding: 10px;
-        }
-
-        .data-table tr:hover {
-            background: #1a1a1a;
-        }
-
-        .loading {
-            color: #888;
-            text-align: center;
-            padding: 20px;
         }
 
         /* リンク管理リスト */
@@ -168,6 +106,7 @@
 
 <body>
 
+    <!-- 管理画面ヘッダー -->
     <header class="admin-header">
         <div style="font-family: 'Montserrat'; font-weight: 900; color: #fff;">APEIRON <span
                 style="color:#D4AF37">ADMIN</span></div>
@@ -177,56 +116,21 @@
 
     <div class="container">
         <h1>Dashboard</h1>
-        <p style="color: #888; margin-bottom: 30px;">スプレッドシート連携ダッシュボード</p>
+        <p style="color: #888; margin-bottom: 30px;">ようこそ、管理者さん。</p>
 
-        <!-- 1. スプレッドシート編集エリア -->
+        <!-- リンク集管理パネル -->
         <div class="panel">
-            <h3>📊 データ編集 (Google Sheets)</h3>
+            <h3>🔗 リンク集管理</h3>
             <p style="color:#ccc; font-size:0.9rem; margin-bottom:15px;">
-                ここで編集した内容は、自動的に下の検索リストに反映されます（リロード後）。<br>
-                <a href="https://docs.google.com/spreadsheets/d/1RbpwN1sLMJ7SwyXB1e3NGvehiYMH1ChbnHaR_xeEyL4/edit?usp=sharing"
-                    target="_blank" style="color:#D4AF37; text-decoration:underline;">別ウィンドウで開く &rarr;</a>
+                チーム内で共有したいURLをここに保存できます。
             </p>
-            <div class="spreadsheet-container">
-                <!-- 共有リンクを埋め込み用に変換しています -->
-                <iframe
-                    src="https://docs.google.com/spreadsheets/d/1RbpwN1sLMJ7SwyXB1e3NGvehiYMH1ChbnHaR_xeEyL4/edit?usp=sharing&rm=minimal"
-                    frameborder="0"></iframe>
-            </div>
-        </div>
+            <ul class="link-list" id="linkList">
+                <!-- ここにリストが追加されます -->
+            </ul>
 
-        <!-- 2. リアルタイム検索エリア -->
-        <div class="panel">
-            <h3>🔍 データ検索</h3>
-            <p style="color:#666; font-size:0.8rem;">スプレッドシートのデータを読み込んで検索します。</p>
-
-            <div style="display:flex; gap:10px; margin-bottom:20px;">
-                <input type="text" id="searchInput" class="search-box" style="margin-bottom:0;"
-                    placeholder="キーワードを入力 (名前、IDなど)...">
-                <button id="refreshBtn" class="btn-add" style="white-space:nowrap;">更新</button>
-            </div>
-
-            <div style="overflow-x: auto;">
-                <table class="data-table">
-                    <thead id="tableHead">
-                        <!-- ここにヘッダーが自動生成されます -->
-                    </thead>
-                    <tbody id="tableBody">
-                        <tr>
-                            <td colspan="5" class="loading">データを読み込んでいます...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- 3. リンク集管理 (LocalStorage) -->
-        <div class="panel">
-            <h3>🔗 クイックリンク管理</h3>
-            <ul class="link-list" id="linkList"></ul>
             <div class="add-form">
-                <input type="text" id="linkTitle" placeholder="タイトル">
-                <input type="text" id="linkUrl" placeholder="URL">
+                <input type="text" id="linkTitle" placeholder="タイトル (例: 大会ルール)">
+                <input type="text" id="linkUrl" placeholder="URL (https://...)">
                 <button class="btn-add" id="addLinkBtn">追加</button>
             </div>
         </div>
