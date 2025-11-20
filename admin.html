@@ -15,7 +15,6 @@
             padding-top: 80px;
         }
 
-        /* ヘッダー分 */
         .admin-header {
             background: #1a1a1a;
             border-bottom: 1px solid #D4AF37;
@@ -32,10 +31,11 @@
 
         .container {
             padding: 40px;
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
+        /* 幅を少し広げました */
         .panel {
             background: #151515;
             border: 1px solid #333;
@@ -72,6 +72,7 @@
             display: flex;
             gap: 10px;
             margin-top: 15px;
+            flex-wrap: wrap;
         }
 
         .add-form input {
@@ -80,6 +81,7 @@
             background: #222;
             border: 1px solid #444;
             color: #fff;
+            min-width: 150px;
         }
 
         .btn-add {
@@ -88,6 +90,7 @@
             border: none;
             padding: 8px 20px;
             cursor: pointer;
+            font-weight: bold;
         }
 
         .btn-delete {
@@ -98,6 +101,68 @@
             font-size: 0.8rem;
             cursor: pointer;
             border-radius: 4px;
+        }
+
+        /* スプレッドシート埋め込み用 */
+        .spreadsheet-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 60%;
+            /* アスペクト比調整 */
+            overflow: hidden;
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+
+        .spreadsheet-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 検索機能付きデータベース用 */
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            background: #000;
+            border: 1px solid #D4AF37;
+            color: #fff;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #fff;
+        }
+
+        .data-table th {
+            text-align: left;
+            border-bottom: 1px solid #666;
+            padding: 10px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .data-table td {
+            border-bottom: 1px solid #333;
+            padding: 10px;
+        }
+
+        .data-table tr:hover {
+            background: #1a1a1a;
+        }
+
+        .tag {
+            background: #333;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
         }
     </style>
 </head>
@@ -116,24 +181,62 @@
         <h1>Dashboard</h1>
         <p style="color: #888; margin-bottom: 30px;">ようこそ、管理者さん。</p>
 
-        <!-- リンク管理パネル（仮機能） -->
+        <!-- 1. スプレッドシート埋め込み -->
         <div class="panel">
-            <h3>🔗 リンク集管理</h3>
-            <ul class="link-list" id="linkList">
-                <!-- ここにJavaScriptでデータが追加されます -->
-            </ul>
-
-            <div class="add-form">
-                <input type="text" id="linkTitle" placeholder="タイトル (例: 大会要項)">
-                <input type="text" id="linkUrl" placeholder="URL">
-                <button class="btn-add" id="addLinkBtn">追加</button>
+            <h3>📊 Google Spreadsheet</h3>
+            <p style="color:#ccc; font-size:0.9rem; margin-bottom:15px;">
+                スプレッドシートを直接編集できます。
+                <a href="https://docs.google.com/spreadsheets/d/1RbpwN1sLMJ7SwyXB1e3NGvehiYMH1ChbnHaR_xeEyL4/edit?usp=sharing"
+                    target="_blank" style="color:#D4AF37; text-decoration:underline;">(全画面で開く)</a>
+            </p>
+            <div class="spreadsheet-container">
+                <iframe
+                    src="https://docs.google.com/spreadsheets/d/1RbpwN1sLMJ7SwyXB1e3NGvehiYMH1ChbnHaR_xeEyL4/edit?usp=sharing&embedded=true"
+                    frameborder="0"></iframe>
             </div>
         </div>
 
-        <!-- データ管理パネル -->
+        <!-- 2. 検索機能付きデータベース（デモ機能） -->
         <div class="panel">
-            <h3>📊 データ管理</h3>
-            <p style="color: #666;">(今後ここにスプレッドシートや戦績データを連携できます)</p>
+            <h3>🔍 メンバー/データ検索 (DB連携デモ)</h3>
+            <p style="color:#ccc; font-size:0.9rem; margin-bottom:15px;">
+                簡易データベース機能です。登録したデータをリアルタイムで検索できます。
+            </p>
+
+            <!-- 登録フォーム -->
+            <div class="add-form" style="background:#111; padding:15px; border-radius:8px; margin-bottom:20px;">
+                <input type="text" id="dbName" placeholder="名前 (例: ホーク)">
+                <input type="text" id="dbRole" placeholder="役職/メモ (例: Leader)">
+                <button class="btn-add" id="addDbBtn">登録</button>
+            </div>
+
+            <!-- 検索ボックス -->
+            <input type="text" id="searchInput" class="search-box" placeholder="🔍 キーワードで検索...">
+
+            <!-- データ一覧テーブル -->
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th>ROLE / NOTE</th>
+                        <th style="width:50px;">ACTION</th>
+                    </tr>
+                </thead>
+                <tbody id="dbList">
+                    <!-- ここにデータが入ります -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 3. リンク集管理 -->
+        <div class="panel">
+            <h3>🔗 リンク集管理</h3>
+            <ul class="link-list" id="linkList"></ul>
+            <div class="add-form">
+                <input type="text" id="linkTitle" placeholder="タイトル">
+                <input type="text" id="linkUrl" placeholder="URL">
+                <button class="btn-add" id="addLinkBtn">追加</button>
+            </div>
         </div>
     </div>
 

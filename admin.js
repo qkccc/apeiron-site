@@ -2,25 +2,12 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-// ▼▼▼ ここにステップ1で取得した鍵を再度貼り付けてください ▼▼▼
-const firebaseConfig = {
-    apiKey: "AIzaSyBwlG_aWINAxETLtGUZ3Jyg2IPqr8wVQs4",
-    authDomain: "apeiron-admin.firebaseapp.com",
-    projectId: "apeiron-admin",
-    storageBucket: "apeiron-admin.firebasestorage.app",
-    messagingSenderId: "252150803236",
-    appId: "1:252150803236:web:03be5b59071dac65a9a1b1"
-};
-// ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+// 【変更点】別ファイルから設定とメールアドレスを読み込む
+import { firebaseConfig, ADMIN_EMAIL } from "./firebaseConfig.js";
 
 // Firebaseを開始
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-
-// ★ 共通の裏アカウント設定
-// ※ Firebaseコンソールで作ったメールアドレスと同じにしてください
-const ADMIN_EMAIL = "kaiyuu2420@gmail.com";
-
 
 // --- ページごとの処理 ---
 
@@ -52,8 +39,7 @@ if (loginBtn) {
 // 2. 管理ページ (admin.html) のセキュリティ処理
 const logoutBtn = document.getElementById('logoutBtn');
 
-// 【修正箇所】判定ワードを "Admin" から "Dashboard" に変更しました
-// これでログインページ（Admin Login）ではこのチェックが動かなくなります
+// タイトルに "Dashboard" が含まれる場合のみ実行
 if (document.title.includes("Dashboard")) {
     onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -75,7 +61,7 @@ if (document.title.includes("Dashboard")) {
 
     // --- 簡易リンク追加機能 (LocalStorage) ---
     const linkList = document.getElementById('linkList');
-    const addBtn = document.getElementById('addLinkBtn');
+    const addLinkBtn = document.getElementById('addLinkBtn');
 
     function loadLinks() {
         const links = JSON.parse(localStorage.getItem('adminLinks') || '[]');
@@ -94,8 +80,8 @@ if (document.title.includes("Dashboard")) {
         });
     }
 
-    if (addBtn) {
-        addBtn.addEventListener('click', () => {
+    if (addLinkBtn) {
+        addLinkBtn.addEventListener('click', () => {
             const title = document.getElementById('linkTitle').value;
             const url = document.getElementById('linkUrl').value;
             if (!title || !url) return;
@@ -117,5 +103,77 @@ if (document.title.includes("Dashboard")) {
         loadLinks();
     };
 
+    /* =========================================
+       機能2: 検索機能付きデータベース (DB連携デモ)
+       ========================================= */
+    const dbList = document.getElementById('dbList');
+    const addDbBtn = document.getElementById('addDbBtn');
+    const searchInput = document.getElementById('searchInput');
+
+    // データの読み込み & 表示
+    function loadDbData(filterText = "") {
+        const data = JSON.parse(localStorage.getItem('adminDb') || '[]');
+        dbList.innerHTML = "";
+
+        // 検索フィルター
+        const filteredData = data.filter(item => {
+            return item.name.toLowerCase().includes(filterText.toLowerCase()) ||
+                item.role.toLowerCase().includes(filterText.toLowerCase());
+        });
+
+        if (filteredData.length === 0) {
+            dbList.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#666;">データが見つかりません</td></tr>`;
+            return;
+        }
+
+        // データ表示
+        filteredData.forEach((item) => {
+            const originalIndex = data.indexOf(item);
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="font-weight:bold;">${item.name}</td>
+                <td><span class="tag">${item.role}</span></td>
+                <td><button class="btn-delete" onclick="deleteDbData(${originalIndex})">×</button></td>
+            `;
+            dbList.appendChild(tr);
+        });
+    }
+
+    // データ追加
+    if (addDbBtn) {
+        addDbBtn.addEventListener('click', () => {
+            const name = document.getElementById('dbName').value;
+            const role = document.getElementById('dbRole').value;
+            if (!name) return;
+
+            const data = JSON.parse(localStorage.getItem('adminDb') || '[]');
+            data.push({ name, role });
+            localStorage.setItem('adminDb', JSON.stringify(data));
+
+            document.getElementById('dbName').value = "";
+            document.getElementById('dbRole').value = "";
+            loadDbData();
+        });
+    }
+
+    // 検索処理
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            loadDbData(e.target.value);
+        });
+    }
+
+    // データ削除
+    window.deleteDbData = (index) => {
+        const data = JSON.parse(localStorage.getItem('adminDb') || '[]');
+        data.splice(index, 1);
+        localStorage.setItem('adminDb', JSON.stringify(data));
+
+        const currentSearch = document.getElementById('searchInput').value;
+        loadDbData(currentSearch);
+    };
+
+    // 初回読み込み
     loadLinks();
+    loadDbData();
 }
