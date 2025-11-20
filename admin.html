@@ -35,7 +35,6 @@
             margin: 0 auto;
         }
 
-        /* 幅を少し広げました */
         .panel {
             background: #151515;
             border: 1px solid #333;
@@ -49,6 +48,68 @@
             margin-bottom: 15px;
             border-bottom: 1px solid #333;
             padding-bottom: 10px;
+        }
+
+        /* スプレッドシート埋め込み用 */
+        .spreadsheet-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 60%;
+            /* アスペクト比 */
+            overflow: hidden;
+            border: 1px solid #333;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .spreadsheet-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 検索機能用 */
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            background: #000;
+            border: 1px solid #D4AF37;
+            color: #fff;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .data-table th {
+            text-align: left;
+            border-bottom: 1px solid #666;
+            padding: 10px;
+            color: #888;
+        }
+
+        .data-table td {
+            border-bottom: 1px solid #333;
+            padding: 10px;
+        }
+
+        .data-table tr:hover {
+            background: #1a1a1a;
+        }
+
+        .loading {
+            color: #888;
+            text-align: center;
+            padding: 20px;
         }
 
         /* リンク管理リスト */
@@ -102,74 +163,11 @@
             cursor: pointer;
             border-radius: 4px;
         }
-
-        /* スプレッドシート埋め込み用 */
-        .spreadsheet-container {
-            position: relative;
-            width: 100%;
-            height: 0;
-            padding-bottom: 60%;
-            /* アスペクト比調整 */
-            overflow: hidden;
-            border: 1px solid #333;
-            border-radius: 8px;
-        }
-
-        .spreadsheet-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* 検索機能付きデータベース用 */
-        .search-box {
-            width: 100%;
-            padding: 12px;
-            background: #000;
-            border: 1px solid #D4AF37;
-            color: #fff;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            color: #fff;
-        }
-
-        .data-table th {
-            text-align: left;
-            border-bottom: 1px solid #666;
-            padding: 10px;
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        .data-table td {
-            border-bottom: 1px solid #333;
-            padding: 10px;
-        }
-
-        .data-table tr:hover {
-            background: #1a1a1a;
-        }
-
-        .tag {
-            background: #333;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-        }
     </style>
 </head>
 
 <body>
 
-    <!-- 管理画面ヘッダー -->
     <header class="admin-header">
         <div style="font-family: 'Montserrat'; font-weight: 900; color: #fff;">APEIRON <span
                 style="color:#D4AF37">ADMIN</span></div>
@@ -179,58 +177,52 @@
 
     <div class="container">
         <h1>Dashboard</h1>
-        <p style="color: #888; margin-bottom: 30px;">ようこそ、管理者さん。</p>
+        <p style="color: #888; margin-bottom: 30px;">スプレッドシート連携ダッシュボード</p>
 
-        <!-- 1. スプレッドシート埋め込み -->
+        <!-- 1. スプレッドシート編集エリア -->
         <div class="panel">
-            <h3>📊 Google Spreadsheet</h3>
+            <h3>📊 データ編集 (Google Sheets)</h3>
             <p style="color:#ccc; font-size:0.9rem; margin-bottom:15px;">
-                スプレッドシートを直接編集できます。
+                ここで編集した内容は、自動的に下の検索リストに反映されます（リロード後）。<br>
                 <a href="https://docs.google.com/spreadsheets/d/1RbpwN1sLMJ7SwyXB1e3NGvehiYMH1ChbnHaR_xeEyL4/edit?usp=sharing"
-                    target="_blank" style="color:#D4AF37; text-decoration:underline;">(全画面で開く)</a>
+                    target="_blank" style="color:#D4AF37; text-decoration:underline;">別ウィンドウで開く &rarr;</a>
             </p>
             <div class="spreadsheet-container">
+                <!-- 共有リンクを埋め込み用に変換しています -->
                 <iframe
-                    src="https://docs.google.com/spreadsheets/d/1RbpwN1sLMJ7SwyXB1e3NGvehiYMH1ChbnHaR_xeEyL4/edit?usp=sharing&embedded=true"
+                    src="https://docs.google.com/spreadsheets/d/1RbpwN1sLMJ7SwyXB1e3NGvehiYMH1ChbnHaR_xeEyL4/edit?usp=sharing&rm=minimal"
                     frameborder="0"></iframe>
             </div>
         </div>
 
-        <!-- 2. 検索機能付きデータベース（デモ機能） -->
+        <!-- 2. リアルタイム検索エリア -->
         <div class="panel">
-            <h3>🔍 メンバー/データ検索 (DB連携デモ)</h3>
-            <p style="color:#ccc; font-size:0.9rem; margin-bottom:15px;">
-                簡易データベース機能です。登録したデータをリアルタイムで検索できます。
-            </p>
+            <h3>🔍 データ検索</h3>
+            <p style="color:#666; font-size:0.8rem;">スプレッドシートのデータを読み込んで検索します。</p>
 
-            <!-- 登録フォーム -->
-            <div class="add-form" style="background:#111; padding:15px; border-radius:8px; margin-bottom:20px;">
-                <input type="text" id="dbName" placeholder="名前 (例: ホーク)">
-                <input type="text" id="dbRole" placeholder="役職/メモ (例: Leader)">
-                <button class="btn-add" id="addDbBtn">登録</button>
+            <div style="display:flex; gap:10px; margin-bottom:20px;">
+                <input type="text" id="searchInput" class="search-box" style="margin-bottom:0;"
+                    placeholder="キーワードを入力 (名前、IDなど)...">
+                <button id="refreshBtn" class="btn-add" style="white-space:nowrap;">更新</button>
             </div>
 
-            <!-- 検索ボックス -->
-            <input type="text" id="searchInput" class="search-box" placeholder="🔍 キーワードで検索...">
-
-            <!-- データ一覧テーブル -->
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>NAME</th>
-                        <th>ROLE / NOTE</th>
-                        <th style="width:50px;">ACTION</th>
-                    </tr>
-                </thead>
-                <tbody id="dbList">
-                    <!-- ここにデータが入ります -->
-                </tbody>
-            </table>
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead id="tableHead">
+                        <!-- ここにヘッダーが自動生成されます -->
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr>
+                            <td colspan="5" class="loading">データを読み込んでいます...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <!-- 3. リンク集管理 -->
+        <!-- 3. リンク集管理 (LocalStorage) -->
         <div class="panel">
-            <h3>🔗 リンク集管理</h3>
+            <h3>🔗 クイックリンク管理</h3>
             <ul class="link-list" id="linkList"></ul>
             <div class="add-form">
                 <input type="text" id="linkTitle" placeholder="タイトル">
@@ -240,7 +232,6 @@
         </div>
     </div>
 
-    <!-- JS読み込み -->
     <script type="module" src="admin.js"></script>
 </body>
 

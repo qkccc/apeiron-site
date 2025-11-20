@@ -1,13 +1,17 @@
 // Firebaseの機能をネットから直接読み込む (CDN)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-// 【変更点】別ファイルから設定とメールアドレスを読み込む
 import { firebaseConfig, ADMIN_EMAIL } from "./firebaseConfig.js";
 
 // Firebaseを開始
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+
+// ★ スプレッドシート設定
+const SHEET_ID = "1RbpwN1sLMJ7SwyXB1e3NGvehiYMH1ChbnHaR_xeEyL4";
+// CSVとしてデータを取得するURL (公開設定が必要)
+const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+
 
 // --- ページごとの処理 ---
 
@@ -18,17 +22,13 @@ if (loginBtn) {
         const pass = document.getElementById('password').value;
         const errorMsg = document.getElementById('errorMsg');
 
-        // メールアドレスは固定のものを使用し、パスワードだけ検証する
         signInWithEmailAndPassword(auth, ADMIN_EMAIL, pass)
             .then((userCredential) => {
-                // ログイン成功 -> 管理画面へ
                 window.location.href = "admin.html";
             })
             .catch((error) => {
-                // 失敗
                 console.error(error);
                 errorMsg.style.display = "block";
-                // パスワード間違いのアニメーション用
                 const box = document.querySelector('.login-box');
                 box.style.animation = "none";
                 setTimeout(() => box.style.animation = "shake 0.4s", 10);
@@ -36,21 +36,18 @@ if (loginBtn) {
     });
 }
 
-// 2. 管理ページ (admin.html) のセキュリティ処理
+// 2. 管理ページ (admin.html) の処理
 const logoutBtn = document.getElementById('logoutBtn');
 
-// タイトルに "Dashboard" が含まれる場合のみ実行
 if (document.title.includes("Dashboard")) {
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            console.log("Logged in access approved.");
+            console.log("Access approved.");
         } else {
-            // ログインしていない -> 強制的にログイン画面へ
             window.location.href = "login.html";
         }
     });
 
-    // ログアウト処理
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
             signOut(auth).then(() => {
@@ -59,7 +56,94 @@ if (document.title.includes("Dashboard")) {
         });
     }
 
-    // --- 簡易リンク追加機能 (LocalStorage) ---
+    /* =========================================
+       機能: スプレッドシート連携 & 検索
+       ========================================= */
+    const tableHead = document.getElementById('tableHead');
+    const tableBody = document.getElementById('tableBody');
+    const searchInput = document.getElementById('searchInput');
+    const refreshBtn = document.getElementById('refreshBtn');
+
+    let sheetData = []; // 取得したデータをここに保存
+
+    // CSVデータを取得・解析する関数
+    async function fetchSheetData() {
+        try {
+            tableBody.innerHTML = '<tr><td colspan="5" class="loading">スプレッドシートからデータを読み込み中...</td></tr>';
+
+            const response = await fetch(CSV_URL);
+            if (!response.ok) throw new Error("データの取得に失敗しました");
+            const text = await response.text();
+
+            // CSVテキストを配列に変換
+            const rows = text.split('\n').map(row => {
+                // 簡易的なCSVパース（カンマ区切り、引用符の処理は簡易版）
+                return row.split(',').map(cell => cell.replace(/^"|"$/g, '').trim());
+            });
+
+            if (rows.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" class="loading">データがありません</td></tr>';
+                return;
+            }
+
+            // ヘッダー（1行目）を作成
+            const headers = rows[0];
+            let headHtml = '<tr>';
+            headers.forEach(h => headHtml += `<th>${h}</th>`);
+            headHtml += '</tr>';
+            tableHead.innerHTML = headHtml;
+
+            // データ（2行目以降）を保存
+            // 最初の行はヘッダーなので除く
+            sheetData = rows.slice(1).filter(row => row.length > 1 && row[0] !== "");
+
+            renderTable(sheetData);
+
+        } catch (error) {
+            console.error(error);
+            tableBody.innerHTML = `<tr><td colspan="5" class="loading" style="color:red;">読み込みエラー: スプレッドシートの「Webに公開」設定を確認してください</td></tr>`;
+        }
+    }
+
+    // テーブル描画関数
+    function renderTable(data) {
+        tableBody.innerHTML = "";
+        if (data.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="5" class="loading">該当するデータがありません</td></tr>';
+            return;
+        }
+
+        data.forEach(row => {
+            let tr = document.createElement('tr');
+            let html = "";
+            row.forEach(cell => {
+                html += `<td>${cell}</td>`;
+            });
+            tr.innerHTML = html;
+            tableBody.appendChild(tr);
+        });
+    }
+
+    // 検索機能
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const keyword = e.target.value.toLowerCase();
+            const filtered = sheetData.filter(row => {
+                // 行内のどれかのセルにキーワードが含まれていればHIT
+                return row.some(cell => cell.toLowerCase().includes(keyword));
+            });
+            renderTable(filtered);
+        });
+    }
+
+    // 更新ボタン
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', fetchSheetData);
+    }
+
+    /* =========================================
+       機能: リンク集管理 (LocalStorage)
+       ========================================= */
     const linkList = document.getElementById('linkList');
     const addLinkBtn = document.getElementById('addLinkBtn');
 
@@ -89,7 +173,6 @@ if (document.title.includes("Dashboard")) {
             const links = JSON.parse(localStorage.getItem('adminLinks') || '[]');
             links.push({ title, url });
             localStorage.setItem('adminLinks', JSON.stringify(links));
-
             document.getElementById('linkTitle').value = "";
             document.getElementById('linkUrl').value = "";
             loadLinks();
@@ -103,77 +186,7 @@ if (document.title.includes("Dashboard")) {
         loadLinks();
     };
 
-    /* =========================================
-       機能2: 検索機能付きデータベース (DB連携デモ)
-       ========================================= */
-    const dbList = document.getElementById('dbList');
-    const addDbBtn = document.getElementById('addDbBtn');
-    const searchInput = document.getElementById('searchInput');
-
-    // データの読み込み & 表示
-    function loadDbData(filterText = "") {
-        const data = JSON.parse(localStorage.getItem('adminDb') || '[]');
-        dbList.innerHTML = "";
-
-        // 検索フィルター
-        const filteredData = data.filter(item => {
-            return item.name.toLowerCase().includes(filterText.toLowerCase()) ||
-                item.role.toLowerCase().includes(filterText.toLowerCase());
-        });
-
-        if (filteredData.length === 0) {
-            dbList.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#666;">データが見つかりません</td></tr>`;
-            return;
-        }
-
-        // データ表示
-        filteredData.forEach((item) => {
-            const originalIndex = data.indexOf(item);
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td style="font-weight:bold;">${item.name}</td>
-                <td><span class="tag">${item.role}</span></td>
-                <td><button class="btn-delete" onclick="deleteDbData(${originalIndex})">×</button></td>
-            `;
-            dbList.appendChild(tr);
-        });
-    }
-
-    // データ追加
-    if (addDbBtn) {
-        addDbBtn.addEventListener('click', () => {
-            const name = document.getElementById('dbName').value;
-            const role = document.getElementById('dbRole').value;
-            if (!name) return;
-
-            const data = JSON.parse(localStorage.getItem('adminDb') || '[]');
-            data.push({ name, role });
-            localStorage.setItem('adminDb', JSON.stringify(data));
-
-            document.getElementById('dbName').value = "";
-            document.getElementById('dbRole').value = "";
-            loadDbData();
-        });
-    }
-
-    // 検索処理
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            loadDbData(e.target.value);
-        });
-    }
-
-    // データ削除
-    window.deleteDbData = (index) => {
-        const data = JSON.parse(localStorage.getItem('adminDb') || '[]');
-        data.splice(index, 1);
-        localStorage.setItem('adminDb', JSON.stringify(data));
-
-        const currentSearch = document.getElementById('searchInput').value;
-        loadDbData(currentSearch);
-    };
-
-    // 初回読み込み
+    // 初期実行
     loadLinks();
-    loadDbData();
+    fetchSheetData();
 }
