@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APEIRON | Admin Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ログインページ専用スタイル */
+        .login-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #1e1e1e 0%, #0a0a0a 70%);
+        }
+
+        .login-box {
+            background: #1a1a1a;
+            padding: 50px 40px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .login-box h2 {
+            margin-bottom: 30px;
+            color: #D4AF37;
+            font-family: 'Montserrat';
+            letter-spacing: 2px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            background: #000;
+            border: 1px solid #444;
+            color: #fff;
+            box-sizing: border-box;
+            border-radius: 4px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #D4AF37;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #D4AF37;
+            color: #000;
+            border: none;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .error-msg {
+            color: #ff4444;
+            font-size: 0.85rem;
+            margin-top: 15px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <div class="login-box">
+            <h2>SECRET AREA</h2>
+            <!-- メールアドレス欄は削除しました -->
+            <input type="password" id="password" placeholder="Enter Password">
+            <button id="loginBtn">UNLOCK</button>
+            <p id="errorMsg" class="error-msg">パスワードが違います</p>
+        </div>
+        <a href="index.html" style="margin-top: 30px; color: #444; font-size: 0.8rem; text-decoration:none;">Back to
+            Top</a>
+    </div>
+
+    <script type="module" src="admin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APEIRON | Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* 管理画面専用スタイル */
+        body {
+            padding-top: 80px;
+        }
+
+        /* ヘッダー分 */
+        .admin-header {
+            background: #1a1a1a;
+            border-bottom: 1px solid #D4AF37;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+
+        .container {
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background: #151515;
+            border: 1px solid #333;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .panel h3 {
+            color: #D4AF37;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        /* リンク管理リスト */
+        .link-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .link-item {
+            background: #000;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+            border: 1px solid #333;
+        }
+
+        .add-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .add-form input {
+            flex: 1;
+            padding: 8px;
+            background: #222;
+            border: 1px solid #444;
+            color: #fff;
+        }
+
+        .btn-add {
+            background: #D4AF37;
+            color: #000;
+            border: none;
+            padding: 8px 20px;
+            cursor: pointer;
+        }
+
+        .btn-delete {
+            background: #ff4444;
+            color: #fff;
+            border: none;
+            padding: 4px 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 管理画面ヘッダー -->
+    <header class="admin-header">
+        <div style="font-family: 'Montserrat'; font-weight: 900; color: #fff;">APEIRON <span
+                style="color:#D4AF37">ADMIN</span></div>
+        <button id="logoutBtn"
+            style="background:none; border:1px solid #666; color:#ccc; padding:5px 15px; cursor:pointer;">LOGOUT</button>
+    </header>
+
+    <div class="container">
+        <h1>Dashboard</h1>
+        <p style="color: #888; margin-bottom: 30px;">ようこそ、管理者さん。</p>
+
+        <!-- リンク管理パネル（仮機能） -->
+        <div class="panel">
+            <h3>🔗 リンク集管理</h3>
+            <ul class="link-list" id="linkList">
+                <!-- ここにJavaScriptでデータが追加されます -->
+            </ul>
+
+            <div class="add-form">
+                <input type="text" id="linkTitle" placeholder="タイトル (例: 大会要項)">
+                <input type="text" id="linkUrl" placeholder="URL">
+                <button class="btn-add" id="addLinkBtn">追加</button>
+            </div>
+        </div>
+
+        <!-- データ管理パネル -->
+        <div class="panel">
+            <h3>📊 データ管理</h3>
+            <p style="color: #666;">(今後ここにスプレッドシートや戦績データを連携できます)</p>
+        </div>
+    </div>
+
+    <!-- JS読み込み -->
+    <script type="module" src="admin.js"></script>
+</body>
+
+</html>
