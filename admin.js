@@ -51,8 +51,10 @@ if (loginBtn) {
 
 // 2. 管理ページ (admin.html) のセキュリティ処理
 const logoutBtn = document.getElementById('logoutBtn');
-// タイトルに "Admin" が含まれる場合のみ実行
-if (document.title.includes("Admin")) {
+
+// 【修正箇所】判定ワードを "Admin" から "Dashboard" に変更しました
+// これでログインページ（Admin Login）ではこのチェックが動かなくなります
+if (document.title.includes("Dashboard")) {
     onAuthStateChanged(auth, (user) => {
         if (user) {
             console.log("Logged in access approved.");
@@ -72,7 +74,6 @@ if (document.title.includes("Admin")) {
     }
 
     // --- 簡易リンク追加機能 (LocalStorage) ---
-    // 注意: 現在はブラウザに保存されます。他の人と共有するにはデータベース(Firestore)が必要です。
     const linkList = document.getElementById('linkList');
     const addBtn = document.getElementById('addLinkBtn');
 
