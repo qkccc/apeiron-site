@@ -307,12 +307,17 @@
 
 .games-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     gap: 6px;
 }
 
 /* スマホ対応: ゲームセル */
 @media (max-width: 768px) {
+    .games-grid {
+        grid-template-columns: 1fr !important;
+        gap: 4px;
+    }
+    
     .game-cell {
         padding: 4px 6px;
         gap: 4px;
