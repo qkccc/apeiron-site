@@ -31,17 +31,17 @@ const API_TIMEOUT = 10000;
 const DEBUG_MODE = false;
 const USE_DUMMY_DATA = false;
 
-// クラスアイコンマッピング(Google Drive直リンク)
+// クラスアイコンマッピング(ローカル icon/)
 const CLASS_ICONS = {
-    "E": "https://drive.google.com/uc?export=download&id=1YdbSAyTEAWzt5HRONyHEW5b8Bjiz8M0t",
-    "R": "https://drive.google.com/uc?export=download&id=1oxsFkWgOAjOVUVi-ojy_0eu3jf-p8nJ9",
-    "W": "https://drive.google.com/uc?export=download&id=1xRYT44TlwMCSIugQzX89JL3TnTRtJ9pj",
-    "D": "https://drive.google.com/uc?export=download&id=1ki7cx_s1GqckicFjEzHB7Ro55DJQIppV",
-    "Ni": "https://drive.google.com/uc?export=download&id=1TrGhxga8Owm22UH3FYNCveKNYHcLbmbC",
-    "B": "https://drive.google.com/uc?export=download&id=1g5ZIVBW6_MAVTUzxdm1xZ7jJC6ZIf2nt",
-    "Nm": "https://drive.google.com/uc?export=download&id=1vBQZ_fMZm9AG_V0O2BpuwIIaYC8MHSGB",
-    "Nc": "https://drive.google.com/uc?export=download&id=1ns6HWRBUAtHUb48oMwCm5yecY0BeAS12",
-    "V": "https://drive.google.com/uc?export=download&id=1sCjlGkclKlaamdW57dhJ2HCJbGOw42lH"
+  "E": "icon/class_E.png",
+  "R": "icon/class_R.png",
+  "W": "icon/class_W.png",
+  "D": "icon/class_D.png",
+  "Ni": "icon/class_Ni.png",
+  "B": "icon/class_B.png",
+  "Nm": "icon/class_Nm.png",
+  "Nc": "icon/class_Nc.png",
+  "V": "icon/class_V.png"
 };
 
 const CLASS_NAMES = {
