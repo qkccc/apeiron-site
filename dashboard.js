@@ -89,14 +89,8 @@ async function dashboardInit() {
             // グローバル変数に保存
             allMatchesData = apiData.matches;
 
-            // シーズンフィルターを生成
+            // シーズンフィルターを生成（内部でフィルタリング＋描画も実行される）
             renderSeasonFilter(allMatchesData);
-
-            // 戦績カードを生成・表示
-            renderMatchCards(allMatchesData);
-
-            // 統計情報を計算・表示
-            renderStatistics(allMatchesData);
         } else {
             showErrorState("データの形式が正しくありません");
         }
