@@ -411,21 +411,21 @@ function renderStatistics(matches) {
     // BO9単位の勝敗
     let matchWins = 0;
     let matchLosses = 0;
-    
+
     // 1試合(ゲーム)単位の勝敗
     let gameWins = 0;
     let gameLosses = 0;
 
     matches.forEach(match => {
         const stats = calculateGameStats(match.games);
-        
+
         // BO9単位: 勝ち数が多ければ勝ち
         if (stats.totalWins > stats.totalLosses) {
             matchWins++;
         } else if (stats.totalLosses > stats.totalWins) {
             matchLosses++;
         }
-        
+
         // 1試合単位の集計
         match.games.forEach(game => {
             if (game.result === "w") {
