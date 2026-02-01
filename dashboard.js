@@ -304,7 +304,7 @@ function createMatchCard(match, index) {
       </div>
       <div class="match-result">
         <span class="result-badge ${stats.totalWins > stats.totalLosses ? 'win' : 'loss'}">
-          ${stats.totalWins} - ${stats.totalLosses}
+          ${stats.totalWins > stats.totalLosses ? 'WIN' : 'LOSE'} ${stats.totalWins} - ${stats.totalLosses}
         </span>
       </div>
     </div>
@@ -445,7 +445,7 @@ function renderStatistics(matches) {
         </div>
         
         <div class="stat-card">
-          <h4>1試合勝敗</h4>
+          <h4>1試合単位勝敗</h4>
           <p class="stat-value">${gameWins}勝 ${gameLosses}敗</p>
           <p class="stat-detail">Total: ${gameWins + gameLosses} games</p>
         </div>`;
