@@ -216,10 +216,10 @@ function renderSeasonFilter(matches) {
         <select id="season-select" class="season-select">
             <option value="all">すべて</option>
             ${seasons.map(season => {
-                const seasonValue = parseInt(String(season).match(/\d+/)?.[0], 10);
-                const isLatest = seasonValue === latestSeasonValue;
-                return `<option value="${season}" ${isLatest ? "selected" : ""}>${season}</option>`;
-            }).join("")}
+        const seasonValue = parseInt(String(season).match(/\d+/)?.[0], 10);
+        const isLatest = seasonValue === latestSeasonValue;
+        return `<option value="${season}" ${isLatest ? "selected" : ""}>${season}</option>`;
+    }).join("")}
         </select>
     `;
 
