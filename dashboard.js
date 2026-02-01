@@ -368,15 +368,15 @@ function createGameCell(game, gameIdx) {
  * @returns {Object} 統計情報
  */
 function calculateGameStats(games) {
-  const playedGames = games.filter(g => g.result === "w" || g.result === "l");
-  const wins = playedGames.filter(g => g.result === "w").length;
-  const losses = playedGames.filter(g => g.result === "l").length;
+    const playedGames = games.filter(g => g.result === "w" || g.result === "l");
+    const wins = playedGames.filter(g => g.result === "w").length;
+    const losses = playedGames.filter(g => g.result === "l").length;
 
     return {
         totalWins: wins,
         totalLosses: losses,
-    totalGames: playedGames.length,
-    winRate: playedGames.length > 0 ? (wins / playedGames.length) * 100 : 0
+        totalGames: playedGames.length,
+        winRate: playedGames.length > 0 ? (wins / playedGames.length) * 100 : 0
     };
 }
 
@@ -396,13 +396,13 @@ function renderStatistics(matches) {
         match.games.forEach(game => {
             if (game.result === "w") {
                 totalWins++;
-          gameCount++;
-          recentGames.push(game.result);
-        } else if (game.result === "l") {
-          totalLosses++;
-          gameCount++;
-          recentGames.push(game.result);
-        }
+                gameCount++;
+                recentGames.push(game.result);
+            } else if (game.result === "l") {
+                totalLosses++;
+                gameCount++;
+                recentGames.push(game.result);
+            }
         });
     });
 
