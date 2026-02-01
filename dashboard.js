@@ -437,7 +437,6 @@ function renderStatistics(matches) {
         <div class="stat-card">
           <h4>BO9勝敗</h4>
           <p class="stat-value">${matchWins}勝 ${matchLosses}敗</p>
-          <p class="stat-detail">Total: ${matchWins + matchLosses} matches</p>
         </div>
         
         <div class="stat-card">

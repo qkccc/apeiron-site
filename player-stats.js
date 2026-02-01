@@ -186,8 +186,25 @@ function render1OverallStats() {
 function render2SeasonPlayerStats() {
     const selectedSeason = document.getElementById("season-player-filter").value;
     const stats = {};
+    
+    // 全シーズンとプレイヤーの組み合わせを初期化
+    const allSeasons = [...new Set(allMatchesData.map(m => m.season))].sort((a, b) => {
+        const numA = parseInt(a.replace(/[^\d]/g, ""));
+        const numB = parseInt(b.replace(/[^\d]/g, ""));
+        return numA - numB;
+    });
+    const allPlayers = [...new Set(allMatchesData.flatMap(m => m.games.map(g => g.myPlayer).filter(p => p)))];
+    
+    // 全組み合わせを0で初期化
+    allSeasons.forEach(season => {
+        allPlayers.forEach(player => {
+            const key = `${season}-${player}`;
+            stats[key] = { season: season, player: player, participated: 0, wins: 0, losses: 0 };
+        });
+    });
+    
+    // 実データで上書き
     allMatchesData.forEach(match => {
-        if (match.season !== selectedSeason) return;
         const playersInMatch = new Set();
         match.games.forEach(game => {
             if (!game.myPlayer) return;
@@ -205,11 +222,14 @@ function render2SeasonPlayerStats() {
         });
     });
 
-    const statsList = Object.values(stats).sort((a, b) => {
-        if (b.participated !== a.participated) return b.participated - a.participated;
-        if (b.wins !== a.wins) return b.wins - a.wins;
-        return a.losses - b.losses;
-    });
+    // 選択されたシーズンのみをフィルタ
+    const statsList = Object.values(stats)
+        .filter(s => s.season === selectedSeason)
+        .sort((a, b) => {
+            if (b.participated !== a.participated) return b.participated - a.participated;
+            if (b.wins !== a.wins) return b.wins - a.wins;
+            return a.losses - b.losses;
+        });
 
     let html = `<table class="stats-table"><thead><tr><th>プレイヤー</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
     statsList.forEach(stat => {
@@ -229,8 +249,30 @@ function render2SeasonPlayerStats() {
 function render3SeasonClassStats() {
     const selectedSeason = document.getElementById("season-class-filter").value;
     const stats = {};
+    
+    // 全シーズンとクラスの組み合わせを初期化
+    const allSeasons = [...new Set(allMatchesData.map(m => m.season))].sort((a, b) => {
+        const numA = parseInt(a.replace(/[^\d]/g, ""));
+        const numB = parseInt(b.replace(/[^\d]/g, ""));
+        return numA - numB;
+    });
+    const allClasses = new Set();
     allMatchesData.forEach(match => {
-        if (match.season !== selectedSeason) return;
+        match.games.forEach(game => {
+            if (game.myClass) allClasses.add(game.myClass);
+        });
+    });
+    
+    // 全組み合わせを0で初期化
+    allSeasons.forEach(season => {
+        allClasses.forEach(cls => {
+            const key = `${season}-${cls}`;
+            stats[key] = { season: season, class: cls, participated: 0, wins: 0, losses: 0 };
+        });
+    });
+    
+    // 実データで上書き
+    allMatchesData.forEach(match => {
         const classesInMatch = new Set();
         match.games.forEach(game => {
             if (!game.myClass) return;
@@ -248,9 +290,12 @@ function render3SeasonClassStats() {
         });
     });
 
-    const statsList = Object.values(stats).sort((a, b) => {
-        return CLASS_ORDER.indexOf(a.class) - CLASS_ORDER.indexOf(b.class);
-    });
+    // 選択されたシーズンのみをフィルタ
+    const statsList = Object.values(stats)
+        .filter(s => s.season === selectedSeason)
+        .sort((a, b) => {
+            return CLASS_ORDER.indexOf(a.class) - CLASS_ORDER.indexOf(b.class);
+        });
 
     let html = `<table class="stats-table"><thead><tr><th>クラス</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
     statsList.forEach(stat => {
