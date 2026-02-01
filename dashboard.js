@@ -397,76 +397,59 @@ function calculateGameStats(games) {
     };
 }
 
+// シーズン順位データ（シーズン名: 順位）
+const SEASON_RANKINGS = {
+    // 例: "12期": 3,
+    // "11期": 5,
+};
+
 /**
  * 全試合の統計情報を計算して表示
  * @param {Array} matches - 試合配列
  */
 function renderStatistics(matches) {
-    // 全ゲームの集計
+    // 全ゲームの集計（勝敗のみ）
     let totalWins = 0;
     let totalLosses = 0;
-    let gameCount = 0;
-    const recentGames = [];
 
-    // 各試合のゲーム結果を集計（勝敗のみ）
     matches.forEach(match => {
         match.games.forEach(game => {
             if (game.result === "w") {
                 totalWins++;
-                gameCount++;
-                recentGames.push(game.result);
             } else if (game.result === "l") {
                 totalLosses++;
-                gameCount++;
-                recentGames.push(game.result);
             }
         });
     });
 
-    // Form (直近5試合の勝敗)
-    const recentForm = recentGames.slice(-5);
-    const formWins = recentForm.filter(r => r === "w").length;
-
-    // Clutch Factor (Game 9までもつれた場合の勝率)
-    const go9Matches = matches.filter(m => calculateGameStats(m.games).totalGames === 9);
-    const go9Wins = go9Matches.filter(m => {
-        const g9 = m.games.find(g => g.gameNumber === 9);
-        return g9 && g9.result === "w";
-    }).length;
-    const clutchFactor = go9Matches.length > 0
-        ? ((go9Wins / go9Matches.length) * 100).toFixed(1)
-        : "N/A";
+    // 現在のシーズンの順位を取得
+    const currentSeason = currentSeasonFilter !== "all" ? currentSeasonFilter : null;
+    const ranking = currentSeason && SEASON_RANKINGS[currentSeason] ? SEASON_RANKINGS[currentSeason] : null;
 
     // 統計表示エリアに出力
     const statsContainer = document.getElementById("statistics-container");
     if (statsContainer) {
-        statsContainer.innerHTML = `
+        let statsHTML = `
       <div class="stats-grid">
         <div class="stat-card">
-          <h4>Overall Win Rate</h4>
-          <p class="stat-value">${(totalWins + totalLosses) > 0 ? ((totalWins / (totalWins + totalLosses)) * 100).toFixed(1) : "0.0"}%</p>
-          <p class="stat-detail">${totalWins}W - ${totalLosses}L</p>
-        </div>
+          <h4>勝敗数</h4>
+          <p class="stat-value">${totalWins}勝 ${totalLosses}敗</p>
+          <p class="stat-detail">Total: ${totalWins + totalLosses} matches</p>
+        </div>`;
         
+        if (ranking !== null) {
+            statsHTML += `
         <div class="stat-card">
-          <h4>Form (Recent 5)</h4>
-          <p class="stat-value">${formWins}/5</p>
-          <p class="stat-detail">${recentForm.map(r => r.toUpperCase()).join("")}</p>
-        </div>
+          <h4>順位</h4>
+          <p class="stat-value">${ranking}位</p>
+          <p class="stat-detail">${currentSeason}</p>
+        </div>`;
+        }
         
-        <div class="stat-card">
-          <h4>Clutch Factor</h4>
-          <p class="stat-value">${clutchFactor}%</p>
-          <p class="stat-detail">BO9 Games (${go9Matches.length})</p>
-        </div>
-        
-        <div class="stat-card">
-          <h4>Total Matches</h4>
-          <p class="stat-value">${matches.length}</p>
-          <p class="stat-detail">${gameCount} games played</p>
-        </div>
+        statsHTML += `
       </div>
     `;
+        statsContainer.innerHTML = statsHTML;
     }
 }
 
