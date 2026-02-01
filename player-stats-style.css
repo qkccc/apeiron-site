@@ -108,7 +108,6 @@
 .section-filter label {
     font-size: 1rem;
     color: var(--text-primary);
-    font-weight: 600;
     white-space: nowrap;
 }
 
@@ -179,7 +178,6 @@
     padding: var(--spacing-sm) var(--spacing-md);
     text-align: left;
     color: var(--accent-gold);
-    font-weight: 700;
     border-bottom: 2px solid var(--accent-gold);
     white-space: nowrap;
 }
@@ -216,14 +214,12 @@
 /* プレイヤー名・クラス名 */
 .stats-table td.player-name,
 .stats-table td.class-name {
-    font-weight: 600;
     color: var(--accent-gold);
 }
 
 /* 勝率カラーコーディング */
 .winrate-high {
     color: var(--accent-red);
-    font-weight: 700;
 }
 
 .winrate-medium {
@@ -336,7 +332,6 @@
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.9rem;
-    font-weight: 600;
     transition: all 0.3s ease;
 }
 
