@@ -187,8 +187,17 @@ function renderSeasonFilter(matches) {
         return;
     }
 
-    // ユニークなシーズン一覧を取得
-    const seasons = [...new Set(matches.map(m => m.season))].sort();
+    // ユニークなシーズン一覧を取得（1,2,3...の数値順）
+    const seasons = [...new Set(matches.map(m => m.season))].sort((a, b) => {
+      const numA = parseInt(String(a).match(/\d+/)?.[0], 10);
+      const numB = parseInt(String(b).match(/\d+/)?.[0], 10);
+
+      if (Number.isNaN(numA) || Number.isNaN(numB)) {
+        return String(a).localeCompare(String(b), "ja");
+      }
+
+      return numA - numB;
+    });
 
     // ドロップダウン生成
     const selectHTML = `

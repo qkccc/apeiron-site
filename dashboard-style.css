@@ -329,13 +329,13 @@
     background: linear-gradient(135deg, var(--bg-cell) 0%, #0a0a0a 100%);
     border: 1px solid var(--border-light);
     border-radius: 6px;
-    padding: var(--spacing-sm);
+    padding: 6px 8px;
     text-align: left;
     transition: all var(--transition-fast);
     cursor: default;
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
+    gap: 8px;
 }
 
 .game-cell:hover {
@@ -362,10 +362,10 @@
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 0;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 700;
-    gap: var(--spacing-sm);
-    min-width: 70px;
+    gap: 6px;
+    min-width: 60px;
 }
 
 .game-number {
@@ -374,7 +374,7 @@
 }
 
 .game-result {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-family: 'Montserrat', sans-serif;
     line-height: 1;
 }
@@ -385,8 +385,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 6px;
-    font-size: 0.75rem;
+    gap: 4px;
+    font-size: 0.72rem;
     flex: 1;
     justify-content: space-between;
 }
@@ -395,7 +395,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     min-width: 0;
     flex: 1;
     justify-content: space-between;
@@ -414,15 +414,15 @@
 }
 
 .player-class {
-    height: 20px;
+    height: 18px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    min-width: 24px;
+    min-width: 20px;
 }
 
 .class-icon {
-    height: 16px;
+    height: 14px;
     width: auto;
     object-fit: contain;
     border-radius: 2px;
@@ -439,10 +439,10 @@
 }
 
 .vs-text {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: var(--text-tertiary);
     font-weight: 600;
-    margin: 0 2px;
+    margin: 0 1px;
     line-height: 1;
     align-self: center;
 }
