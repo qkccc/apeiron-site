@@ -372,12 +372,12 @@ function render4ClassSeasonStats() {
 function render5PlayerClassStats() {
     const selectedPlayer = document.getElementById("player-class-filter").value;
     const stats = {};
-    
+
     // 全クラスを初期化
     CLASS_ORDER.forEach(className => {
         stats[className] = { class: className, participated: 0, wins: 0, losses: 0 };
     });
-    
+
     allMatchesData.forEach(match => {
         const classInMatch = new Set();
         match.games.forEach(game => {
