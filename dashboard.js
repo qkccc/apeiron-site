@@ -199,16 +199,37 @@ function renderSeasonFilter(matches) {
         return numA - numB;
     });
 
+    const numericSeasons = seasons
+        .map(season => ({
+            label: season,
+            value: parseInt(String(season).match(/\d+/)?.[0], 10)
+        }))
+        .filter(item => !Number.isNaN(item.value));
+
+    const latestSeasonValue = numericSeasons.length > 0
+        ? Math.max(...numericSeasons.map(item => item.value))
+        : null;
+
     // ドロップダウン生成
     const selectHTML = `
         <label for="season-select">シーズン: </label>
         <select id="season-select" class="season-select">
             <option value="all">すべて</option>
-            ${seasons.map(season => `<option value="${season}">${season}</option>`).join("")}
+            ${seasons.map(season => {
+                const seasonValue = parseInt(String(season).match(/\d+/)?.[0], 10);
+                const isLatest = seasonValue === latestSeasonValue;
+                return `<option value="${season}" ${isLatest ? "selected" : ""}>${season}</option>`;
+            }).join("")}
         </select>
     `;
 
     filterContainer.innerHTML = selectHTML;
+
+    if (latestSeasonValue !== null) {
+        currentSeasonFilter = String(latestSeasonValue);
+    }
+
+    filterAndRenderMatches();
 
     // イベントリスナー設定
     const selectElement = document.getElementById("season-select");
@@ -298,16 +319,7 @@ function createMatchCard(match, index) {
       </div>
     </div>
     
-    <div class="match-card-footer">
-      <div class="game-stats">
-        <span class="stat-item">
-          <strong>Win Rate:</strong> ${stats.totalGames > 0 ? stats.winRate.toFixed(1) : "0.0"}%
-        </span>
-        <span class="stat-item">
-          <strong>Games:</strong> ${stats.totalGames} / 9
-        </span>
-      </div>
-    </div>
+    <div class="match-card-footer"></div>
   `;
 
     return card;
