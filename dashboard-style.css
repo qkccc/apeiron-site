@@ -318,38 +318,38 @@
         gap: 4px;
         flex-wrap: wrap;
     }
-    
+
     .game-header {
         min-width: 50px;
         font-size: 0.8rem;
         gap: 4px;
     }
-    
+
     .game-result {
         font-size: 1rem;
     }
-    
+
     .game-body {
         gap: 2px;
         font-size: 0.75rem;
         flex-wrap: nowrap;
         overflow: hidden;
     }
-    
+
     .player-name {
         font-size: 0.75rem;
         max-width: 80px;
     }
-    
+
     .player-class {
         height: 16px;
         min-width: 16px;
     }
-    
+
     .class-icon {
         height: 14px;
     }
-    
+
     .vs-text {
         font-size: 0.65rem;
         margin: 0;
