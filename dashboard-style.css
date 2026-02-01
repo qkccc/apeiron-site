@@ -288,20 +288,20 @@
 /* ===== マッチカード ボディ ===== */
 
 .match-card-body {
-    padding: var(--spacing-md);
+    padding: 8px 10px;
     flex-grow: 1;
 }
 
 .games-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--spacing-sm);
+    gap: 6px;
 }
 
 /* ===== マッチカード フッター ===== */
 
 .match-card-footer {
-    padding: var(--spacing-md);
+    padding: 8px 10px;
     border-top: 1px solid var(--border-light);
     background: rgba(0, 0, 0, 0.3);
 }
