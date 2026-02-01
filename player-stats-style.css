@@ -78,31 +78,40 @@
 }
 
 /* ============================================================================
-   フィルター
+   セクションヘッダー・フィルター
    ============================================================================ */
 
-.filters-container {
+.section-header {
     display: flex;
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-xl);
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-md);
     flex-wrap: wrap;
-    justify-content: center;
-    padding: var(--spacing-md);
-    background: var(--bg-secondary);
-    border-radius: 8px;
-    border: 1px solid var(--border-light);
+    gap: var(--spacing-md);
 }
 
-.filter-group {
+.section-header h2 {
+    font-size: 1.8rem;
+    color: var(--accent-gold);
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--accent-gold);
+    padding-bottom: var(--spacing-sm);
+    flex: 1;
+    min-width: 250px;
+    margin: 0;
+}
+
+.section-filter {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.filter-group label {
+.section-filter label {
     font-size: 1rem;
     color: var(--text-primary);
     font-weight: 600;
+    white-space: nowrap;
 }
 
 .filter-select {
@@ -133,15 +142,6 @@
 
 .stats-section {
     margin-bottom: var(--spacing-xl);
-}
-
-.stats-section h2 {
-    font-size: 1.8rem;
-    margin-bottom: var(--spacing-md);
-    color: var(--accent-gold);
-    letter-spacing: 1px;
-    border-bottom: 2px solid var(--accent-gold);
-    padding-bottom: var(--spacing-sm);
 }
 
 /* ============================================================================
