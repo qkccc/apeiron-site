@@ -21,15 +21,44 @@
 // グローバル設定
 // ============================================================================
 
-// GAS デプロイメントURL（変更必要）
+// GAS デプロイメントURL(変更必要)
 // GAS側で「デプロイ > ウェブアプリ」として取得したURLを設定
 const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxZhLQ38hytU05NimDksu1Y23fEhrYBJulyOMTB30qWPIov02-Zxgx4rYe60eJHk2g8eA/exec";
-// API取得時のタイムアウト（ミリ秒）
+// API取得時のタイムアウト(ミリ秒)
 const API_TIMEOUT = 10000;
 
-// デバッグモード（ローカルテスト時はtrueに変更）
+// デバッグモード(ローカルテスト時はtrueに変更)
 const DEBUG_MODE = false;
 const USE_DUMMY_DATA = false;
+
+// クラスアイコンマッピング(Google Drive直リンク)
+const CLASS_ICONS = {
+    "E": "https://drive.google.com/uc?export=download&id=1YdbSAyTEAWzt5HRONyHEW5b8Bjiz8M0t",
+    "R": "https://drive.google.com/uc?export=download&id=1oxsFkWgOAjOVUVi-ojy_0eu3jf-p8nJ9",
+    "W": "https://drive.google.com/uc?export=download&id=1xRYT44TlwMCSIugQzX89JL3TnTRtJ9pj",
+    "D": "https://drive.google.com/uc?export=download&id=1ki7cx_s1GqckicFjEzHB7Ro55DJQIppV",
+    "Ni": "https://drive.google.com/uc?export=download&id=1TrGhxga8Owm22UH3FYNCveKNYHcLbmbC",
+    "B": "https://drive.google.com/uc?export=download&id=1g5ZIVBW6_MAVTUzxdm1xZ7jJC6ZIf2nt",
+    "Nm": "https://drive.google.com/uc?export=download&id=1vBQZ_fMZm9AG_V0O2BpuwIIaYC8MHSGB",
+    "Nc": "https://drive.google.com/uc?export=download&id=1ns6HWRBUAtHUb48oMwCm5yecY0BeAS12",
+    "V": "https://drive.google.com/uc?export=download&id=1sCjlGkclKlaamdW57dhJ2HCJbGOw42lH"
+};
+
+const CLASS_NAMES = {
+    "E": "エルフ",
+    "R": "ロイヤル",
+    "W": "ウィッチ",
+    "D": "ドラゴン",
+    "Ni": "ナイトメア",
+    "B": "ビショップ",
+    "Nm": "ネメシス",
+    "Nc": "ネクロマンサー",
+    "V": "ヴァンパイア"
+};
+
+// グローバル変数: 全データとフィルター用
+let allMatchesData = [];
+let currentSeasonFilter = "all";
 
 // ============================================================================
 // ページ読込時の初期化
@@ -57,11 +86,17 @@ async function dashboardInit() {
             // データ取得成功
             console.log(`Fetched ${apiData.matches.length} matches`);
 
+            // グローバル変数に保存
+            allMatchesData = apiData.matches;
+
+            // シーズンフィルターを生成
+            renderSeasonFilter(allMatchesData);
+
             // 戦績カードを生成・表示
-            renderMatchCards(apiData.matches);
+            renderMatchCards(allMatchesData);
 
             // 統計情報を計算・表示
-            renderStatistics(apiData.matches);
+            renderStatistics(allMatchesData);
         } else {
             showErrorState("データの形式が正しくありません");
         }
@@ -135,6 +170,55 @@ async function fetchDataFromGAS() {
 
         throw error;
     }
+}
+
+// ============================================================================
+// シーズンフィルター
+// ============================================================================
+
+/**
+ * シーズンフィルターのドロップダウンを生成
+ * @param {Array} matches - 全試合データ
+ */
+function renderSeasonFilter(matches) {
+    const filterContainer = document.getElementById("season-filter-container");
+    if (!filterContainer) {
+        console.warn("season-filter-container element not found");
+        return;
+    }
+
+    // ユニークなシーズン一覧を取得
+    const seasons = [...new Set(matches.map(m => m.season))].sort();
+
+    // ドロップダウン生成
+    const selectHTML = `
+        <label for="season-select">シーズン: </label>
+        <select id="season-select" class="season-select">
+            <option value="all">すべて</option>
+            ${seasons.map(season => `<option value="${season}">${season}</option>`).join("")}
+        </select>
+    `;
+
+    filterContainer.innerHTML = selectHTML;
+
+    // イベントリスナー設定
+    const selectElement = document.getElementById("season-select");
+    selectElement.addEventListener("change", (e) => {
+        currentSeasonFilter = e.target.value;
+        filterAndRenderMatches();
+    });
+}
+
+/**
+ * フィルタリングして再描画
+ */
+function filterAndRenderMatches() {
+    const filteredMatches = currentSeasonFilter === "all"
+        ? allMatchesData
+        : allMatchesData.filter(m => m.season === currentSeasonFilter);
+
+    renderMatchCards(filteredMatches);
+    renderStatistics(filteredMatches);
 }
 
 // ============================================================================
@@ -227,9 +311,11 @@ function createMatchCard(match, index) {
  * @returns {String} セルのHTML
  */
 function createGameCell(game, gameIdx) {
-    // クラスアイコンURL（設定されていない場合は略称で表示）
-    const myClassIcon = game.myClassInfo?.iconUrl || null;
-    const enemyClassIcon = game.enemyClassInfo?.iconUrl || null;
+    // クラスアイコンURL（ローカルマッピングを優先）
+    const myClassIcon = CLASS_ICONS[game.myClass] || game.myClassInfo?.iconUrl || null;
+    const enemyClassIcon = CLASS_ICONS[game.enemyClass] || game.enemyClassInfo?.iconUrl || null;
+    const myClassName = CLASS_NAMES[game.myClass] || game.myClass;
+    const enemyClassName = CLASS_NAMES[game.enemyClass] || game.enemyClass;
 
     // 勝敗に応じたCSSクラス（"w" or "l" のみ有効）
     const resultClass = game.result === "w" ? "game-result-win" : (game.result === "l" ? "game-result-loss" : "");
@@ -250,8 +336,8 @@ function createGameCell(game, gameIdx) {
         <div class="player-info my-player">
           <div class="player-name">${game.myPlayer || "?"}</div>
           <div class="player-class">
-            ${myClassIcon && game.myClass
-            ? `<img src="${myClassIcon}" alt="${game.myClass}" class="class-icon" title="${game.myClassInfo.name}">`
+            ${myClassIcon
+            ? `<img src="${myClassIcon}" alt="${game.myClass}" class="class-icon" title="${myClassName}">`
             : `<span class="class-abbr">${game.myClass || "?"}</span>`
         }
           </div>
@@ -263,8 +349,8 @@ function createGameCell(game, gameIdx) {
         <!-- 敵情報（敵プレイヤー名は基本空なので敵クラスのみ表示） -->
         <div class="player-info enemy-player">
           <div class="player-class">
-            ${enemyClassIcon && game.enemyClass
-            ? `<img src="${enemyClassIcon}" alt="${game.enemyClass}" class="class-icon" title="${game.enemyClassInfo.name}">`
+            ${enemyClassIcon
+            ? `<img src="${enemyClassIcon}" alt="${game.enemyClass}" class="class-icon" title="${enemyClassName}">`
             : `<span class="class-abbr">${game.enemyClass || "?"}</span>`
         }
           </div>
