@@ -23,8 +23,7 @@
 
 // GAS デプロイメントURL（変更必要）
 // GAS側で「デプロイ > ウェブアプリ」として取得したURLを設定
-const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxZhLQ38hytU05NimDksu1Y23fEhrYBJulyOMTB30qWPIov02-Zxgx4rYe60eJHk2g8eA/exec"; // 要変更
-
+const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxZhLQ38hytU05NimDksu1Y23fEhrYBJulyOMTB30qWPIov02-Zxgx4rYe60eJHk2g8eA/exec";
 // API取得時のタイムアウト（ミリ秒）
 const API_TIMEOUT = 10000;
 
