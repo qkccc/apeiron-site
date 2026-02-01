@@ -28,6 +28,10 @@ const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxZhLQ38hytU05NimDk
 // API取得時のタイムアウト（ミリ秒）
 const API_TIMEOUT = 10000;
 
+// デバッグモード（ローカルテスト時はtrueに変更）
+const DEBUG_MODE = false;
+const USE_DUMMY_DATA = false;
+
 // ============================================================================
 // ページ読込時の初期化
 // ============================================================================
@@ -79,25 +83,52 @@ async function dashboardInit() {
 async function fetchDataFromGAS() {
     console.log(`Fetching from GAS: ${GAS_API_URL}`);
 
+    // ダミーデータ使用モード（デバッグ用）
+    if (USE_DUMMY_DATA) {
+        console.warn("⚠️ ダミーデータを使用しています");
+        return getDummyData();
+    }
+
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), API_TIMEOUT);
 
     try {
         const response = await fetch(GAS_API_URL, {
             method: "GET",
-            signal: controller.signal
+            signal: controller.signal,
+            headers: {
+                "Accept": "application/json"
+            }
         });
 
         clearTimeout(timeoutId);
 
+        if (DEBUG_MODE) {
+            console.log(`Response Status: ${response.status}`);
+            console.log(`Response Headers:`, response.headers);
+        }
+
         if (!response.ok) {
-            throw new Error(`HTTP Error: ${response.status}`);
+            throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
         }
 
         const data = await response.json();
+        
+        if (DEBUG_MODE) {
+            console.log("API Response:", data);
+        }
+        
         return data;
     } catch (error) {
         clearTimeout(timeoutId);
+
+        if (DEBUG_MODE) {
+            console.error("Fetch Error Details:", {
+                name: error.name,
+                message: error.message,
+                stack: error.stack
+            });
+        }
 
         if (error.name === "AbortError") {
             throw new Error("APIリクエストがタイムアウトしました（" + API_TIMEOUT + "ms）");
@@ -394,4 +425,101 @@ function showErrorState(message) {
       </div>
     `;
     }
+}
+
+// ============================================================================
+// ダミーデータ（デバッグ用）
+// ============================================================================
+
+/**
+ * デバッグ用ダミーデータを返す
+ * USE_DUMMY_DATA = true の場合に使用
+ */
+function getDummyData() {
+    return {
+        success: true,
+        timestamp: new Date().toISOString(),
+        matches: [
+            {
+                id: 1,
+                season: "第14回前半",
+                round: 1,
+                date: "2026/01/28",
+                enemy: "COL",
+                games: [
+                    {
+                        gameNumber: 1,
+                        myPlayer: "そー",
+                        myClass: "Nm",
+                        myClassInfo: { name: "Forestcraft", abbr: "Nm" },
+                        result: "l",
+                        enemyClass: "Nm",
+                        enemyClassInfo: { name: "Forestcraft", abbr: "Nm" },
+                        enemyPlayer: ""
+                    },
+                    {
+                        gameNumber: 2,
+                        myPlayer: "ヒヨぴー",
+                        myClass: "R",
+                        myClassInfo: { name: "Runecraft", abbr: "R" },
+                        result: "w",
+                        enemyClass: "W",
+                        enemyClassInfo: { name: "Witch", abbr: "W" },
+                        enemyPlayer: ""
+                    },
+                    {
+                        gameNumber: 3,
+                        myPlayer: "poke",
+                        myClass: "B",
+                        myClassInfo: { name: "Bishop", abbr: "B" },
+                        result: "w",
+                        enemyClass: "B",
+                        enemyClassInfo: { name: "Bishop", abbr: "B" },
+                        enemyPlayer: ""
+                    },
+                    {
+                        gameNumber: 4,
+                        myPlayer: "SKY",
+                        myClass: "D",
+                        myClassInfo: { name: "Dragoncraft", abbr: "D" },
+                        result: "l",
+                        enemyClass: "D",
+                        enemyClassInfo: { name: "Dragoncraft", abbr: "D" },
+                        enemyPlayer: ""
+                    },
+                    {
+                        gameNumber: 5,
+                        myPlayer: "maho",
+                        myClass: "W",
+                        myClassInfo: { name: "Witch", abbr: "W" },
+                        result: "w",
+                        enemyClass: "W",
+                        enemyClassInfo: { name: "Witch", abbr: "W" },
+                        enemyPlayer: ""
+                    },
+                    {
+                        gameNumber: 6,
+                        myPlayer: "そー",
+                        myClass: "Nm",
+                        myClassInfo: { name: "Forestcraft", abbr: "Nm" },
+                        result: "w",
+                        enemyClass: "R",
+                        enemyClassInfo: { name: "Runecraft", abbr: "R" },
+                        enemyPlayer: ""
+                    },
+                    {
+                        gameNumber: 7,
+                        myPlayer: "SKY",
+                        myClass: "D",
+                        myClassInfo: { name: "Dragoncraft", abbr: "D" },
+                        result: "w",
+                        enemyClass: "R",
+                        enemyClassInfo: { name: "Runecraft", abbr: "R" },
+                        enemyPlayer: ""
+                    }
+                ]
+            }
+        ],
+        totalMatches: 1
+    };
 }
