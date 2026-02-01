@@ -374,8 +374,9 @@
 }
 
 .game-result {
-    font-size: 0.95rem;
+    font-size: 1.15rem;
     font-family: 'Montserrat', sans-serif;
+    line-height: 1;
 }
 
 /* ===== ゲーム セル ボディ ===== */
@@ -396,6 +397,8 @@
     align-items: center;
     gap: 6px;
     min-width: 0;
+    flex: 1;
+    justify-content: space-between;
 }
 
 .player-name {
@@ -406,13 +409,16 @@
     text-overflow: ellipsis;
     max-width: 140px;
     line-height: 1;
+    text-align: left;
+    flex: 1;
 }
 
 .player-class {
     height: 20px;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-end;
+    min-width: 24px;
 }
 
 .class-icon {
