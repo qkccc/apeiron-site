@@ -49,12 +49,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 });
 
-
-
-// ============================================================================
-// データ取得
-// ============================================================================
-
 async function fetchDataFromGAS() {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), API_TIMEOUT);
@@ -68,10 +62,6 @@ async function fetchDataFromGAS() {
         throw error;
     }
 }
-
-// ============================================================================
-// フィルター初期化
-// ============================================================================
 
 function initializeAllFilters() {
     const seasons = [...new Set(allMatchesData.map(m => m.season))].sort((a, b) => {
@@ -113,10 +103,6 @@ function addFilterOptions(elementId, options) {
     });
 }
 
-// ============================================================================
-// 統計レンダリング
-// ============================================================================
-
 function renderAllStats() {
     render1OverallStats();
     render2SeasonPlayerStats();
@@ -125,10 +111,6 @@ function renderAllStats() {
     render5PlayerClassStats();
     render6PlayerClassAllSeasonStats();
 }
-
-// ============================================================================
-// 1. 全シーズン通しての出場・勝敗
-// ============================================================================
 
 function render1OverallStats() {
     const stats = {};
@@ -159,10 +141,6 @@ function render1OverallStats() {
     html += `</tbody></table>`;
     document.getElementById("overall-stats-container").innerHTML = html;
 }
-
-// ============================================================================
-// 2. シーズンごとの戦績 - プレイヤー別
-// ============================================================================
 
 function render2SeasonPlayerStats() {
     const selectedSeason = document.getElementById("season-player-filter").value;
@@ -198,10 +176,6 @@ function render2SeasonPlayerStats() {
     document.getElementById("season-player-stats-container").innerHTML = html;
 }
 
-// ============================================================================
-// 3. シーズンごとの戦績 - クラス別
-// ============================================================================
-
 function render3SeasonClassStats() {
     const selectedSeason = document.getElementById("season-class-filter").value;
     const stats = {};
@@ -234,10 +208,6 @@ function render3SeasonClassStats() {
     html += `</tbody></table>`;
     document.getElementById("season-class-stats-container").innerHTML = html;
 }
-
-// ============================================================================
-// 4. 各クラスのシーズンごとの戦績
-// ============================================================================
 
 function render4ClassSeasonStats() {
     const selectedClass = document.getElementById("class-season-filter").value;
@@ -275,10 +245,6 @@ function render4ClassSeasonStats() {
     document.getElementById("class-season-stats-container").innerHTML = html;
 }
 
-// ============================================================================
-// 5. 各プレイヤーのクラスごとの戦績(1試合出場以上)
-// ============================================================================
-
 function render5PlayerClassStats() {
     const selectedPlayer = document.getElementById("player-class-filter").value;
     const stats = {};
@@ -313,10 +279,6 @@ function render5PlayerClassStats() {
     document.getElementById("player-class-stats-container").innerHTML = html;
 }
 
-// ============================================================================
-// 6. 各プレイヤーの全シーズン通してのクラスごとの戦績
-// ============================================================================
-
 function render6PlayerClassAllSeasonStats() {
     const stats = {};
     allMatchesData.forEach(match => {
@@ -348,10 +310,6 @@ function render6PlayerClassAllSeasonStats() {
     document.getElementById("player-class-allseason-stats-container").innerHTML = html;
 }
 
-// ============================================================================
-// ユーティリティ
-// ============================================================================
-
 function getWinRateClass(winRate) {
     if (winRate >= 60) return "winrate-high";
     if (winRate >= 40) return "winrate-medium";
@@ -364,4 +322,3 @@ function showError(message) {
         if (el) el.innerHTML = `<div class="loading-state"><p style="color: #ef4444;">${message}</p></div>`;
     });
 }
-
