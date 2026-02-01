@@ -372,6 +372,12 @@ function render4ClassSeasonStats() {
 function render5PlayerClassStats() {
     const selectedPlayer = document.getElementById("player-class-filter").value;
     const stats = {};
+    
+    // 全クラスを初期化
+    CLASS_ORDER.forEach(className => {
+        stats[className] = { class: className, participated: 0, wins: 0, losses: 0 };
+    });
+    
     allMatchesData.forEach(match => {
         const classInMatch = new Set();
         match.games.forEach(game => {
@@ -390,7 +396,7 @@ function render5PlayerClassStats() {
         });
     });
 
-    const statsList = Object.values(stats).filter(s => s.participated >= 1).sort((a, b) => {
+    const statsList = Object.values(stats).sort((a, b) => {
         return CLASS_ORDER.indexOf(a.class) - CLASS_ORDER.indexOf(b.class);
     });
 
