@@ -397,12 +397,6 @@ function calculateGameStats(games) {
     };
 }
 
-// シーズン順位データ（シーズン名: 順位）
-const SEASON_RANKINGS = {
-    // 例: "12期": 3,
-    // "11期": 5,
-};
-
 /**
  * 全試合の統計情報を計算して表示
  * @param {Array} matches - 試合配列
