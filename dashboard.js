@@ -336,15 +336,14 @@ function createGameCell(game, gameIdx) {
 
     // 勝敗に応じたCSSクラス（"w" or "l" のみ有効）
     const resultClass = game.result === "w" ? "game-result-win" : (game.result === "l" ? "game-result-loss" : "");
-    const resultText = game.result === "w" ? "W" : (game.result === "l" ? "L" : "");
-    const resultColor = game.result === "w" ? "#4ade80" : (game.result === "l" ? "#ef4444" : "#707070"); // 緑 / 赤 / グレー
+    const resultIcon = game.result === "w" ? "icon/maru.png" : (game.result === "l" ? "icon/batu.png" : "");
 
     return `
     <div class="game-cell ${resultClass}" data-game-number="${game.gameNumber}">
       <div class="game-header">
         <span class="game-number">G${game.gameNumber}</span>
-        <span class="game-result" style="color: ${resultColor}; font-weight: bold;">
-          ${resultText}
+        <span class="game-result">
+          ${resultIcon ? `<img src="${resultIcon}" alt="${game.result}" class="result-icon">` : ""}
         </span>
       </div>
       
