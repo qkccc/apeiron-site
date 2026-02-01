@@ -282,7 +282,7 @@ function createMatchCard(match, index) {
     card.innerHTML = `
     <div class="match-card-header">
       <div class="match-info">
-        <h3 class="match-title">#${index + 1} Round ${match.round}</h3>
+        <h3 class="match-title">Round ${match.round}</h3>
         <p class="match-date">${formatDate(match.date)} vs ${match.enemy}</p>
       </div>
       <div class="match-result">

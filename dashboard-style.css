@@ -255,7 +255,7 @@
 }
 
 .match-date {
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: var(--text-secondary);
     margin: 0;
 }
@@ -362,7 +362,7 @@
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 0;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 700;
     gap: 6px;
     min-width: 60px;
@@ -374,7 +374,7 @@
 }
 
 .game-result {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     font-family: 'Montserrat', sans-serif;
     line-height: 1;
 }
@@ -386,7 +386,7 @@
     flex-direction: row;
     align-items: center;
     gap: 4px;
-    font-size: 0.72rem;
+    font-size: 0.85rem;
     flex: 1;
     justify-content: space-between;
 }
@@ -422,7 +422,7 @@
 }
 
 .class-icon {
-    height: 14px;
+    height: 16px;
     width: auto;
     object-fit: contain;
     border-radius: 2px;
@@ -439,7 +439,7 @@
 }
 
 .vs-text {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     color: var(--text-tertiary);
     font-weight: 600;
     margin: 0 1px;
