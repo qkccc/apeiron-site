@@ -1,0 +1,563 @@
+/**
+ * ============================================================================
+ * dashboard-style.css - BO9 戦績ダッシュボード スタイル
+ * ============================================================================
+ * 
+ * 【デザイン】
+ * e-sports 公式配信風のダークテーマ
+ * - 背景: ダークグレー（#0a0a0a）
+ * - アクセント: ゴールド（#D4AF37）
+ * - ゲーム結果: 勝利は緑、敗北は赤で色分け
+ * 
+ * 【レイアウト】
+ * - グリッドレイアウトで Game1~9 を横並び表示
+ * - カード型で 1 試合 = 1 カード
+ * - レスポンシブ対応（モバイル時は2段組に）
+ * 
+ * ============================================================================
+ */
+
+/* ============================================================================
+   グローバル変数・基本スタイル
+   ============================================================================ */
+
+:root {
+    /* 色定義 */
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #1a1a1a;
+    --bg-card: #151515;
+    --bg-cell: #0f0f0f;
+
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --text-tertiary: #707070;
+
+    --accent-gold: #D4AF37;
+    --accent-green: #4ade80;
+    --accent-red: #ef4444;
+    --accent-blue: #3b82f6;
+
+    --border-light: rgba(255, 255, 255, 0.1);
+    --border-accent: rgba(212, 175, 55, 0.3);
+
+    /* 間隔 */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+
+    /* アニメーション */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* ページメインコンテンツ */
+.dashboard-main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+    margin-top: 80px;
+    /* ヘッダー固定のため上部余白 */
+}
+
+/* ============================================================================
+   ダッシュボード ヘッダー
+   ============================================================================ */
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+    border: 1px solid var(--border-accent);
+    border-radius: 8px;
+}
+
+.dashboard-header h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--accent-gold) 0%, #8a6e18 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: var(--spacing-sm);
+}
+
+.dashboard-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+/* ============================================================================
+   統計情報セクション
+   ============================================================================ */
+
+.statistics-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.statistics-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--accent-gold);
+    letter-spacing: 1px;
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.stat-card {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: var(--spacing-md);
+    text-align: center;
+    transition: all var(--transition-normal);
+    cursor: default;
+}
+
+.stat-card:hover {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    transform: translateY(-2px);
+}
+
+.stat-card h4 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.stat-card .stat-value {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--accent-gold);
+    margin: var(--spacing-sm) 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.stat-card .stat-detail {
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+}
+
+/* ============================================================================
+   戦績カード
+   ============================================================================ */
+
+.matches-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.matches-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--accent-gold);
+    letter-spacing: 1px;
+}
+
+.matches-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: var(--spacing-md);
+}
+
+/* ===== マッチカード基本スタイル ===== */
+
+.match-card {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+}
+
+.match-card:hover {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+    transform: translateY(-4px);
+}
+
+/* 背景色（勝敗に応じた色分け） */
+.match-card.bg-win {
+    border-left: 4px solid var(--accent-green);
+}
+
+.match-card.bg-loss {
+    border-left: 4px solid var(--accent-red);
+}
+
+/* ===== マッチカード ヘッダー ===== */
+
+.match-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-light);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.match-info {
+    flex: 1;
+}
+
+.match-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    margin-bottom: var(--spacing-xs);
+}
+
+.match-date {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.match-result {
+    text-align: right;
+}
+
+.result-badge {
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: 900;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.result-badge.win {
+    background: rgba(74, 222, 128, 0.2);
+    color: var(--accent-green);
+    border: 1px solid var(--accent-green);
+}
+
+.result-badge.loss {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--accent-red);
+    border: 1px solid var(--accent-red);
+}
+
+/* ===== マッチカード ボディ ===== */
+
+.match-card-body {
+    padding: var(--spacing-md);
+    flex-grow: 1;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-sm);
+}
+
+/* ===== マッチカード フッター ===== */
+
+.match-card-footer {
+    padding: var(--spacing-md);
+    border-top: 1px solid var(--border-light);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.game-stats {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+}
+
+.stat-item {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.stat-item strong {
+    color: var(--accent-gold);
+}
+
+/* ============================================================================
+   ゲーム結果セル（Game1~9）
+   ============================================================================ */
+
+.game-cell {
+    background: linear-gradient(135deg, var(--bg-cell) 0%, #0a0a0a 100%);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    padding: var(--spacing-sm);
+    text-align: center;
+    transition: all var(--transition-fast);
+    cursor: default;
+}
+
+.game-cell:hover {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+}
+
+/* 勝利セル */
+.game-cell.game-result-win {
+    border-left: 3px solid var(--accent-green);
+    background: linear-gradient(135deg, rgba(74, 222, 128, 0.05) 0%, rgba(74, 222, 128, 0.02) 100%);
+}
+
+/* 敗北セル */
+.game-cell.game-result-loss {
+    border-left: 3px solid var(--accent-red);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(239, 68, 68, 0.02) 100%);
+}
+
+/* ===== ゲーム セル ヘッダー ===== */
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.game-number {
+    color: var(--text-secondary);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.game-result {
+    font-size: 0.95rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* ===== ゲーム セル ボディ ===== */
+
+.game-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    font-size: 0.75rem;
+}
+
+.player-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.player-name {
+    color: var(--text-primary);
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-class {
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.class-icon {
+    height: 20px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 2px;
+}
+
+.class-abbr {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.2);
+    color: var(--accent-gold);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.vs-text {
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+    font-weight: 600;
+}
+
+/* ============================================================================
+   ローディング・エラー状態
+   ============================================================================ */
+
+.loading-placeholder {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-secondary);
+}
+
+.loading-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: var(--spacing-xl);
+}
+
+.loading-state p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-light);
+    border-top-color: var(--accent-gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.error-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: var(--spacing-xl);
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--accent-red);
+    border-radius: 8px;
+}
+
+.error-state h3 {
+    color: var(--accent-red);
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.error-state p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.retry-btn {
+    background: linear-gradient(135deg, var(--accent-gold) 0%, #8a6e18 100%);
+    color: #000;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 4px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.retry-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+/* ============================================================================
+   レスポンシブ対応
+   ============================================================================ */
+
+/* タブレット サイズ（768px以下） */
+@media (max-width: 768px) {
+    .dashboard-main {
+        padding: var(--spacing-md);
+        margin-top: 100px;
+    }
+
+    .matches-container {
+        grid-template-columns: 1fr;
+    }
+
+    .games-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* スマートフォン サイズ（480px以下） */
+@media (max-width: 480px) {
+    .dashboard-main {
+        padding: var(--spacing-sm);
+        margin-top: 80px;
+    }
+
+    .dashboard-header {
+        padding: var(--spacing-md);
+    }
+
+    .dashboard-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .match-card-header {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .match-result {
+        text-align: left;
+    }
+
+    .games-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-xs);
+    }
+
+    .game-cell {
+        padding: var(--spacing-xs);
+    }
+
+    .game-body {
+        font-size: 0.65rem;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+
+    .game-stats {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* ============================================================================
+   アクセシビリティ対応
+   ============================================================================ */
+
+/* フォーカス可視性 */
+.match-card:focus-visible,
+.stat-card:focus-visible,
+.retry-btn:focus-visible {
+    outline: 2px solid var(--accent-gold);
+    outline-offset: 2px;
+}
+
+/* ハイコントラストモード対応 */
+@media (prefers-contrast: more) {
+
+    .match-card,
+    .stat-card {
+        border: 2px solid var(--accent-gold);
+    }
+}
+
+/* 暗いテーマ設定 */
+@media (prefers-color-scheme: dark) {
+    /* 既にダークテーマがデフォルトなので特別な対応は不要 */
+}

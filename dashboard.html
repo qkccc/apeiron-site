@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- ===== 基本設定 ===== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APEIRON | BO9 戦績ダッシュボード</title>
+
+    <!-- ===== スタイルシート ===== -->
+    <link rel="stylesheet" href="dashboard-style.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ===== フォント読み込み ===== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- ===== ヘッダーナビゲーション ===== -->
+    <header>
+        <a href="index.html" class="logo">
+            <img src="https://static.wixstatic.com/media/0b2d0a_02bb0feb79f04127994e2a62bcaacbe8~mv2.jpg"
+                alt="APEIRON Logo">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html">TOP</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="achievements.html">ACHIEVEMENTS</a></li>
+                <li><a href="members.html">MEMBERS</a></li>
+                <li><a href="dashboard.html" class="active">DASHBOARD</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ===== ダッシュボード コンテンツ ===== -->
+    <main class="dashboard-main">
+
+        <!-- ===== ページタイトル ===== -->
+        <section class="dashboard-header">
+            <h1>BO9 Team Results</h1>
+            <p>シャドウバース BO9 チーム戦績ダッシュボード</p>
+        </section>
+
+        <!-- ===== 統計情報セクション ===== -->
+        <section class="statistics-section">
+            <h2>Statistics</h2>
+            <div id="statistics-container" class="stats-container">
+                <!-- dashboard.js で動的に生成される -->
+                <div class="loading-placeholder">統計情報を読み込み中...</div>
+            </div>
+        </section>
+
+        <!-- ===== 戦績カード一覧セクション ===== -->
+        <section class="matches-section">
+            <h2>Match Results</h2>
+            <div id="matches-container" class="matches-container">
+                <!-- dashboard.js で動的に生成される -->
+                <div class="loading-placeholder">戦績データを読み込み中...</div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== JavaScriptファイル読み込み ===== -->
+    <script src="dashboard.js"></script>
+
+</body>
+
+</html>
