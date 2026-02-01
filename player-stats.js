@@ -146,12 +146,17 @@ function renderAllStats() {
 function render1OverallStats() {
     const stats = {};
     allMatchesData.forEach(match => {
+        const playersInMatch = new Set();
         match.games.forEach(game => {
             if (!game.myPlayer) return;
             if (!stats[game.myPlayer]) {
                 stats[game.myPlayer] = { player: game.myPlayer, participated: 0, wins: 0, losses: 0 };
             }
-            stats[game.myPlayer].participated++;
+            // 同じマッチ内で同じプレイヤーは1度のみカウント
+            if (!playersInMatch.has(game.myPlayer)) {
+                stats[game.myPlayer].participated++;
+                playersInMatch.add(game.myPlayer);
+            }
             if (game.result === "w") stats[game.myPlayer].wins++;
             if (game.result === "l") stats[game.myPlayer].losses++;
         });
@@ -182,13 +187,18 @@ function render2SeasonPlayerStats() {
     const stats = {};
     allMatchesData.forEach(match => {
         if (match.season !== selectedSeason) return;
+        const playersInMatch = new Set();
         match.games.forEach(game => {
             if (!game.myPlayer) return;
             const key = `${match.season}-${game.myPlayer}`;
             if (!stats[key]) {
                 stats[key] = { season: match.season, player: game.myPlayer, participated: 0, wins: 0, losses: 0 };
             }
-            stats[key].participated++;
+            // 同じマッチ内で同じプレイヤーは1度のみカウント
+            if (!playersInMatch.has(game.myPlayer)) {
+                stats[key].participated++;
+                playersInMatch.add(game.myPlayer);
+            }
             if (game.result === "w") stats[key].wins++;
             if (game.result === "l") stats[key].losses++;
         });
@@ -219,13 +229,18 @@ function render3SeasonClassStats() {
     const stats = {};
     allMatchesData.forEach(match => {
         if (match.season !== selectedSeason) return;
+        const classesInMatch = new Set();
         match.games.forEach(game => {
             if (!game.myClass) return;
             const key = `${match.season}-${game.myClass}`;
             if (!stats[key]) {
                 stats[key] = { season: match.season, class: game.myClass, participated: 0, wins: 0, losses: 0 };
             }
-            stats[key].participated++;
+            // 同じマッチ内で同じクラスは1度のみカウント
+            if (!classesInMatch.has(game.myClass)) {
+                stats[key].participated++;
+                classesInMatch.add(game.myClass);
+            }
             if (game.result === "w") stats[key].wins++;
             if (game.result === "l") stats[key].losses++;
         });
@@ -254,13 +269,18 @@ function render4ClassSeasonStats() {
     const selectedClass = document.getElementById("class-season-filter").value;
     const stats = {};
     allMatchesData.forEach(match => {
+        const classInMatch = new Set();
         match.games.forEach(game => {
             if (!game.myClass || game.myClass !== selectedClass) return;
             const key = `${match.season}`;
             if (!stats[key]) {
                 stats[key] = { season: match.season, participated: 0, wins: 0, losses: 0 };
             }
-            stats[key].participated++;
+            // 同じマッチ内で同じクラスは1度のみカウント
+            if (!classInMatch.has(game.myClass)) {
+                stats[key].participated++;
+                classInMatch.add(game.myClass);
+            }
             if (game.result === "w") stats[key].wins++;
             if (game.result === "l") stats[key].losses++;
         });
@@ -290,13 +310,18 @@ function render5PlayerClassStats() {
     const selectedPlayer = document.getElementById("player-class-filter").value;
     const stats = {};
     allMatchesData.forEach(match => {
+        const classInMatch = new Set();
         match.games.forEach(game => {
             if (!game.myPlayer || game.myPlayer !== selectedPlayer) return;
             const key = `${game.myClass}`;
             if (!stats[key]) {
                 stats[key] = { class: game.myClass, participated: 0, wins: 0, losses: 0 };
             }
-            stats[key].participated++;
+            // 同じマッチ内で同じクラスは1度のみカウント
+            if (!classInMatch.has(game.myClass)) {
+                stats[key].participated++;
+                classInMatch.add(game.myClass);
+            }
             if (game.result === "w") stats[key].wins++;
             if (game.result === "l") stats[key].losses++;
         });
