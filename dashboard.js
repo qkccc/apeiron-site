@@ -436,7 +436,7 @@ function renderStatistics(matches) {
           <p class="stat-value">${totalWins}勝 ${totalLosses}敗</p>
           <p class="stat-detail">Total: ${totalWins + totalLosses} matches</p>
         </div>`;
-        
+
         if (ranking !== null) {
             statsHTML += `
         <div class="stat-card">
@@ -445,7 +445,7 @@ function renderStatistics(matches) {
           <p class="stat-detail">${currentSeason}</p>
         </div>`;
         }
-        
+
         statsHTML += `
       </div>
     `;
