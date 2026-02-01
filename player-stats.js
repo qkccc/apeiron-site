@@ -316,19 +316,19 @@ function render3SeasonClassStats() {
 function render4ClassSeasonStats() {
     const selectedClass = document.getElementById("class-season-filter").value;
     const stats = {};
-    
+
     // 全シーズンを初期化
     const allSeasons = [...new Set(allMatchesData.map(m => m.season))].sort((a, b) => {
         const numA = parseInt(a.replace(/[^\d]/g, ""));
         const numB = parseInt(b.replace(/[^\d]/g, ""));
         return numA - numB;
     });
-    
+
     // 全シーズンを0で初期化
     allSeasons.forEach(season => {
         stats[season] = { season: season, participated: 0, wins: 0, losses: 0 };
     });
-    
+
     // 実データで上書き
     allMatchesData.forEach(match => {
         const classInMatch = new Set();
