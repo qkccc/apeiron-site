@@ -77,27 +77,30 @@ function initializeAllFilters() {
     const seasons = [...new Set(allMatchesData.map(m => m.season))].sort((a, b) => {
         const numA = parseInt(a.replace(/[^\d]/g, ""));
         const numB = parseInt(b.replace(/[^\d]/g, ""));
-        return numB - numA;
+        return numA - numB;
     });
 
     const players = new Set();
     const classes = new Set();
+    const playerAppearances = {};
     allMatchesData.forEach(match => {
         match.games.forEach(game => {
-            if (game.myPlayer) players.add(game.myPlayer);
+            if (game.myPlayer) {
+                players.add(game.myPlayer);
+                playerAppearances[game.myPlayer] = (playerAppearances[game.myPlayer] || 0) + 1;
+            }
             if (game.myClass) classes.add(game.myClass);
         });
     });
 
     addFilterOptions("season-player-filter", seasons.map(s => ({ value: s, text: s })));
     addFilterOptions("season-class-filter", seasons.map(s => ({ value: s, text: s })));
-
+    
     const classOptions = CLASS_ORDER.filter(c => classes.has(c)).map(c => ({ value: c, text: CLASS_NAMES[c] }));
     addFilterOptions("class-season-filter", classOptions);
-
-    addFilterOptions("player-class-filter", [...players].sort().map(p => ({ value: p, text: p })));
-
-    document.getElementById("season-player-filter").addEventListener("change", renderAllStats);
+    
+    const sortedPlayers = [...players].sort((a, b) => (playerAppearances[b] || 0) - (playerAppearances[a] || 0));
+    addFilterOptions("player-class-filter", sortedPlayers.map(p => ({ value: p, text: p })));    document.getElementById("season-player-filter").addEventListener("change", renderAllStats);
     document.getElementById("season-class-filter").addEventListener("change", renderAllStats);
     document.getElementById("class-season-filter").addEventListener("change", renderAllStats);
     document.getElementById("player-class-filter").addEventListener("change", renderAllStats);

@@ -210,7 +210,6 @@ function renderSeasonFilter(matches) {
     const selectHTML = `
         <label for="season-select">シーズン: </label>
         <select id="season-select" class="season-select">
-            <option value="all">すべて</option>
             ${seasons.map(season => {
         const seasonValue = parseInt(String(season).match(/\d+/)?.[0], 10);
         const isLatest = seasonValue === latestSeasonValue;
@@ -239,9 +238,7 @@ function renderSeasonFilter(matches) {
  * フィルタリングして再描画
  */
 function filterAndRenderMatches() {
-    const filteredMatches = currentSeasonFilter === "all"
-        ? allMatchesData
-        : allMatchesData.filter(m => m.season === currentSeasonFilter);
+    const filteredMatches = allMatchesData.filter(m => m.season === currentSeasonFilter);
 
     renderMatchCards(filteredMatches);
     renderStatistics(filteredMatches);

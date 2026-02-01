@@ -238,11 +238,11 @@
 
 /* 背景色（勝敗に応じた色分け） */
 .match-card.bg-win {
-    border-left: 4px solid var(--accent-green);
+    border-left: 4px solid var(--accent-red);
 }
 
 .match-card.bg-loss {
-    border-left: 4px solid var(--accent-red);
+    border-left: 4px solid #3b82f6;
 }
 
 /* ===== マッチカード ヘッダー ===== */
