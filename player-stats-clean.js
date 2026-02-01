@@ -81,10 +81,10 @@ function initializeAllFilters() {
 
     addFilterOptions("season-player-filter", seasons.map(s => ({ value: s, text: s })));
     addFilterOptions("season-class-filter", seasons.map(s => ({ value: s, text: s })));
-    
+
     const classOptions = CLASS_ORDER.filter(c => classes.has(c)).map(c => ({ value: c, text: CLASS_NAMES[c] }));
     addFilterOptions("class-season-filter", classOptions);
-    
+
     addFilterOptions("player-class-filter", [...players].sort().map(p => ({ value: p, text: p })));
 
     document.getElementById("season-player-filter").addEventListener("change", renderAllStats);
