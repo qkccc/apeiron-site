@@ -40,13 +40,11 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: var(--spacing-lg);
-    margin-top: 100px;
 }
 
 @media (max-width: 768px) {
     .player-stats-main {
         padding: var(--spacing-sm);
-        margin-top: 80px;
     }
 }
 

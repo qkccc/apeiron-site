@@ -58,14 +58,11 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: var(--spacing-lg);
-    margin-top: 100px;
-    /* ヘッダー固定のため上部余白 */
 }
 
 @media (max-width: 768px) {
     .dashboard-main {
         padding: var(--spacing-sm);
-        margin-top: 80px;
     }
 }
 
@@ -150,8 +147,39 @@
 
 .stats-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-md);
+}
+
+@media (max-width: 1024px) {
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+
+    .stat-card {
+        padding: var(--spacing-sm);
+    }
+
+    .stat-card h4 {
+        font-size: 0.8rem;
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .stat-card .stat-value {
+        font-size: 1.5rem;
+        margin: var(--spacing-xs) 0;
+    }
+
+    .stat-card .stat-detail {
+        font-size: 0.75rem;
+    }
 }
 
 .stat-card {
