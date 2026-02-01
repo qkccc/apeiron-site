@@ -324,3 +324,41 @@ function showError(message) {
     });
 }
 
+// ============================================================================
+// セクション選択ナビゲーション機能
+// ============================================================================
+
+document.addEventListener("DOMContentLoaded", function () {
+    // セクションナビゲーションボタンのイベントリスナーを設定
+    document.querySelectorAll(".nav-button").forEach(button => {
+        button.addEventListener("click", function () {
+            const sectionId = this.getAttribute("data-section");
+            switchSection(sectionId);
+        });
+    });
+});
+
+function switchSection(sectionId) {
+    // 全セクションを非表示
+    document.querySelectorAll(".stats-section").forEach(section => {
+        section.style.display = "none";
+    });
+
+    // 選択されたセクションのみ表示
+    const targetSection = document.getElementById("section-" + sectionId);
+    if (targetSection) {
+        targetSection.style.display = "block";
+    }
+
+    // ボタンのアクティブ状態を更新
+    document.querySelectorAll(".nav-button").forEach(button => {
+        button.classList.remove("active");
+        if (button.getAttribute("data-section") === sectionId) {
+            button.classList.add("active");
+        }
+    });
+
+    // ページトップへスクロール
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+

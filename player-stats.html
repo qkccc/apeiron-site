@@ -43,8 +43,18 @@
             <p>個人戦績 - シーズン別・クラス別統計</p>
         </div>
 
+        <!-- ===== セクション選択ナビゲーション ===== -->
+        <div class="section-navigation">
+            <button class="nav-button active" data-section="1">全シーズン通しての成績</button>
+            <button class="nav-button" data-section="2">シーズン別・プレイヤー別</button>
+            <button class="nav-button" data-section="3">シーズン別・クラス別</button>
+            <button class="nav-button" data-section="4">クラス別・シーズン別</button>
+            <button class="nav-button" data-section="5">プレイヤー別・クラス別</button>
+            <button class="nav-button" data-section="6">全員・全シーズン・クラス別</button>
+        </div>
+
         <!-- ===== セクション1: 全シーズン通しての出場・勝敗 ===== -->
-        <section class="stats-section">
+        <section class="stats-section" id="section-1">
             <div class="section-header">
                 <h2>全シーズン通しての出場・勝敗</h2>
             </div>
@@ -54,7 +64,7 @@
         </section>
 
         <!-- ===== セクション2: シーズンごとの戦績(プレイヤー名ごと) ===== -->
-        <section class="stats-section">
+        <section class="stats-section" id="section-2">
             <div class="section-header">
                 <h2>シーズンごとの戦績 - プレイヤー別</h2>
                 <div class="section-filter">
@@ -69,7 +79,7 @@
         </section>
 
         <!-- ===== セクション3: シーズンごとの戦績(クラスごと) ===== -->
-        <section class="stats-section">
+        <section class="stats-section" id="section-3">
             <div class="section-header">
                 <h2>シーズンごとの戦績 - クラス別</h2>
                 <div class="section-filter">
@@ -84,7 +94,7 @@
         </section>
 
         <!-- ===== セクション4: 各クラスのシーズンごとの戦績 ===== -->
-        <section class="stats-section">
+        <section class="stats-section" id="section-4">
             <div class="section-header">
                 <h2>各クラスのシーズンごとの戦績</h2>
                 <div class="section-filter">
@@ -99,7 +109,7 @@
         </section>
 
         <!-- ===== セクション5: 各プレイヤーのクラスごとの戦績(1試合出場以上) ===== -->
-        <section class="stats-section">
+        <section class="stats-section" id="section-5">
             <div class="section-header">
                 <h2>各プレイヤーのクラスごとの戦績</h2>
                 <div class="section-filter">
@@ -114,7 +124,7 @@
         </section>
 
         <!-- ===== セクション6: 各プレイヤーの全シーズン通してのクラスごとの戦績 ===== -->
-        <section class="stats-section">
+        <section class="stats-section" id="section-6">
             <div class="section-header">
                 <h2>各プレイヤーの全シーズン通してのクラスごとの戦績</h2>
             </div>

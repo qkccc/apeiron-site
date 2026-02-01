@@ -142,6 +142,16 @@
 
 .stats-section {
     margin-bottom: var(--spacing-xl);
+    display: block;
+}
+
+/* セクション2-6は初期状態で非表示 */
+#section-2,
+#section-3,
+#section-4,
+#section-5,
+#section-6 {
+    display: none;
 }
 
 /* ============================================================================
@@ -293,4 +303,54 @@
     .stats-table td {
         padding: var(--spacing-xs) var(--spacing-sm);
     }
+
+    .section-navigation {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .nav-button {
+        width: 100%;
+    }
+}
+
+/* ============================================================================
+   セクションナビゲーション
+   ============================================================================ */
+
+.section-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+}
+
+.nav-button {
+    flex: 1;
+    min-width: 120px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: var(--bg-table-header);
+    color: var(--text-primary);
+    border-color: var(--border-accent);
+}
+
+.nav-button.active {
+    background-color: var(--accent-gold);
+    color: #000;
+    border-color: var(--accent-gold);
 }

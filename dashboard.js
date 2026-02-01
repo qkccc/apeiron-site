@@ -444,7 +444,7 @@ function renderStatistics(matches) {
         <div class="stat-card">
           <h4>1試合単位勝敗</h4>
           <p class="stat-value">${gameWins}勝 ${gameLosses}敗</p>
-          <p class="stat-detail">Total: ${gameWins + gameLosses} games</p>
+          <p class="stat-detail">${((gameWins / (gameWins + gameLosses)) * 100).toFixed(0)}% (${gameWins + gameLosses}試合)</p>
         </div>`;
 
         if (ranking !== null) {
