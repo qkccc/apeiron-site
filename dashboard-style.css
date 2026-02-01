@@ -58,8 +58,15 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: var(--spacing-lg);
-    margin-top: 80px;
+    margin-top: 100px;
     /* ヘッダー固定のため上部余白 */
+}
+
+@media (max-width: 768px) {
+    .dashboard-main {
+        padding: var(--spacing-sm);
+        margin-top: 80px;
+    }
 }
 
 /* ============================================================================
@@ -203,6 +210,12 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     gap: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+    .matches-container {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ===== マッチカード基本スタイル ===== */

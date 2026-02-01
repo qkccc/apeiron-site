@@ -408,16 +408,30 @@ const SEASON_RANKINGS = {
  * @param {Array} matches - 試合配列
  */
 function renderStatistics(matches) {
-    // 全ゲームの集計（勝敗のみ）
-    let totalWins = 0;
-    let totalLosses = 0;
+    // BO9単位の勝敗
+    let matchWins = 0;
+    let matchLosses = 0;
+    
+    // 1試合(ゲーム)単位の勝敗
+    let gameWins = 0;
+    let gameLosses = 0;
 
     matches.forEach(match => {
+        const stats = calculateGameStats(match.games);
+        
+        // BO9単位: 勝ち数が多ければ勝ち
+        if (stats.totalWins > stats.totalLosses) {
+            matchWins++;
+        } else if (stats.totalLosses > stats.totalWins) {
+            matchLosses++;
+        }
+        
+        // 1試合単位の集計
         match.games.forEach(game => {
             if (game.result === "w") {
-                totalWins++;
+                gameWins++;
             } else if (game.result === "l") {
-                totalLosses++;
+                gameLosses++;
             }
         });
     });
@@ -432,9 +446,15 @@ function renderStatistics(matches) {
         let statsHTML = `
       <div class="stats-grid">
         <div class="stat-card">
-          <h4>勝敗数</h4>
-          <p class="stat-value">${totalWins}勝 ${totalLosses}敗</p>
-          <p class="stat-detail">Total: ${totalWins + totalLosses} matches</p>
+          <h4>BO9勝敗</h4>
+          <p class="stat-value">${matchWins}勝 ${matchLosses}敗</p>
+          <p class="stat-detail">Total: ${matchWins + matchLosses} matches</p>
+        </div>
+        
+        <div class="stat-card">
+          <h4>1試合勝敗</h4>
+          <p class="stat-value">${gameWins}勝 ${gameLosses}敗</p>
+          <p class="stat-detail">Total: ${gameWins + gameLosses} games</p>
         </div>`;
 
         if (ranking !== null) {
