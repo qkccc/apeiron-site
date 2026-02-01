@@ -126,7 +126,6 @@ function renderAllStats() {
     render3SeasonClassStats();
     render4ClassSeasonStats();
     render5PlayerClassStats();
-    render6PlayerClassAllSeasonStats();
 }
 
 // ============================================================================
@@ -171,7 +170,7 @@ function render2SeasonPlayerStats() {
     const selectedSeason = document.getElementById("season-player-filter").value;
     const stats = {};
     allMatchesData.forEach(match => {
-        if (selectedSeason !== "all" && match.season !== selectedSeason) return;
+        if (match.season !== selectedSeason) return;
         match.games.forEach(game => {
             if (!game.myPlayer) return;
             const key = `${match.season}-${game.myPlayer}`;
@@ -185,17 +184,16 @@ function render2SeasonPlayerStats() {
     });
 
     const statsList = Object.values(stats).sort((a, b) => {
-        if (a.season !== b.season) return a.season.localeCompare(b.season);
         if (b.participated !== a.participated) return b.participated - a.participated;
         if (b.wins !== a.wins) return b.wins - a.wins;
         return a.losses - b.losses;
     });
 
-    let html = `<table class="stats-table"><thead><tr><th>シーズン</th><th>プレイヤー</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
+    let html = `<table class="stats-table"><thead><tr><th>プレイヤー</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
     statsList.forEach(stat => {
         const winRate = stat.participated > 0 ? ((stat.wins / stat.participated) * 100).toFixed(1) : "0.0";
         const winRateClass = getWinRateClass(parseFloat(winRate));
-        html += `<tr><td>${stat.season}</td><td class="player-name">${stat.player}</td><td class="align-center">${stat.participated}</td><td class="align-center">${stat.wins}</td><td class="align-center">${stat.losses}</td><td class="align-center ${winRateClass}">${winRate}%</td></tr>`;
+        html += `<tr><td class="player-name">${stat.player}</td><td class="align-center">${stat.participated}</td><td class="align-center">${stat.wins}</td><td class="align-center">${stat.losses}</td><td class="align-center ${winRateClass}">${winRate}%</td></tr>`;
     });
     html += `</tbody></table>`;
     document.getElementById("season-player-stats-container").innerHTML = html;
@@ -209,7 +207,7 @@ function render3SeasonClassStats() {
     const selectedSeason = document.getElementById("season-class-filter").value;
     const stats = {};
     allMatchesData.forEach(match => {
-        if (selectedSeason !== "all" && match.season !== selectedSeason) return;
+        if (match.season !== selectedSeason) return;
         match.games.forEach(game => {
             if (!game.myClass) return;
             const key = `${match.season}-${game.myClass}`;
@@ -223,16 +221,15 @@ function render3SeasonClassStats() {
     });
 
     const statsList = Object.values(stats).sort((a, b) => {
-        if (a.season !== b.season) return a.season.localeCompare(b.season);
         return CLASS_ORDER.indexOf(a.class) - CLASS_ORDER.indexOf(b.class);
     });
 
-    let html = `<table class="stats-table"><thead><tr><th>シーズン</th><th>クラス</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
+    let html = `<table class="stats-table"><thead><tr><th>クラス</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
     statsList.forEach(stat => {
         const winRate = stat.participated > 0 ? ((stat.wins / stat.participated) * 100).toFixed(1) : "0.0";
         const winRateClass = getWinRateClass(parseFloat(winRate));
         const icon = CLASS_ICONS[stat.class] ? `<img src="${CLASS_ICONS[stat.class]}" class="class-icon-small" alt="${stat.class}">` : "";
-        html += `<tr><td>${stat.season}</td><td class="class-name">${icon}${CLASS_NAMES[stat.class]}</td><td class="align-center">${stat.participated}</td><td class="align-center">${stat.wins}</td><td class="align-center">${stat.losses}</td><td class="align-center ${winRateClass}">${winRate}%</td></tr>`;
+        html += `<tr><td class="class-name">${icon}${CLASS_NAMES[stat.class]}</td><td class="align-center">${stat.participated}</td><td class="align-center">${stat.wins}</td><td class="align-center">${stat.losses}</td><td class="align-center ${winRateClass}">${winRate}%</td></tr>`;
     });
     html += `</tbody></table>`;
     document.getElementById("season-class-stats-container").innerHTML = html;
@@ -247,10 +244,10 @@ function render4ClassSeasonStats() {
     const stats = {};
     allMatchesData.forEach(match => {
         match.games.forEach(game => {
-            if (!game.myClass || (selectedClass !== "all" && game.myClass !== selectedClass)) return;
-            const key = `${game.myClass}-${match.season}`;
+            if (!game.myClass || game.myClass !== selectedClass) return;
+            const key = `${match.season}`;
             if (!stats[key]) {
-                stats[key] = { class: game.myClass, season: match.season, participated: 0, wins: 0, losses: 0 };
+                stats[key] = { season: match.season, participated: 0, wins: 0, losses: 0 };
             }
             stats[key].participated++;
             if (game.result === "w") stats[key].wins++;
@@ -259,20 +256,16 @@ function render4ClassSeasonStats() {
     });
 
     const statsList = Object.values(stats).sort((a, b) => {
-        if (selectedClass === "all" && a.class !== b.class) {
-            return CLASS_ORDER.indexOf(a.class) - CLASS_ORDER.indexOf(b.class);
-        }
-        return a.season.localeCompare(b.season);
+        const numA = parseInt(a.season.match(/\d+/)[0]);
+        const numB = parseInt(b.season.match(/\d+/)[0]);
+        return numA - numB;
     });
 
-    const hasClassColumn = selectedClass === "all";
-    let html = `<table class="stats-table"><thead><tr>${hasClassColumn ? "<th>クラス</th>" : ""}<th>シーズン</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
+    let html = `<table class="stats-table"><thead><tr><th>シーズン</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
     statsList.forEach(stat => {
         const winRate = stat.participated > 0 ? ((stat.wins / stat.participated) * 100).toFixed(1) : "0.0";
         const winRateClass = getWinRateClass(parseFloat(winRate));
-        const icon = CLASS_ICONS[stat.class] ? `<img src="${CLASS_ICONS[stat.class]}" class="class-icon-small" alt="${stat.class}">` : "";
-        const classCell = hasClassColumn ? `<td class="class-name">${icon}${CLASS_NAMES[stat.class]}</td>` : "";
-        html += `<tr>${classCell}<td>${stat.season}</td><td class="align-center">${stat.participated}</td><td class="align-center">${stat.wins}</td><td class="align-center">${stat.losses}</td><td class="align-center ${winRateClass}">${winRate}%</td></tr>`;
+        html += `<tr><td>${stat.season}</td><td class="align-center">${stat.participated}</td><td class="align-center">${stat.wins}</td><td class="align-center">${stat.losses}</td><td class="align-center ${winRateClass}">${winRate}%</td></tr>`;
     });
     html += `</tbody></table>`;
     document.getElementById("class-season-stats-container").innerHTML = html;
@@ -287,10 +280,10 @@ function render5PlayerClassStats() {
     const stats = {};
     allMatchesData.forEach(match => {
         match.games.forEach(game => {
-            if (!game.myPlayer || (selectedPlayer !== "all" && game.myPlayer !== selectedPlayer)) return;
-            const key = `${game.myPlayer}-${game.myClass}`;
+            if (!game.myPlayer || game.myPlayer !== selectedPlayer) return;
+            const key = `${game.myClass}`;
             if (!stats[key]) {
-                stats[key] = { player: game.myPlayer, class: game.myClass, participated: 0, wins: 0, losses: 0 };
+                stats[key] = { class: game.myClass, participated: 0, wins: 0, losses: 0 };
             }
             stats[key].participated++;
             if (game.result === "w") stats[key].wins++;
@@ -299,57 +292,20 @@ function render5PlayerClassStats() {
     });
 
     const statsList = Object.values(stats).filter(s => s.participated >= 1).sort((a, b) => {
-        if (a.player !== b.player) return a.player.localeCompare(b.player);
         return CLASS_ORDER.indexOf(a.class) - CLASS_ORDER.indexOf(b.class);
     });
 
-    const hasPlayerColumn = selectedPlayer === "all";
-    let html = `<table class="stats-table"><thead><tr>${hasPlayerColumn ? "<th>プレイヤー</th>" : ""}<th>クラス</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
+    let html = `<table class="stats-table"><thead><tr><th>クラス</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
     statsList.forEach(stat => {
         const winRate = stat.participated > 0 ? ((stat.wins / stat.participated) * 100).toFixed(1) : "0.0";
         const winRateClass = getWinRateClass(parseFloat(winRate));
         const icon = CLASS_ICONS[stat.class] ? `<img src="${CLASS_ICONS[stat.class]}" class="class-icon-small" alt="${stat.class}">` : "";
-        const playerCell = hasPlayerColumn ? `<td class="player-name">${stat.player}</td>` : "";
-        html += `<tr>${playerCell}<td class="class-name">${icon}${CLASS_NAMES[stat.class]}</td><td class="align-center">${stat.participated}</td><td class="align-center">${stat.wins}</td><td class="align-center">${stat.losses}</td><td class="align-center ${winRateClass}">${winRate}%</td></tr>`;
+        html += `<tr><td class="class-name">${icon}${CLASS_NAMES[stat.class]}</td><td class="align-center">${stat.participated}</td><td class="align-center">${stat.wins}</td><td class="align-center">${stat.losses}</td><td class="align-center ${winRateClass}">${winRate}%</td></tr>`;
     });
     html += `</tbody></table>`;
     document.getElementById("player-class-stats-container").innerHTML = html;
 }
 
-// ============================================================================
-// 6. 各プレイヤーの全シーズン通してのクラスごとの戦績
-// ============================================================================
-
-function render6PlayerClassAllSeasonStats() {
-    const stats = {};
-    allMatchesData.forEach(match => {
-        match.games.forEach(game => {
-            if (!game.myPlayer || !game.myClass) return;
-            const key = `${game.myPlayer}-${game.myClass}`;
-            if (!stats[key]) {
-                stats[key] = { player: game.myPlayer, class: game.myClass, participated: 0, wins: 0, losses: 0 };
-            }
-            stats[key].participated++;
-            if (game.result === "w") stats[key].wins++;
-            if (game.result === "l") stats[key].losses++;
-        });
-    });
-
-    const statsList = Object.values(stats).sort((a, b) => {
-        if (a.player !== b.player) return a.player.localeCompare(b.player);
-        return CLASS_ORDER.indexOf(a.class) - CLASS_ORDER.indexOf(b.class);
-    });
-
-    let html = `<table class="stats-table"><thead><tr><th>プレイヤー</th><th>クラス</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
-    statsList.forEach(stat => {
-        const winRate = stat.participated > 0 ? ((stat.wins / stat.participated) * 100).toFixed(1) : "0.0";
-        const winRateClass = getWinRateClass(parseFloat(winRate));
-        const icon = CLASS_ICONS[stat.class] ? `<img src="${CLASS_ICONS[stat.class]}" class="class-icon-small" alt="${stat.class}">` : "";
-        html += `<tr><td class="player-name">${stat.player}</td><td class="class-name">${icon}${CLASS_NAMES[stat.class]}</td><td class="align-center">${stat.participated}</td><td class="align-center">${stat.wins}</td><td class="align-center">${stat.losses}</td><td class="align-center ${winRateClass}">${winRate}%</td></tr>`;
-    });
-    html += `</tbody></table>`;
-    document.getElementById("player-class-allseason-stats-container").innerHTML = html;
-}
 
 // ============================================================================
 // ユーティリティ
@@ -362,7 +318,7 @@ function getWinRateClass(winRate) {
 }
 
 function showError(message) {
-    ["overall-stats-container", "season-player-stats-container", "season-class-stats-container", "class-season-stats-container", "player-class-stats-container", "player-class-allseason-stats-container"].forEach(id => {
+    ["overall-stats-container", "season-player-stats-container", "season-class-stats-container", "class-season-stats-container", "player-class-stats-container"].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.innerHTML = `<div class="loading-state"><p style="color: #ef4444;">${message}</p></div>`;
     });
