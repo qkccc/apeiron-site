@@ -145,12 +145,11 @@
     display: block;
 }
 
-/* セクション2-6は初期状態で非表示 */
+/* セクション2-5は初期状態で非表示 */
 #section-2,
 #section-3,
 #section-4,
-#section-5,
-#section-6 {
+#section-5 {
     display: none;
 }
 

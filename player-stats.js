@@ -100,7 +100,18 @@ function initializeAllFilters() {
     addFilterOptions("class-season-filter", classOptions);
 
     const sortedPlayers = [...players].sort((a, b) => (playerAppearances[b] || 0) - (playerAppearances[a] || 0));
-    addFilterOptions("player-class-filter", sortedPlayers.map(p => ({ value: p, text: p }))); document.getElementById("season-player-filter").addEventListener("change", renderAllStats);
+    addFilterOptions("player-class-filter", sortedPlayers.map(p => ({ value: p, text: p })));
+
+    // 最新のシーズンをデフォルト選択
+    if (seasons.length > 0) {
+        const latestSeason = seasons[seasons.length - 1];
+        document.getElementById("season-player-filter").value = latestSeason;
+        document.getElementById("season-class-filter").value = latestSeason;
+        if (classOptions.length > 0) document.getElementById("class-season-filter").value = classOptions[0].value;
+        if (sortedPlayers.length > 0) document.getElementById("player-class-filter").value = sortedPlayers[0];
+    }
+
+    document.getElementById("season-player-filter").addEventListener("change", renderAllStats);
     document.getElementById("season-class-filter").addEventListener("change", renderAllStats);
     document.getElementById("class-season-filter").addEventListener("change", renderAllStats);
     document.getElementById("player-class-filter").addEventListener("change", renderAllStats);
