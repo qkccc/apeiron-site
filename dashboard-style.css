@@ -330,9 +330,12 @@
     border: 1px solid var(--border-light);
     border-radius: 6px;
     padding: var(--spacing-sm);
-    text-align: center;
+    text-align: left;
     transition: all var(--transition-fast);
     cursor: default;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
 }
 
 .game-cell:hover {
@@ -356,11 +359,13 @@
 
 .game-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: 0;
     font-size: 0.85rem;
     font-weight: 700;
+    gap: var(--spacing-sm);
+    min-width: 70px;
 }
 
 .game-number {
@@ -377,15 +382,20 @@
 
 .game-body {
     display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xs);
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-sm);
     font-size: 0.75rem;
+    flex: 1;
+    justify-content: space-between;
 }
 
 .player-info {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
 }
 
 .player-name {
@@ -394,17 +404,18 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 140px;
 }
 
 .player-class {
     height: 24px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .class-icon {
-    height: 20px;
+    height: 18px;
     width: auto;
     object-fit: contain;
     border-radius: 2px;
@@ -424,6 +435,7 @@
     font-size: 0.7rem;
     color: var(--text-tertiary);
     font-weight: 600;
+    margin: 0 4px;
 }
 
 /* ============================================================================
