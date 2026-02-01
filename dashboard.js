@@ -113,11 +113,11 @@ async function fetchDataFromGAS() {
         }
 
         const data = await response.json();
-        
+
         if (DEBUG_MODE) {
             console.log("API Response:", data);
         }
-        
+
         return data;
     } catch (error) {
         clearTimeout(timeoutId);
