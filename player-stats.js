@@ -95,12 +95,12 @@ function initializeAllFilters() {
 
     addFilterOptions("season-player-filter", seasons.map(s => ({ value: s, text: s })));
     addFilterOptions("season-class-filter", seasons.map(s => ({ value: s, text: s })));
-    
+
     const classOptions = CLASS_ORDER.filter(c => classes.has(c)).map(c => ({ value: c, text: CLASS_NAMES[c] }));
     addFilterOptions("class-season-filter", classOptions);
-    
+
     const sortedPlayers = [...players].sort((a, b) => (playerAppearances[b] || 0) - (playerAppearances[a] || 0));
-    addFilterOptions("player-class-filter", sortedPlayers.map(p => ({ value: p, text: p })));    document.getElementById("season-player-filter").addEventListener("change", renderAllStats);
+    addFilterOptions("player-class-filter", sortedPlayers.map(p => ({ value: p, text: p }))); document.getElementById("season-player-filter").addEventListener("change", renderAllStats);
     document.getElementById("season-class-filter").addEventListener("change", renderAllStats);
     document.getElementById("class-season-filter").addEventListener("change", renderAllStats);
     document.getElementById("player-class-filter").addEventListener("change", renderAllStats);
