@@ -186,7 +186,7 @@ function render1OverallStats() {
 function render2SeasonPlayerStats() {
     const selectedSeason = document.getElementById("season-player-filter").value;
     const stats = {};
-    
+
     // 全シーズンとプレイヤーの組み合わせを初期化
     const allSeasons = [...new Set(allMatchesData.map(m => m.season))].sort((a, b) => {
         const numA = parseInt(a.replace(/[^\d]/g, ""));
@@ -194,7 +194,7 @@ function render2SeasonPlayerStats() {
         return numA - numB;
     });
     const allPlayers = [...new Set(allMatchesData.flatMap(m => m.games.map(g => g.myPlayer).filter(p => p)))];
-    
+
     // 全組み合わせを0で初期化
     allSeasons.forEach(season => {
         allPlayers.forEach(player => {
@@ -202,7 +202,7 @@ function render2SeasonPlayerStats() {
             stats[key] = { season: season, player: player, participated: 0, wins: 0, losses: 0 };
         });
     });
-    
+
     // 実データで上書き
     allMatchesData.forEach(match => {
         const playersInMatch = new Set();
@@ -249,7 +249,7 @@ function render2SeasonPlayerStats() {
 function render3SeasonClassStats() {
     const selectedSeason = document.getElementById("season-class-filter").value;
     const stats = {};
-    
+
     // 全シーズンとクラスの組み合わせを初期化
     const allSeasons = [...new Set(allMatchesData.map(m => m.season))].sort((a, b) => {
         const numA = parseInt(a.replace(/[^\d]/g, ""));
@@ -262,7 +262,7 @@ function render3SeasonClassStats() {
             if (game.myClass) allClasses.add(game.myClass);
         });
     });
-    
+
     // 全組み合わせを0で初期化
     allSeasons.forEach(season => {
         allClasses.forEach(cls => {
@@ -270,7 +270,7 @@ function render3SeasonClassStats() {
             stats[key] = { season: season, class: cls, participated: 0, wins: 0, losses: 0 };
         });
     });
-    
+
     // 実データで上書き
     allMatchesData.forEach(match => {
         const classesInMatch = new Set();
