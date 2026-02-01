@@ -170,7 +170,8 @@ function render1OverallStats() {
 
     let html = `<table class="stats-table"><thead><tr><th>プレイヤー</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
     statsList.forEach(stat => {
-        const winRate = stat.participated > 0 ? ((stat.wins / stat.participated) * 100).toFixed(1) : "0.0";
+        const totalGames = stat.wins + stat.losses;
+        const winRate = totalGames > 0 ? ((stat.wins / totalGames) * 100).toFixed(1) : "0.0";
         const winRateClass = getWinRateClass(parseFloat(winRate));
         html += `<tr><td class="player-name">${stat.player}</td><td class="align-center">${stat.participated}</td><td class="align-center">${stat.wins}</td><td class="align-center">${stat.losses}</td><td class="align-center ${winRateClass}">${winRate}%</td></tr>`;
     });
@@ -212,7 +213,8 @@ function render2SeasonPlayerStats() {
 
     let html = `<table class="stats-table"><thead><tr><th>プレイヤー</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
     statsList.forEach(stat => {
-        const winRate = stat.participated > 0 ? ((stat.wins / stat.participated) * 100).toFixed(1) : "0.0";
+        const totalGames = stat.wins + stat.losses;
+        const winRate = totalGames > 0 ? ((stat.wins / totalGames) * 100).toFixed(1) : "0.0";
         const winRateClass = getWinRateClass(parseFloat(winRate));
         html += `<tr><td class="player-name">${stat.player}</td><td class="align-center">${stat.participated}</td><td class="align-center">${stat.wins}</td><td class="align-center">${stat.losses}</td><td class="align-center ${winRateClass}">${winRate}%</td></tr>`;
     });
@@ -252,7 +254,8 @@ function render3SeasonClassStats() {
 
     let html = `<table class="stats-table"><thead><tr><th>クラス</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
     statsList.forEach(stat => {
-        const winRate = stat.participated > 0 ? ((stat.wins / stat.participated) * 100).toFixed(1) : "0.0";
+        const totalGames = stat.wins + stat.losses;
+        const winRate = totalGames > 0 ? ((stat.wins / totalGames) * 100).toFixed(1) : "0.0";
         const winRateClass = getWinRateClass(parseFloat(winRate));
         const icon = CLASS_ICONS[stat.class] ? `<img src="${CLASS_ICONS[stat.class]}" class="class-icon-small" alt="${stat.class}">` : "";
         html += `<tr><td class="class-name">${icon}${CLASS_NAMES[stat.class]}</td><td class="align-center">${stat.participated}</td><td class="align-center">${stat.wins}</td><td class="align-center">${stat.losses}</td><td class="align-center ${winRateClass}">${winRate}%</td></tr>`;
@@ -294,7 +297,8 @@ function render4ClassSeasonStats() {
 
     let html = `<table class="stats-table"><thead><tr><th>シーズン</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
     statsList.forEach(stat => {
-        const winRate = stat.participated > 0 ? ((stat.wins / stat.participated) * 100).toFixed(1) : "0.0";
+        const totalGames = stat.wins + stat.losses;
+        const winRate = totalGames > 0 ? ((stat.wins / totalGames) * 100).toFixed(1) : "0.0";
         const winRateClass = getWinRateClass(parseFloat(winRate));
         html += `<tr><td>${stat.season}</td><td class="align-center">${stat.participated}</td><td class="align-center">${stat.wins}</td><td class="align-center">${stat.losses}</td><td class="align-center ${winRateClass}">${winRate}%</td></tr>`;
     });
@@ -333,7 +337,8 @@ function render5PlayerClassStats() {
 
     let html = `<table class="stats-table"><thead><tr><th>クラス</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
     statsList.forEach(stat => {
-        const winRate = stat.participated > 0 ? ((stat.wins / stat.participated) * 100).toFixed(1) : "0.0";
+        const totalGames = stat.wins + stat.losses;
+        const winRate = totalGames > 0 ? ((stat.wins / totalGames) * 100).toFixed(1) : "0.0";
         const winRateClass = getWinRateClass(parseFloat(winRate));
         const icon = CLASS_ICONS[stat.class] ? `<img src="${CLASS_ICONS[stat.class]}" class="class-icon-small" alt="${stat.class}">` : "";
         html += `<tr><td class="class-name">${icon}${CLASS_NAMES[stat.class]}</td><td class="align-center">${stat.participated}</td><td class="align-center">${stat.wins}</td><td class="align-center">${stat.losses}</td><td class="align-center ${winRateClass}">${winRate}%</td></tr>`;
