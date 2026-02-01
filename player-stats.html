@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- ===== 基本設定 ===== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APEIRON | Player Statistics</title>
+
+    <!-- ===== スタイルシート ===== -->
+    <link rel="stylesheet" href="player-stats-style.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ===== フォント読み込み ===== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- ===== ヘッダーナビゲーション ===== -->
+    <header>
+        <a href="index.html" class="logo">
+            <img src="https://static.wixstatic.com/media/0b2d0a_02bb0feb79f04127994e2a62bcaacbe8~mv2.jpg"
+                alt="APEIRON Logo">
+        </a>
+        <nav>
+            <a href="about.html">ABOUT</a>
+            <a href="members.html">MEMBERS</a>
+            <a href="achievements.html">ACHIEVEMENTS</a>
+        </nav>
+    </header>
+
+    <!-- ===== メインコンテンツ ===== -->
+    <main class="player-stats-main">
+
+        <!-- ===== ヘッダー ===== -->
+        <div class="player-stats-header">
+            <h1>Player Statistics</h1>
+            <p>個人戦績 - シーズン別・クラス別統計</p>
+        </div>
+
+        <!-- ===== フィルター ===== -->
+        <div class="filters-container">
+            <div class="filter-group">
+                <label for="season-filter">シーズン:</label>
+                <select id="season-filter" class="filter-select">
+                    <option value="all">全シーズン</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="player-filter">プレイヤー:</label>
+                <select id="player-filter" class="filter-select">
+                    <option value="all">全員</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="class-filter">クラス:</label>
+                <select id="class-filter" class="filter-select">
+                    <option value="all">全クラス</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- ===== セクション1: プレイヤー別戦績（節単位） ===== -->
+        <section class="stats-section">
+            <h2>節別出場・勝敗</h2>
+            <div id="round-participation-container" class="table-container">
+                <!-- player-stats.js で動的生成 -->
+            </div>
+        </section>
+
+        <!-- ===== セクション2: シーズン別プレイヤー戦績 ===== -->
+        <section class="stats-section">
+            <h2>シーズン別プレイヤー戦績</h2>
+            <div id="season-player-stats-container" class="table-container">
+                <!-- player-stats.js で動的生成 -->
+            </div>
+        </section>
+
+        <!-- ===== セクション3: シーズン別クラス戦績 ===== -->
+        <section class="stats-section">
+            <h2>シーズン別クラス戦績</h2>
+            <div id="season-class-stats-container" class="table-container">
+                <!-- player-stats.js で動的生成 -->
+            </div>
+        </section>
+
+        <!-- ===== セクション4: クラス別大会戦績 ===== -->
+        <section class="stats-section">
+            <h2>クラス別大会戦績</h2>
+            <div id="class-tournament-stats-container" class="table-container">
+                <!-- player-stats.js で動的生成 -->
+            </div>
+        </section>
+
+        <!-- ===== セクション5: クラス別個人戦績 ===== -->
+        <section class="stats-section">
+            <h2>クラス別個人戦績</h2>
+            <div id="class-player-stats-container" class="table-container">
+                <!-- player-stats.js で動的生成 -->
+            </div>
+        </section>
+
+        <!-- ===== セクション6: 個人のクラス戦績 ===== -->
+        <section class="stats-section">
+            <h2>個人のクラス戦績</h2>
+            <div id="player-class-stats-container" class="table-container">
+                <!-- player-stats.js で動的生成 -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== JavaScriptファイル読み込み ===== -->
+    <script src="player-stats.js"></script>
+
+</body>
+
+</html>

@@ -304,7 +304,7 @@ function createMatchCard(match, index) {
       </div>
       <div class="match-result">
         <span class="result-badge ${stats.totalWins > stats.totalLosses ? 'win' : 'loss'}">
-          ${stats.totalWins > stats.totalLosses ? 'WIN' : 'LOSE'} ${stats.totalWins} - ${stats.totalLosses}
+          ${stats.totalWins > stats.totalLosses ? 'WIN' : 'LOSE'} &nbsp; ${stats.totalWins} - ${stats.totalLosses}
         </span>
       </div>
     </div>
