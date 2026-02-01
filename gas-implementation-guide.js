@@ -17,7 +17,7 @@
  * 
  * 【データ構造】
  * DB シート:
- *   列: ID | Season | Round | Date | Enemy | Game1 | Game2 | ... | Game9
+ *   列: Season | Round | ID | Date | Enemy | Game1 | Game2 | ... | Game9
  *   行: 試合ごとのデータ（2行目以降）
  * 
  * Settings シート:
@@ -115,9 +115,9 @@ function parseMatches(dbData, classMap) {
     
     // 基本情報（最初の5列）
     const match = {
-      id: row[0],                  // ID
-      season: row[1],              // Season
-      round: row[2],               // Round
+      season: row[0],              // Season
+      round: row[1],               // Round
+      id: row[2],                  // ID
       date: row[3],                // Date
       enemy: row[4],               // Enemy
       games: []                    // Game1~9の配列

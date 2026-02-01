@@ -292,10 +292,10 @@ function createMatchCard(match, index) {
     <div class="match-card-footer">
       <div class="game-stats">
         <span class="stat-item">
-          <strong>Win Rate:</strong> ${((stats.totalWins / (stats.totalWins + stats.totalLosses)) * 100).toFixed(1)}%
+          <strong>Win Rate:</strong> ${stats.totalGames > 0 ? stats.winRate.toFixed(1) : "0.0"}%
         </span>
         <span class="stat-item">
-          <strong>Games:</strong> ${match.games.length} / 9
+          <strong>Games:</strong> ${stats.totalGames} / 9
         </span>
       </div>
     </div>
@@ -319,7 +319,7 @@ function createGameCell(game, gameIdx) {
 
     // 勝敗に応じたCSSクラス（"w" or "l" のみ有効）
     const resultClass = game.result === "w" ? "game-result-win" : (game.result === "l" ? "game-result-loss" : "");
-    const resultText = game.result === "w" ? "W" : (game.result === "l" ? "L" : "?");
+    const resultText = game.result === "w" ? "W" : (game.result === "l" ? "L" : "");
     const resultColor = game.result === "w" ? "#4ade80" : (game.result === "l" ? "#ef4444" : "#707070"); // 緑 / 赤 / グレー
 
     return `
@@ -334,11 +334,11 @@ function createGameCell(game, gameIdx) {
       <div class="game-body">
         <!-- 自選手情報 -->
         <div class="player-info my-player">
-          <div class="player-name">${game.myPlayer || "?"}</div>
+          <div class="player-name">${game.myPlayer || ""}</div>
           <div class="player-class">
             ${myClassIcon
             ? `<img src="${myClassIcon}" alt="${game.myClass}" class="class-icon" title="${myClassName}">`
-            : `<span class="class-abbr">${game.myClass || "?"}</span>`
+            : `<span class="class-abbr">${game.myClass || ""}</span>`
         }
           </div>
         </div>
@@ -351,10 +351,9 @@ function createGameCell(game, gameIdx) {
           <div class="player-class">
             ${enemyClassIcon
             ? `<img src="${enemyClassIcon}" alt="${game.enemyClass}" class="class-icon" title="${enemyClassName}">`
-            : `<span class="class-abbr">${game.enemyClass || "?"}</span>`
+            : `<span class="class-abbr">${game.enemyClass || ""}</span>`
         }
           </div>
-          <div class="player-name" style="font-size: 0.65rem; color: var(--text-tertiary);">敵</div>
         </div>
       </div>
     </div>
@@ -369,14 +368,15 @@ function createGameCell(game, gameIdx) {
  * @returns {Object} 統計情報
  */
 function calculateGameStats(games) {
-    const wins = games.filter(g => g.result === "w").length;
-    const losses = games.filter(g => g.result === "l").length;
+  const playedGames = games.filter(g => g.result === "w" || g.result === "l");
+  const wins = playedGames.filter(g => g.result === "w").length;
+  const losses = playedGames.filter(g => g.result === "l").length;
 
     return {
         totalWins: wins,
         totalLosses: losses,
-        totalGames: games.length,
-        winRate: games.length > 0 ? (wins / games.length) * 100 : 0
+    totalGames: playedGames.length,
+    winRate: playedGames.length > 0 ? (wins / playedGames.length) * 100 : 0
     };
 }
 
@@ -391,16 +391,18 @@ function renderStatistics(matches) {
     let gameCount = 0;
     const recentGames = [];
 
-    // 各試合のゲーム結果を集計
+    // 各試合のゲーム結果を集計（勝敗のみ）
     matches.forEach(match => {
         match.games.forEach(game => {
             if (game.result === "w") {
                 totalWins++;
-            } else {
-                totalLosses++;
-            }
-            gameCount++;
-            recentGames.push(game.result);
+          gameCount++;
+          recentGames.push(game.result);
+        } else if (game.result === "l") {
+          totalLosses++;
+          gameCount++;
+          recentGames.push(game.result);
+        }
         });
     });
 
@@ -409,7 +411,7 @@ function renderStatistics(matches) {
     const formWins = recentForm.filter(r => r === "w").length;
 
     // Clutch Factor (Game 9までもつれた場合の勝率)
-    const go9Matches = matches.filter(m => m.games.length === 9);
+    const go9Matches = matches.filter(m => calculateGameStats(m.games).totalGames === 9);
     const go9Wins = go9Matches.filter(m => {
         const g9 = m.games.find(g => g.gameNumber === 9);
         return g9 && g9.result === "w";
@@ -425,7 +427,7 @@ function renderStatistics(matches) {
       <div class="stats-grid">
         <div class="stat-card">
           <h4>Overall Win Rate</h4>
-          <p class="stat-value">${((totalWins / (totalWins + totalLosses)) * 100).toFixed(1)}%</p>
+          <p class="stat-value">${(totalWins + totalLosses) > 0 ? ((totalWins / (totalWins + totalLosses)) * 100).toFixed(1) : "0.0"}%</p>
           <p class="stat-detail">${totalWins}W - ${totalLosses}L</p>
         </div>
         
