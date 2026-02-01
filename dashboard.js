@@ -434,7 +434,6 @@ function renderStatistics(matches) {
     const statsContainer = document.getElementById("statistics-container");
     if (statsContainer) {
         let statsHTML = `
-      <div class="stats-grid">
         <div class="stat-card">
           <h4>BO9勝敗</h4>
           <p class="stat-value">${matchWins}勝 ${matchLosses}敗</p>
@@ -456,9 +455,6 @@ function renderStatistics(matches) {
         </div>`;
         }
 
-        statsHTML += `
-      </div>
-    `;
         statsContainer.innerHTML = statsHTML;
     }
 }
