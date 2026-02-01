@@ -319,7 +319,7 @@ function createGameCell(game, gameIdx) {
 
     // 勝敗に応じたCSSクラス（"w" or "l" のみ有効）
     const resultClass = game.result === "w" ? "game-result-win" : (game.result === "l" ? "game-result-loss" : "");
-    const resultText = game.result === "w" ? "W" : (game.result === "l" ? "L" : "");
+    const resultText = game.result === "w" ? "○" : (game.result === "l" ? "×" : "");
     const resultColor = game.result === "w" ? "#4ade80" : (game.result === "l" ? "#ef4444" : "#707070"); // 緑 / 赤 / グレー
 
     return `
