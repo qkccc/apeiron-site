@@ -210,6 +210,8 @@ function renderSeasonFilter(matches) {
         ? Math.max(...numericSeasons.map(item => item.value))
         : null;
 
+    const latestSeason = numericSeasons.find(item => item.value === latestSeasonValue)?.label || null;
+
     // ドロップダウン生成
     const selectHTML = `
         <label for="season-select">シーズン: </label>
@@ -225,8 +227,8 @@ function renderSeasonFilter(matches) {
 
     filterContainer.innerHTML = selectHTML;
 
-    if (latestSeasonValue !== null) {
-        currentSeasonFilter = String(latestSeasonValue);
+    if (latestSeason !== null) {
+        currentSeasonFilter = latestSeason;
     }
 
     filterAndRenderMatches();
