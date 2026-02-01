@@ -33,15 +33,15 @@ const USE_DUMMY_DATA = false;
 
 // クラスアイコンマッピング(ローカル icon/)
 const CLASS_ICONS = {
-  "E": "icon/class_E.png",
-  "R": "icon/class_R.png",
-  "W": "icon/class_W.png",
-  "D": "icon/class_D.png",
-  "Ni": "icon/class_Ni.png",
-  "B": "icon/class_B.png",
-  "Nm": "icon/class_Nm.png",
-  "Nc": "icon/class_Nc.png",
-  "V": "icon/class_V.png"
+    "E": "icon/class_E.png",
+    "R": "icon/class_R.png",
+    "W": "icon/class_W.png",
+    "D": "icon/class_D.png",
+    "Ni": "icon/class_Ni.png",
+    "B": "icon/class_B.png",
+    "Nm": "icon/class_Nm.png",
+    "Nc": "icon/class_Nc.png",
+    "V": "icon/class_V.png"
 };
 
 const CLASS_NAMES = {
