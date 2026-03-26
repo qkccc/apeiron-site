@@ -65,6 +65,7 @@
     font-size: clamp(2rem, 5vw, 3.5rem);
     letter-spacing: 2px;
     background: linear-gradient(135deg, var(--accent-gold) 0%, #8a6e18 100%);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin: 0;
@@ -177,12 +178,34 @@
     display: block;
 }
 
-/* セクション2-5は初期状態で非表示 */
+/* セクション2-4は初期状態で非表示 */
 #section-2,
 #section-3,
-#section-4,
-#section-5 {
+#section-4 {
     display: none;
+}
+
+.subsection-block {
+    margin-bottom: var(--spacing-lg);
+}
+
+.subsection-block:last-child {
+    margin-bottom: 0;
+}
+
+.subsection-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.subsection-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--text-primary);
 }
 
 /* ============================================================================

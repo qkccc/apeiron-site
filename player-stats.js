@@ -97,6 +97,7 @@ function initializeAllFilters() {
     addFilterOptions("season-class-filter", seasons.map(s => ({ value: s, text: s })));
 
     const classOptions = CLASS_ORDER.filter(c => classes.has(c)).map(c => ({ value: c, text: CLASS_NAMES[c] }));
+    addFilterOptions("class-player-filter", classOptions);
     addFilterOptions("class-season-filter", classOptions);
 
     const sortedPlayers = [...players].sort((a, b) => (playerAppearances[b] || 0) - (playerAppearances[a] || 0));
@@ -107,12 +108,14 @@ function initializeAllFilters() {
         const latestSeason = seasons[seasons.length - 1];
         document.getElementById("season-player-filter").value = latestSeason;
         document.getElementById("season-class-filter").value = latestSeason;
+        if (classOptions.length > 0) document.getElementById("class-player-filter").value = classOptions[0].value;
         if (classOptions.length > 0) document.getElementById("class-season-filter").value = classOptions[0].value;
         if (sortedPlayers.length > 0) document.getElementById("player-class-filter").value = sortedPlayers[0];
     }
 
     document.getElementById("season-player-filter").addEventListener("change", renderAllStats);
     document.getElementById("season-class-filter").addEventListener("change", renderAllStats);
+    document.getElementById("class-player-filter").addEventListener("change", renderAllStats);
     document.getElementById("class-season-filter").addEventListener("change", renderAllStats);
     document.getElementById("player-class-filter").addEventListener("change", renderAllStats);
 }
@@ -135,8 +138,9 @@ function renderAllStats() {
     render1OverallStats();
     render2SeasonPlayerStats();
     render3SeasonClassStats();
-    render4ClassSeasonStats();
-    render5PlayerClassStats();
+    render4ClassPlayerStats();
+    render5ClassSeasonStats();
+    render6PlayerClassStats();
 }
 
 // ============================================================================
@@ -310,10 +314,54 @@ function render3SeasonClassStats() {
 }
 
 // ============================================================================
-// 4. 各クラスのシーズンごとの戦績
+// 4. 各クラス・プレイヤー別
 // ============================================================================
 
-function render4ClassSeasonStats() {
+function render4ClassPlayerStats() {
+    const selectedClass = document.getElementById("class-player-filter").value;
+    const stats = {};
+
+    allMatchesData.forEach(match => {
+        const playersInMatch = new Set();
+        match.games.forEach(game => {
+            if (!game.myClass || game.myClass !== selectedClass || !game.myPlayer) return;
+            const key = `${game.myPlayer}`;
+            if (!stats[key]) {
+                stats[key] = { player: game.myPlayer, participated: 0, wins: 0, losses: 0 };
+            }
+            if (!playersInMatch.has(game.myPlayer)) {
+                stats[key].participated++;
+                playersInMatch.add(game.myPlayer);
+            }
+            if (game.result === "w") stats[key].wins++;
+            if (game.result === "l") stats[key].losses++;
+        });
+    });
+
+    const statsList = Object.values(stats)
+        .filter(stat => stat.participated > 0)
+        .sort((a, b) => {
+            if (b.participated !== a.participated) return b.participated - a.participated;
+            if (b.wins !== a.wins) return b.wins - a.wins;
+            return a.losses - b.losses;
+        });
+
+    let html = `<table class="stats-table"><thead><tr><th>プレイヤー</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
+    statsList.forEach(stat => {
+        const totalGames = stat.wins + stat.losses;
+        const winRate = totalGames > 0 ? ((stat.wins / totalGames) * 100).toFixed(1) : "-";
+        const winRateClass = getWinRateClass(parseFloat(winRate));
+        html += `<tr><td class="player-name">${stat.player}</td><td class="align-center">${stat.participated}</td><td class="align-center">${stat.wins}</td><td class="align-center">${stat.losses}</td><td class="align-center ${winRateClass}">${winRate}${typeof winRate === "string" && winRate === "-" ? "" : "%"}</td></tr>`;
+    });
+    html += `</tbody></table>`;
+    document.getElementById("class-player-stats-container").innerHTML = html;
+}
+
+// ============================================================================
+// 5. 各クラス・シーズン別
+// ============================================================================
+
+function render5ClassSeasonStats() {
     const selectedClass = document.getElementById("class-season-filter").value;
     const stats = {};
 
@@ -366,10 +414,10 @@ function render4ClassSeasonStats() {
 }
 
 // ============================================================================
-// 5. 各プレイヤーのクラスごとの戦績(1試合出場以上)
+// 6. 各プレイヤーのクラスごとの戦績(1試合出場以上)
 // ============================================================================
 
-function render5PlayerClassStats() {
+function render6PlayerClassStats() {
     const selectedPlayer = document.getElementById("player-class-filter").value;
     const stats = {};
 
@@ -424,7 +472,7 @@ function getWinRateClass(winRate) {
 }
 
 function showError(message) {
-    ["overall-stats-container", "season-player-stats-container", "season-class-stats-container", "class-season-stats-container", "player-class-stats-container"].forEach(id => {
+    ["overall-stats-container", "season-player-stats-container", "season-class-stats-container", "class-player-stats-container", "class-season-stats-container", "player-class-stats-container"].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.innerHTML = `<div class="loading-state"><p style="color: #ef4444;">${message}</p></div>`;
     });

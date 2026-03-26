@@ -38,10 +38,9 @@
         <!-- ===== セクション選択ナビゲーション ===== -->
         <div class="section-navigation">
             <button class="nav-button active" data-section="1">総合戦績</button>
-            <button class="nav-button" data-section="2">各シーズン・プレイヤー別</button>
-            <button class="nav-button" data-section="3">各シーズン・クラス別</button>
-            <button class="nav-button" data-section="4">各クラス・シーズン別</button>
-            <button class="nav-button" data-section="5">各プレイヤー・クラス別</button>
+            <button class="nav-button" data-section="2">各シーズン</button>
+            <button class="nav-button" data-section="3">各クラス</button>
+            <button class="nav-button" data-section="4">各プレイヤー</button>
         </div>
 
         <!-- ===== セクション1: 全シーズン通しての出場・勝敗 ===== -->
@@ -54,55 +53,80 @@
             </div>
         </section>
 
-        <!-- ===== セクション2: シーズンごとの戦績(プレイヤー名ごと) ===== -->
+        <!-- ===== セクション2: 各シーズン ===== -->
         <section class="stats-section" id="section-2">
             <div class="section-header">
-                <h2>シーズンごとの戦績 - プレイヤー別</h2>
-                <div class="section-filter">
-                    <label for="season-player-filter">シーズン:</label>
-                    <select id="season-player-filter" class="filter-select">
-                    </select>
+                <h2>各シーズン</h2>
+            </div>
+
+            <div class="subsection-block">
+                <div class="subsection-header">
+                    <h3>各シーズン・プレイヤー別</h3>
+                    <div class="section-filter">
+                        <label for="season-player-filter">シーズン:</label>
+                        <select id="season-player-filter" class="filter-select">
+                        </select>
+                    </div>
+                </div>
+                <div id="season-player-stats-container" class="table-container">
+                    <!-- player-stats.js で動的生成 -->
                 </div>
             </div>
-            <div id="season-player-stats-container" class="table-container">
-                <!-- player-stats.js で動的生成 -->
+
+            <div class="subsection-block">
+                <div class="subsection-header">
+                    <h3>各シーズン・クラス別</h3>
+                    <div class="section-filter">
+                        <label for="season-class-filter">シーズン:</label>
+                        <select id="season-class-filter" class="filter-select">
+                        </select>
+                    </div>
+                </div>
+                <div id="season-class-stats-container" class="table-container">
+                    <!-- player-stats.js で動的生成 -->
+                </div>
             </div>
         </section>
 
-        <!-- ===== セクション3: シーズンごとの戦績(クラスごと) ===== -->
+        <!-- ===== セクション3: 各クラス ===== -->
         <section class="stats-section" id="section-3">
             <div class="section-header">
-                <h2>シーズンごとの戦績 - クラス別</h2>
-                <div class="section-filter">
-                    <label for="season-class-filter">シーズン:</label>
-                    <select id="season-class-filter" class="filter-select">
-                    </select>
+                <h2>各クラス</h2>
+            </div>
+
+            <div class="subsection-block">
+                <div class="subsection-header">
+                    <h3>各クラス・プレイヤー別</h3>
+                    <div class="section-filter">
+                        <label for="class-player-filter">クラス:</label>
+                        <select id="class-player-filter" class="filter-select">
+                        </select>
+                    </div>
+                </div>
+                <div id="class-player-stats-container" class="table-container">
+                    <!-- player-stats.js で動的生成 -->
                 </div>
             </div>
-            <div id="season-class-stats-container" class="table-container">
-                <!-- player-stats.js で動的生成 -->
+
+            <div class="subsection-block">
+                <div class="subsection-header">
+                    <h3>各クラス・シーズン別</h3>
+                    <div class="section-filter">
+                        <label for="class-season-filter">クラス:</label>
+                        <select id="class-season-filter" class="filter-select">
+                        </select>
+                    </div>
+                </div>
+                <div id="class-season-stats-container" class="table-container">
+                    <!-- player-stats.js で動的生成 -->
+                </div>
             </div>
         </section>
 
-        <!-- ===== セクション4: 各クラスのシーズンごとの戦績 ===== -->
+        <!-- ===== セクション4: 各プレイヤーのクラスごとの戦績 ===== -->
         <section class="stats-section" id="section-4">
             <div class="section-header">
-                <h2>各クラスのシーズンごとの戦績</h2>
-                <div class="section-filter">
-                    <label for="class-season-filter">クラス:</label>
-                    <select id="class-season-filter" class="filter-select">
-                    </select>
-                </div>
-            </div>
-            <div id="class-season-stats-container" class="table-container">
-                <!-- player-stats.js で動的生成 -->
-            </div>
-        </section>
-
-        <!-- ===== セクション5: 各プレイヤーのクラスごとの戦績(1試合出場以上) ===== -->
-        <section class="stats-section" id="section-5">
-            <div class="section-header">
-                <h2>各プレイヤーのクラスごとの戦績</h2>
+                <h2>各プレイヤー</h2>
                 <div class="section-filter">
                     <label for="player-class-filter">プレイヤー:</label>
                     <select id="player-class-filter" class="filter-select">
