@@ -310,12 +310,72 @@ function createMatchCard(match, index) {
       <div class="games-grid">
         ${match.games.map((game, gameIdx) => createGameCell(game, gameIdx)).join("")}
       </div>
+            ${createDeckLinksSection(match)}
     </div>
     
     <div class="match-card-footer"></div>
   `;
 
     return card;
+}
+
+/**
+ * デッキ確認リンクのセクションHTMLを生成
+ * 第14期以降のみ表示（前半/後半を含む）
+ * @param {Object} match - 試合データ
+ * @returns {String} リンクバッジHTML
+ */
+function createDeckLinksSection(match) {
+    const seasonNumber = getSeasonNumber(match.season);
+
+    if (seasonNumber === null || seasonNumber < 14) {
+        return "";
+    }
+
+    const deckLinks = resolveDeckLinksByFileName(match);
+    const myDeckLink = deckLinks.my || "";
+    const enemyDeckLink = deckLinks.enemy || "";
+
+    if (!myDeckLink && !enemyDeckLink) {
+        return "";
+    }
+
+    return `
+    <div class="deck-links-section">
+      ${myDeckLink
+            ? `<a href="${myDeckLink}" target="_blank" rel="noopener noreferrer" class="deck-link-badge my-deck">自チームデッキを見る</a>`
+            : ""
+        }
+      ${enemyDeckLink
+            ? `<a href="${enemyDeckLink}" target="_blank" rel="noopener noreferrer" class="deck-link-badge enemy-deck">相手チームデッキを見る</a>`
+            : ""
+        }
+    </div>
+  `;
+}
+
+/**
+ * 命名規則からデッキ画像リンクを解決
+ * 規則: deck-images/s{season}-{first|second}-r{round}-{my|enemy}.png
+ * 例: deck-images/s14-second-r2-my.png
+ * @param {Object} match - 試合データ
+ * @returns {{my: String, enemy: String}} デッキ画像リンク
+ */
+function resolveDeckLinksByFileName(match) {
+    const seasonNumber = getSeasonNumber(match.season);
+    const seasonHalf = getSeasonHalfToken(match.season);
+    const roundNumber = getRoundNumber(match.round);
+
+    if (seasonNumber === null || seasonNumber < 14 || !seasonHalf || roundNumber === null) {
+        return { my: "", enemy: "" };
+    }
+
+    const base = `deck-images/s${seasonNumber}-${seasonHalf}-r${roundNumber}`;
+
+    return {
+        my: `${base}-my.png`,
+        enemy: `${base}-enemy.png`
+    };
 }
 
 /**
@@ -476,6 +536,62 @@ function formatDate(date) {
     const day = String(d.getDate()).padStart(2, "0");
 
     return `${year}/${month}/${day}`;
+}
+
+/**
+ * シーズン文字列から期数を抽出
+ * 例: 「第14期前半」「第14期後半」「第14回前半」-> 14
+ * @param {String} season - シーズン文字列
+ * @returns {Number|null} 期数
+ */
+function getSeasonNumber(season) {
+    if (!season) return null;
+
+    const matched = String(season).match(/\d+/);
+    if (!matched) return null;
+
+    const parsed = parseInt(matched[0], 10);
+    return Number.isNaN(parsed) ? null : parsed;
+}
+
+/**
+ * シーズン文字列から前半/後半トークンを取得
+ * @param {String} season - シーズン文字列
+ * @returns {"first"|"second"|null} halfトークン
+ */
+function getSeasonHalfToken(season) {
+    if (!season) return null;
+
+    const normalized = String(season).toLowerCase();
+
+    if (normalized.includes("前半") || normalized.includes("first")) {
+        return "first";
+    }
+
+    if (normalized.includes("後半") || normalized.includes("second")) {
+        return "second";
+    }
+
+    return null;
+}
+
+/**
+ * Round値を数値化
+ * @param {String|Number} round - ラウンド値
+ * @returns {Number|null} ラウンド番号
+ */
+function getRoundNumber(round) {
+    if (round === null || round === undefined) return null;
+
+    if (typeof round === "number") {
+        return Number.isFinite(round) ? round : null;
+    }
+
+    const matched = String(round).match(/\d+/);
+    if (!matched) return null;
+
+    const parsed = parseInt(matched[0], 10);
+    return Number.isNaN(parsed) ? null : parsed;
 }
 
 /**
