@@ -861,6 +861,7 @@
     width: 100%;
     height: 100%;
     z-index: 1;
+    pointer-events: none;
 }
 
 .deck-modal-image {
@@ -870,6 +871,7 @@
     border-radius: 8px;
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
     animation: modalSlideIn var(--transition-normal) ease;
+    pointer-events: auto;
 }
 
 .deck-modal-close {
@@ -891,11 +893,11 @@
     transition: all var(--transition-fast);
     z-index: 10;
     line-height: 1;
+    pointer-events: auto;
 }
 
 .deck-modal-close:hover {
     background: rgba(255, 255, 255, 0.3);
-    transform: rotate(90deg);
 }
 
 @keyframes modalSlideIn {

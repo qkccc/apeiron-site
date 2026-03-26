@@ -777,6 +777,13 @@ function initDeckModal() {
         overlay.addEventListener("click", closeDeckModal);
     }
 
+    // モーダル背景クリック（overlay以外の構造変化にも対応）
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            closeDeckModal();
+        }
+    });
+
     // デッキバッジのクリックイベント（event delegation）
     document.addEventListener("click", (e) => {
         if (e.target.classList.contains("deck-badge-trigger")) {
