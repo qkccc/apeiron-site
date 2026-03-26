@@ -602,32 +602,39 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.82rem;
+    font-size: 0.85rem;
     font-weight: 700;
-    letter-spacing: 0.2px;
-    padding: 6px 10px;
-    border-radius: 999px;
-    border: 1px solid var(--border-light);
+    letter-spacing: 0.3px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
     text-decoration: none;
-    transition: all var(--transition-fast);
-    color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.05);
+    transition: all var(--transition-normal);
+    color: #fff;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
 }
 
 .deck-link-badge:hover {
-    transform: translateY(-1px);
-    border-color: var(--accent-gold);
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
 .deck-link-badge.my-deck {
-    border-color: rgba(74, 222, 128, 0.45);
-    background: rgba(74, 222, 128, 0.12);
+    background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+}
+
+.deck-link-badge.my-deck:hover {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
 }
 
 .deck-link-badge.enemy-deck {
-    border-color: rgba(59, 130, 246, 0.5);
-    background: rgba(59, 130, 246, 0.12);
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.deck-link-badge.enemy-deck:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
 }
 
 @media (max-width: 768px) {

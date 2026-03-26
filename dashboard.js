@@ -206,23 +206,23 @@ function renderSeasonFilter(matches) {
 
     const latestSeason = numericSeasons.find(item => item.value === latestSeasonValue)?.label || null;
 
+    // 初期選択値をグローバル変数に先に設定（renderMatchCardsより前に）
+    if (latestSeason !== null) {
+        currentSeasonFilter = latestSeason;
+    }
+
     // ドロップダウン生成
     const selectHTML = `
         <label for="season-select">シーズン: </label>
         <select id="season-select" class="season-select">
             ${seasons.map(season => {
-        const seasonValue = parseInt(String(season).match(/\d+/)?.[0], 10);
-        const isLatest = seasonValue === latestSeasonValue;
+        const isLatest = season === latestSeason;
         return `<option value="${season}" ${isLatest ? "selected" : ""}>${season}</option>`;
     }).join("")}
         </select>
     `;
 
     filterContainer.innerHTML = selectHTML;
-
-    if (latestSeason !== null) {
-        currentSeasonFilter = latestSeason;
-    }
 
     filterAndRenderMatches();
 
@@ -322,6 +322,7 @@ function createMatchCard(match, index) {
 /**
  * デッキ確認リンクのセクションHTMLを生成
  * 第14期以降のみ表示（前半/後半を含む）
+ * 存在しない画像はバッジを非表示
  * @param {Object} match - 試合データ
  * @returns {String} リンクバッジHTML
  */
@@ -340,16 +341,27 @@ function createDeckLinksSection(match) {
         return "";
     }
 
+    const badgeHtml = [];
+
+    if (myDeckLink) {
+        badgeHtml.push(
+            `<a href="${myDeckLink}" target="_blank" rel="noopener noreferrer" class="deck-link-badge my-deck" onerror="this.style.display='none'">🏠 My Deck</a>`
+        );
+    }
+
+    if (enemyDeckLink) {
+        badgeHtml.push(
+            `<a href="${enemyDeckLink}" target="_blank" rel="noopener noreferrer" class="deck-link-badge enemy-deck" onerror="this.style.display='none'">⚔️ Enemy Deck</a>`
+        );
+    }
+
+    if (badgeHtml.length === 0) {
+        return "";
+    }
+
     return `
     <div class="deck-links-section">
-      ${myDeckLink
-            ? `<a href="${myDeckLink}" target="_blank" rel="noopener noreferrer" class="deck-link-badge my-deck">自チームデッキを見る</a>`
-            : ""
-        }
-      ${enemyDeckLink
-            ? `<a href="${enemyDeckLink}" target="_blank" rel="noopener noreferrer" class="deck-link-badge enemy-deck">相手チームデッキを見る</a>`
-            : ""
-        }
+      ${badgeHtml.join("\n      ")}
     </div>
   `;
 }
