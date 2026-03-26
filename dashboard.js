@@ -318,10 +318,9 @@ function createMatchCard(match, index) {
       <div class="games-grid">
         ${match.games.map((game, gameIdx) => createGameCell(game, gameIdx)).join("")}
       </div>
-            ${createDeckLinksSection(match)}
     </div>
     
-    <div class="match-card-footer"></div>
+        <div class="match-card-footer">${createDeckLinksSection(match)}</div>
   `;
 
     return card;
@@ -353,7 +352,7 @@ function createDeckLinksSection(match) {
 
     if (myDeckLink) {
         badgeHtml.push(
-            `<a href="javascript:void(0);" data-deck-image="${myDeckLink}" class="deck-link-badge my-deck deck-badge-trigger" onerror="this.style.display='none'">My Deck</a>`
+            `<a href="javascript:void(0);" data-deck-image="${myDeckLink}" class="deck-link-badge my-deck deck-badge-trigger" onerror="this.style.display='none'">MY DECK</a>`
         );
     }
 

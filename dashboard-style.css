@@ -431,6 +431,7 @@
     padding: 8px 10px;
     border-top: 1px solid var(--border-light);
     background: rgba(0, 0, 0, 0.3);
+    margin-top: auto;
 }
 
 .game-stats {
@@ -592,7 +593,7 @@
    ============================================================================ */
 
 .deck-links-section {
-    margin-top: 10px;
+    margin-top: 0;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -622,11 +623,11 @@
 }
 
 .deck-link-badge.my-deck {
-    background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
 }
 
 .deck-link-badge.my-deck:hover {
-    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
 }
 
 .deck-link-badge.enemy-deck {
