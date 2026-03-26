@@ -75,6 +75,9 @@ document.addEventListener("DOMContentLoaded", function () {
 async function dashboardInit() {
     console.log("Dashboard initializing...");
 
+    // モーダルイベントを初期化
+    initDeckModal();
+
     // ローディング表示
     showLoadingState();
 
@@ -350,13 +353,13 @@ function createDeckLinksSection(match) {
 
     if (myDeckLink) {
         badgeHtml.push(
-            `<a href="${myDeckLink}" target="_blank" rel="noopener noreferrer" class="deck-link-badge my-deck" onerror="this.style.display='none'">My Deck</a>`
+            `<a href="javascript:void(0);" data-deck-image="${myDeckLink}" class="deck-link-badge my-deck deck-badge-trigger" onerror="this.style.display='none'">My Deck</a>`
         );
     }
 
     if (enemyDeckLink) {
         badgeHtml.push(
-            `<a href="${enemyDeckLink}" target="_blank" rel="noopener noreferrer" class="deck-link-badge enemy-deck" onerror="this.style.display='none'">Enemy Deck</a>`
+            `<a href="javascript:void(0);" data-deck-image="${enemyDeckLink}" class="deck-link-badge enemy-deck deck-badge-trigger" onerror="this.style.display='none'">Enemy Deck</a>`
         );
     }
 
@@ -747,4 +750,75 @@ function getDummyData() {
         ],
         totalMatches: 1
     };
+}
+
+// ============================================================================
+// デッキ画像モーダル
+// ============================================================================
+
+/**
+ * モーダルイベントリスナーの初期化
+ * ページ読込後、動的に追加されるバッジクリック時の処理も委譲
+ */
+function initDeckModal() {
+    const modal = document.getElementById("deck-modal");
+    const closeBtn = document.getElementById("deck-modal-close");
+    const overlay = document.querySelector(".deck-modal-overlay");
+
+    if (!modal) return;
+
+    // 閉じるボタンクリック
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeDeckModal);
+    }
+
+    // オーバーレイクリック（背景をクリック）
+    if (overlay) {
+        overlay.addEventListener("click", closeDeckModal);
+    }
+
+    // デッキバッジのクリックイベント（event delegation）
+    document.addEventListener("click", (e) => {
+        if (e.target.classList.contains("deck-badge-trigger")) {
+            e.preventDefault();
+            const deckImageUrl = e.target.getAttribute("data-deck-image");
+            if (deckImageUrl) {
+                openDeckModal(deckImageUrl);
+            }
+        }
+    });
+
+    // キーボード操作（Esc で閉じる）
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.classList.contains("show")) {
+            closeDeckModal();
+        }
+    });
+}
+
+/**
+ * デッキ画像モーダルを開く
+ * @param {String} imageSrc - 画像URL
+ */
+function openDeckModal(imageSrc) {
+    const modal = document.getElementById("deck-modal");
+    const image = document.getElementById("deck-modal-image");
+
+    if (!modal || !image) return;
+
+    image.src = imageSrc;
+    modal.classList.add("show");
+    document.body.style.overflow = "hidden"; // スクロール禁止
+}
+
+/**
+ * デッキ画像モーダルを閉じる
+ */
+function closeDeckModal() {
+    const modal = document.getElementById("deck-modal");
+
+    if (!modal) return;
+
+    modal.classList.remove("show");
+    document.body.style.overflow = "auto"; // スクロール許可
 }
