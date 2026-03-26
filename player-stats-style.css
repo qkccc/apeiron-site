@@ -208,6 +208,44 @@
     color: var(--text-primary);
 }
 
+.subsection-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.sub-nav-button {
+    padding: 8px 14px;
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.sub-nav-button:hover {
+    background-color: var(--bg-table-header);
+    color: var(--text-primary);
+    border-color: var(--border-accent);
+}
+
+.sub-nav-button.active {
+    background-color: var(--accent-gold);
+    color: #000;
+    border-color: var(--accent-gold);
+}
+
+.stats-subsection {
+    display: none;
+}
+
+.stats-subsection.active {
+    display: block;
+}
+
 /* ============================================================================
    テーブル
    ============================================================================ */
@@ -361,6 +399,15 @@
     }
 
     .nav-button {
+        width: 100%;
+    }
+
+    .subsection-navigation {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .sub-nav-button {
         width: 100%;
     }
 }

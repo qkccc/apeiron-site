@@ -102,6 +102,7 @@ function initializeAllFilters() {
 
     const sortedPlayers = [...players].sort((a, b) => (playerAppearances[b] || 0) - (playerAppearances[a] || 0));
     addFilterOptions("player-class-filter", sortedPlayers.map(p => ({ value: p, text: p })));
+    addFilterOptions("player-season-filter", sortedPlayers.map(p => ({ value: p, text: p })));
 
     // 最新のシーズンをデフォルト選択
     if (seasons.length > 0) {
@@ -111,6 +112,7 @@ function initializeAllFilters() {
         if (classOptions.length > 0) document.getElementById("class-player-filter").value = classOptions[0].value;
         if (classOptions.length > 0) document.getElementById("class-season-filter").value = classOptions[0].value;
         if (sortedPlayers.length > 0) document.getElementById("player-class-filter").value = sortedPlayers[0];
+        if (sortedPlayers.length > 0) document.getElementById("player-season-filter").value = sortedPlayers[0];
     }
 
     document.getElementById("season-player-filter").addEventListener("change", renderAllStats);
@@ -118,6 +120,7 @@ function initializeAllFilters() {
     document.getElementById("class-player-filter").addEventListener("change", renderAllStats);
     document.getElementById("class-season-filter").addEventListener("change", renderAllStats);
     document.getElementById("player-class-filter").addEventListener("change", renderAllStats);
+    document.getElementById("player-season-filter").addEventListener("change", renderAllStats);
 }
 
 function addFilterOptions(elementId, options) {
@@ -141,6 +144,7 @@ function renderAllStats() {
     render4ClassPlayerStats();
     render5ClassSeasonStats();
     render6PlayerClassStats();
+    render7PlayerSeasonStats();
 }
 
 // ============================================================================
@@ -460,6 +464,58 @@ function render6PlayerClassStats() {
     document.getElementById("player-class-stats-container").innerHTML = html;
 }
 
+// ============================================================================
+// 7. 各プレイヤー・シーズン別
+// ============================================================================
+
+function render7PlayerSeasonStats() {
+    const selectedPlayer = document.getElementById("player-season-filter").value;
+    const stats = {};
+
+    const allSeasons = [...new Set(allMatchesData.map(m => m.season))].sort((a, b) => {
+        const numA = parseInt(a.replace(/[^\d]/g, ""));
+        const numB = parseInt(b.replace(/[^\d]/g, ""));
+        return numA - numB;
+    });
+
+    allSeasons.forEach(season => {
+        stats[season] = { season: season, participated: 0, wins: 0, losses: 0 };
+    });
+
+    allMatchesData.forEach(match => {
+        const playerInMatch = new Set();
+        match.games.forEach(game => {
+            if (!game.myPlayer || game.myPlayer !== selectedPlayer) return;
+            const key = `${match.season}`;
+            if (!stats[key]) {
+                stats[key] = { season: match.season, participated: 0, wins: 0, losses: 0 };
+            }
+            if (!playerInMatch.has(game.myPlayer)) {
+                stats[key].participated++;
+                playerInMatch.add(game.myPlayer);
+            }
+            if (game.result === "w") stats[key].wins++;
+            if (game.result === "l") stats[key].losses++;
+        });
+    });
+
+    const statsList = Object.values(stats).sort((a, b) => {
+        const numA = parseInt(a.season.match(/\d+/)[0]);
+        const numB = parseInt(b.season.match(/\d+/)[0]);
+        return numA - numB;
+    });
+
+    let html = `<table class="stats-table"><thead><tr><th>シーズン</th><th class="align-center">出場</th><th class="align-center">勝</th><th class="align-center">敗</th><th class="align-center">勝率</th></tr></thead><tbody>`;
+    statsList.forEach(stat => {
+        const totalGames = stat.wins + stat.losses;
+        const winRate = totalGames > 0 ? ((stat.wins / totalGames) * 100).toFixed(1) : "-";
+        const winRateClass = getWinRateClass(parseFloat(winRate));
+        html += `<tr><td>${stat.season}</td><td class="align-center">${stat.participated}</td><td class="align-center">${stat.wins}</td><td class="align-center">${stat.losses}</td><td class="align-center ${winRateClass}">${winRate}${typeof winRate === "string" && winRate === "-" ? "" : "%"}</td></tr>`;
+    });
+    html += `</tbody></table>`;
+    document.getElementById("player-season-stats-container").innerHTML = html;
+}
+
 
 // ============================================================================
 // ユーティリティ
@@ -472,7 +528,7 @@ function getWinRateClass(winRate) {
 }
 
 function showError(message) {
-    ["overall-stats-container", "season-player-stats-container", "season-class-stats-container", "class-player-stats-container", "class-season-stats-container", "player-class-stats-container"].forEach(id => {
+    ["overall-stats-container", "season-player-stats-container", "season-class-stats-container", "class-player-stats-container", "class-season-stats-container", "player-class-stats-container", "player-season-stats-container"].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.innerHTML = `<div class="loading-state"><p style="color: #ef4444;">${message}</p></div>`;
     });
@@ -488,6 +544,14 @@ document.addEventListener("DOMContentLoaded", function () {
         button.addEventListener("click", function () {
             const sectionId = this.getAttribute("data-section");
             switchSection(sectionId);
+        });
+    });
+
+    document.querySelectorAll(".sub-nav-button").forEach(button => {
+        button.addEventListener("click", function () {
+            const subgroup = this.getAttribute("data-subgroup");
+            const subsection = this.getAttribute("data-subsection");
+            switchSubSection(subgroup, subsection);
         });
     });
 });
@@ -514,5 +578,23 @@ function switchSection(sectionId) {
 
     // ページトップへスクロール
     window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function switchSubSection(subgroup, subsection) {
+    document.querySelectorAll(`.stats-subsection[data-subgroup="${subgroup}"]`).forEach(section => {
+        section.classList.remove("active");
+    });
+
+    const target = document.querySelector(`.stats-subsection[data-subgroup="${subgroup}"][data-subsection="${subsection}"]`);
+    if (target) {
+        target.classList.add("active");
+    }
+
+    document.querySelectorAll(`.sub-nav-button[data-subgroup="${subgroup}"]`).forEach(button => {
+        button.classList.remove("active");
+        if (button.getAttribute("data-subsection") === subsection) {
+            button.classList.add("active");
+        }
+    });
 }
 
