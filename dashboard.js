@@ -196,15 +196,20 @@ function renderSeasonFilter(matches) {
     const numericSeasons = seasons
         .map(season => ({
             label: season,
-            value: parseInt(String(season).match(/\d+/)?.[0], 10)
+            value: parseInt(String(season).match(/\d+/)?.[0], 10),
+            isSecondHalf: String(season).includes("後半") || String(season).includes("second")
         }))
         .filter(item => !Number.isNaN(item.value));
 
+    // 最新期を取得
     const latestSeasonValue = numericSeasons.length > 0
         ? Math.max(...numericSeasons.map(item => item.value))
         : null;
 
-    const latestSeason = numericSeasons.find(item => item.value === latestSeasonValue)?.label || null;
+    // 同じ期数の中から「後半」を優先（ない場合は「前半」）
+    const latestSeason = numericSeasons
+        .filter(item => item.value === latestSeasonValue)
+        .sort((a, b) => b.isSecondHalf - a.isSecondHalf)[0]?.label || null;
 
     // 初期選択値をグローバル変数に先に設定（renderMatchCardsより前に）
     if (latestSeason !== null) {
@@ -345,13 +350,13 @@ function createDeckLinksSection(match) {
 
     if (myDeckLink) {
         badgeHtml.push(
-            `<a href="${myDeckLink}" target="_blank" rel="noopener noreferrer" class="deck-link-badge my-deck" onerror="this.style.display='none'">🏠 My Deck</a>`
+            `<a href="${myDeckLink}" target="_blank" rel="noopener noreferrer" class="deck-link-badge my-deck" onerror="this.style.display='none'">My Deck</a>`
         );
     }
 
     if (enemyDeckLink) {
         badgeHtml.push(
-            `<a href="${enemyDeckLink}" target="_blank" rel="noopener noreferrer" class="deck-link-badge enemy-deck" onerror="this.style.display='none'">⚔️ Enemy Deck</a>`
+            `<a href="${enemyDeckLink}" target="_blank" rel="noopener noreferrer" class="deck-link-badge enemy-deck" onerror="this.style.display='none'">Enemy Deck</a>`
         );
     }
 
