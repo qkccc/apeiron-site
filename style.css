@@ -458,6 +458,94 @@ nav a.active {
     color: var(--accent);
 }
 
+/* --- Achievement Spotlight (RAGE 準優勝) --- */
+.achievement-spotlight {
+    max-width: 800px;
+    margin: 0 auto 55px;
+    padding: 42px 45px;
+    position: relative;
+    border-radius: 14px;
+    background:
+        linear-gradient(135deg, rgba(212, 175, 55, 0.20) 0%, rgba(212, 175, 55, 0.04) 45%, rgba(212, 175, 55, 0.14) 100%),
+        var(--card-bg);
+    border: 1px solid rgba(212, 175, 55, 0.55);
+    box-shadow: 0 0 45px rgba(212, 175, 55, 0.18), inset 0 0 30px rgba(212, 175, 55, 0.05);
+    overflow: hidden;
+    text-align: center;
+}
+
+.achievement-spotlight::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 40%;
+    height: 200%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+    transform: rotate(25deg);
+    animation: spotlight-shine 5.5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes spotlight-shine {
+    0% { left: -60%; }
+    60%, 100% { left: 130%; }
+}
+
+.spotlight-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.spotlight-title {
+    font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.5rem, 4vw, 2.4rem);
+    letter-spacing: 2px;
+    line-height: 1.2;
+    margin: 0 0 12px;
+    color: #fff;
+    position: relative;
+    z-index: 1;
+}
+
+.spotlight-title span {
+    display: block;
+    margin-top: 8px;
+    font-size: 1.3em;
+    background: linear-gradient(135deg, #F5D97B 0%, #D4AF37 45%, #8a6e18 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px var(--accent-glow);
+}
+
+.spotlight-sub {
+    color: var(--text-sub);
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    letter-spacing: 1px;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .achievement-spotlight {
+        padding: 30px 22px;
+        margin-bottom: 40px;
+    }
+}
+
 /* 実績リスト */
 .achievements ul {
     list-style: none;
