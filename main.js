@@ -3,7 +3,6 @@
    - フッターの年号を自動更新
    - モバイルのハンバーガーメニュー（開閉・オーバーレイ・Esc・簡易フォーカストラップ）
    - スクロールで固定ヘッダーを引き締め
-   - スクロール入場アニメーション（.reveal）
    - ページ上部へ戻るボタン
    - X アカウントのハンドルを各ボタンへ付与（members）
    依存ライブラリなし。<script src="main.js" defer> で読み込む想定。
@@ -125,35 +124,6 @@
     };
     updateToTop();
     window.addEventListener('scroll', rafThrottle(updateToTop), { passive: true });
-
-    /* ---------- スクロール入場アニメーション ---------- */
-    var reveals = document.querySelectorAll('.reveal');
-    if (reveals.length) {
-        if (reduceMotion || !('IntersectionObserver' in window)) {
-            reveals.forEach(function (el) {
-                el.classList.add('is-visible');
-            });
-        } else {
-            var io = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (!entry.isIntersecting) return;
-                    var el = entry.target;
-                    /* 同じ親の中での並び順に応じて少しずつ遅延（スタッガー） */
-                    var group = el.parentNode
-                        ? el.parentNode.querySelectorAll(':scope > .reveal')
-                        : [el];
-                    var idx = Array.prototype.indexOf.call(group, el);
-                    el.style.transitionDelay = (Math.min(idx, 6) * 70) + 'ms';
-                    el.classList.add('is-visible');
-                    io.unobserve(el);
-                });
-            }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-
-            reveals.forEach(function (el) {
-                io.observe(el);
-            });
-        }
-    }
 
     /* ---------- X アカウントのハンドルをボタンへ付与 ---------- */
     document.querySelectorAll('a.x-btn[href]').forEach(function (a) {

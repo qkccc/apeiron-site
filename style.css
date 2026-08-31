@@ -830,27 +830,7 @@ body.nav-open .nav-overlay {
     pointer-events: auto;
 }
 
-/* --- スクロール入場アニメーション --- */
-/* JS が動く環境（html.js）でのみ初期状態を隠す。
-   JS 無効・読込失敗時はそのまま表示されるためコンテンツが消えない。 */
-.js .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    will-change: opacity, transform;
-}
-
-.js .reveal.is-visible {
-    opacity: 1;
-    transform: none;
-}
-
-@media (scripting: none) {
-    .reveal {
-        opacity: 1 !important;
-        transform: none !important;
-    }
-}
+/* スクロール入場アニメーションは廃止。.reveal クラスは無効（残っていても無害）。 */
 
 /* --- ページ上部へ戻るボタン（JSで生成） --- */
 .to-top {
@@ -1354,11 +1334,6 @@ footer {
         animation-iteration-count: 1 !important;
         transition-duration: 0.001ms !important;
         scroll-behavior: auto !important;
-    }
-
-    .reveal {
-        opacity: 1 !important;
-        transform: none !important;
     }
 
     .hero-scroll {
