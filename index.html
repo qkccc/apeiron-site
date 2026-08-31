@@ -5,7 +5,32 @@
     <!-- ===== 基本設定 ===== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APEIRON | Top</title>
+    <title>APEIRON | Shadowverse アマチュアeスポーツチーム公式サイト</title>
+    <meta name="description"
+        content="APEIRON（アペイロン）はShadowverse / Shadowverse Worlds Beyond のアマチュアeスポーツチームです。2021年設立。メンバー募集・対抗戦（スクリム）のお申し込みを随時受け付けています。">
+
+    <!-- ===== 正規URL ===== -->
+    <link rel="canonical" href="https://apeiron-site.vercel.app/">
+
+    <!-- ===== OGP / Twitter Card（SNSシェア用） ===== -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="APEIRON">
+    <meta property="og:title" content="APEIRON | Shadowverse アマチュアeスポーツチーム公式サイト">
+    <meta property="og:description"
+        content="Shadowverse アマチュアeスポーツチーム APEIRON の公式サイト。メンバー募集・対抗戦の情報を掲載しています。">
+    <meta property="og:url" content="https://apeiron-site.vercel.app/">
+    <meta property="og:image" content="https://apeiron-site.vercel.app/profile/Apeiron.jpg">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@Apeiron_SV0629">
+    <meta name="twitter:title" content="APEIRON | Shadowverse アマチュアeスポーツチーム公式サイト">
+    <meta name="twitter:description"
+        content="Shadowverse アマチュアeスポーツチーム APEIRON の公式サイト。メンバー募集・対抗戦の情報を掲載しています。">
+    <meta name="twitter:image" content="https://apeiron-site.vercel.app/profile/Apeiron.jpg">
+
+    <!-- ===== ファビコン ===== -->
+    <link rel="icon" href="profile/Apeiron.jpg" type="image/jpeg">
+    <link rel="apple-touch-icon" href="profile/Apeiron.jpg">
+    <meta name="theme-color" content="#0a0a0a">
 
     <!-- ===== スタイルシート ===== -->
     <link rel="stylesheet" href="style.css">
@@ -18,24 +43,37 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+JP:wght@400;700&display=swap"
         rel="stylesheet">
 
-    <!-- ===== アイコンライブラリ ===== -->
-    <!-- Font Awesome: SNSアイコン等で使用 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- ===== 構造化データ（Organization） ===== -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "APEIRON",
+        "alternateName": "アペイロン",
+        "url": "https://apeiron-site.vercel.app/",
+        "logo": "https://apeiron-site.vercel.app/profile/Apeiron.jpg",
+        "foundingDate": "2021-06-29",
+        "description": "Shadowverse / Shadowverse Worlds Beyond のアマチュアeスポーツチーム",
+        "sameAs": ["https://twitter.com/Apeiron_SV0629"]
+    }
+    </script>
 </head>
 
 <body>
+
+    <!-- キーボード操作用: 本文へスキップ -->
+    <a href="#main" class="skip-link">本文へスキップ</a>
 
     <!-- ===== ヘッダーナビゲーション ===== -->
     <!-- 全ページ共通のナビゲーションバー（固定表示） -->
     <header>
         <!-- ロゴ画像（クリックでトップページへ） -->
         <a href="index.html" class="logo">
-            <img src="https://static.wixstatic.com/media/0b2d0a_02bb0feb79f04127994e2a62bcaacbe8~mv2.jpg"
-                alt="APEIRON Logo">
+            <img src="profile/Apeiron.jpg" alt="APEIRON" width="45" height="45" fetchpriority="high">
         </a>
 
         <!-- メインナビゲーションメニュー -->
-        <nav>
+        <nav aria-label="メインナビゲーション">
             <ul>
                 <li><a href="index.html" class="active">TOP</a></li>
                 <li><a href="about.html">ABOUT</a></li>
@@ -44,6 +82,8 @@
             </ul>
         </nav>
     </header>
+
+    <main id="main" tabindex="-1">
 
     <!-- ===== ヒーローセクション ===== -->
     <!-- ページトップのメインビジュアルエリア -->
@@ -54,7 +94,8 @@
 
     <!-- ===== お知らせセクション ===== -->
     <!-- メンバー募集と対抗戦募集の情報を表示 -->
-    <section class="top-info-section">
+    <section class="top-info-section" aria-labelledby="news-heading">
+        <h2 id="news-heading" class="top-section-label">NEWS <span>お知らせ</span></h2>
 
         <!-- メンバー募集カード -->
         <div class="info-card">
@@ -67,10 +108,11 @@
                 公募を開始いたしました。<br>
                 詳細は下記の公式Xのポストをご確認ください。
             </p>
-            <!-- 公式Xポスト埋め込み -->
+            <!-- 公式Xポスト埋め込み（widgets.js 未読込時はテキストリンクを表示） -->
             <div class="x-embed">
                 <blockquote class="twitter-tweet" data-theme="dark" data-dnt="true">
-                    <a href="https://twitter.com/Apeiron_SV0629/status/2093896493019119687"></a>
+                    <a href="https://twitter.com/Apeiron_SV0629/status/2093896493019119687" target="_blank"
+                        rel="noopener noreferrer">公募開始のお知らせ（公式Xのポストを見る）</a>
                 </blockquote>
             </div>
         </div>
@@ -87,7 +129,7 @@
                 チーム公式XのDMにご連絡ください。
             </p>
             <!-- 公式Xアカウントへのリンク -->
-            <a href="https://twitter.com/Apeiron_SV0629" target="_blank"
+            <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer"
                 style="display:inline-block; margin-top:15px; color:var(--accent); border-bottom:1px solid var(--accent);">
                 公式Xへ連絡する &rarr;
             </a>
@@ -96,34 +138,42 @@
 
     <!-- ===== ナビゲーションカードセクション ===== -->
     <!-- 各ページへのビジュアルリンク -->
-    <section class="top-nav-section">
+    <section class="top-nav-section" aria-labelledby="menu-heading">
+        <h2 id="menu-heading" class="top-section-label">MENU <span>ページ一覧</span></h2>
         <div class="nav-grid">
             <!-- チーム紹介ページへのリンク -->
             <a href="about.html" class="nav-card">
-                <h2>ABOUT</h2>
+                <h3>ABOUT</h3>
             </a>
 
             <!-- 戦績ページへのリンク -->
             <a href="achievements.html" class="nav-card">
-                <h2>ACHIEVEMENTS</h2>
+                <h3>ACHIEVEMENTS</h3>
             </a>
 
             <!-- メンバー紹介ページへのリンク -->
             <a href="members.html" class="nav-card">
-                <h2>MEMBERS</h2>
+                <h3>MEMBERS</h3>
             </a>
         </div>
     </section>
 
+    </main>
+
     <!-- ===== フッター ===== -->
     <!-- サイト下部の著作権表記と連絡先 -->
     <footer>
-        &copy; 2025 APEIRON Shadowverse Team.<br>
-        Contact: <a href="https://twitter.com/Apeiron_SV0629" target="_blank" style="color:#D4AF37;">@Apeiron_SV0629</a>
+        &copy; 2021&ndash;<span id="footer-year">2026</span> APEIRON Shadowverse Team.<br>
+        Contact: <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer"
+            style="color:#D4AF37;">@Apeiron_SV0629</a>
     </footer>
 
     <!-- ===== X (Twitter) 埋め込みウィジェット ===== -->
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script>
+        // フッターの著作権年を自動更新
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+    </script>
 
 </body>
 

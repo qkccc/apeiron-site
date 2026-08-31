@@ -34,6 +34,36 @@ a {
     transition: 0.3s;
 }
 
+/* キーボード操作: フォーカスリング */
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+
+/* 本文へスキップリンク（フォーカス時のみ表示） */
+.skip-link {
+    position: absolute;
+    left: 12px;
+    top: -60px;
+    z-index: 2000;
+    background: var(--accent);
+    color: #000;
+    font-weight: 700;
+    padding: 10px 18px;
+    border-radius: 6px;
+    transition: top 0.2s;
+}
+
+.skip-link:focus {
+    top: 12px;
+}
+
+main:focus {
+    outline: none;
+}
+
 /* --- ヘッダー --- */
 header {
     position: fixed;
@@ -44,6 +74,7 @@ header {
     justify-content: space-between;
     align-items: center;
     background: rgba(10, 10, 10, 0.95);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     z-index: 1000;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -93,17 +124,15 @@ nav a.active {
 .hero h1 {
     font-size: clamp(3rem, 8vw, 6rem);
     letter-spacing: clamp(5px, 1vw, 15px);
+    /* background-clip 非対応環境用のフォールバック色 */
+    color: var(--accent);
     background: linear-gradient(135deg, #D4AF37 0%, #8a6e18 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 20px;
     text-shadow: 0 0 40px var(--accent-glow);
     line-height: 1.1;
-}
-
-/* 標準プロパティも追加して警告を消す */
-.hero h1 {
-    background-clip: text;
 }
 
 .hero p {
@@ -118,6 +147,28 @@ nav a.active {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
+}
+
+/* セクション見出し（NEWS / MENU） */
+.top-section-label {
+    grid-column: 1 / -1;
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.top-section-label span {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: var(--text-sub);
+    margin-left: 12px;
+}
+
+.top-nav-section .top-section-label {
+    margin-bottom: 25px;
 }
 
 .info-card {
@@ -194,7 +245,8 @@ nav a.active {
     box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
 }
 
-.nav-card h2 {
+.nav-card h3 {
+    font-family: 'Montserrat', sans-serif;
     font-size: clamp(1.2rem, 2vw, 2rem);
     z-index: 2;
     text-transform: uppercase;
@@ -583,7 +635,7 @@ nav a.active {
 footer {
     text-align: center;
     padding: 40px;
-    color: #666;
+    color: #9a9a9a;
     font-size: 0.8rem;
     border-top: 1px solid #222;
     background: #0a0a0a;
@@ -619,7 +671,7 @@ footer {
         grid-template-columns: 1fr;
     }
 
-    .nav-card h2 {
+    .nav-card h3 {
         font-size: 1.5rem;
     }
 
