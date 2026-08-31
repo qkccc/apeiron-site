@@ -157,6 +157,15 @@ nav a.active {
     color: #888;
 }
 
+/* X（Twitter）ポスト埋め込み */
+.x-embed {
+    margin-top: 20px;
+}
+
+.x-embed .twitter-tweet {
+    margin: 0 !important;
+}
+
 .top-nav-section {
     padding: 0 10% 80px;
 }
