@@ -144,6 +144,9 @@ nav a.active {
 /* --- トップページ：情報＆ナビエリア --- */
 .top-info-section {
     padding: 60px 10%;
+}
+
+.info-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
@@ -151,7 +154,6 @@ nav a.active {
 
 /* セクション見出し（NEWS / MENU） */
 .top-section-label {
-    grid-column: 1 / -1;
     font-size: 1.4rem;
     letter-spacing: 3px;
     text-transform: uppercase;
