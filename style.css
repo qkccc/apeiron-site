@@ -819,7 +819,10 @@ body.nav-open .nav-toggle span:nth-child(3) {
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
-    z-index: 1050;
+    /* ドロワー(#site-nav)は position:fixed の <header>(z-index:1000) の子で、
+       その内側にスタッキングコンテキストが閉じている。オーバーレイを
+       header より下(=999)に置くことで、ヘッダー経由でドロワーが前面に描画される。 */
+    z-index: 999;
 }
 
 body.nav-open .nav-overlay {
@@ -1280,6 +1283,12 @@ footer {
         flex-direction: row;
         padding: 10px 18px;
         gap: 0;
+        /* backdrop-filter を持つ祖先は position:fixed の子孫の基準を
+           自分の箱に閉じ込めてしまい、ドロワーがヘッダー高に潰れる。
+           モバイルではぼかしを外す（背景は元々ほぼ不透明で見た目はほぼ不変）。 */
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        background: rgba(10, 10, 10, 0.98);
     }
 
     .nav-toggle {
