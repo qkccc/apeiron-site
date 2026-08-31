@@ -1140,6 +1140,22 @@ body.nav-open .nav-overlay {
     border-bottom: 0;
 }
 
+/* 個人実績のカテゴリ小見出し */
+.ach-subhead {
+    font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text-main);
+    margin: 30px 0 2px;
+    padding-left: 12px;
+    border-left: 3px solid var(--accent);
+}
+
+.ach-subhead:first-of-type {
+    margin-top: 16px;
+}
+
 /* --- MEMBERS：note リンクのダークテーマ化・X ボタンのハンドル表示 --- */
 .note-links {
     margin: 48px auto 0;
