@@ -27,12 +27,14 @@
     <link rel="apple-touch-icon" href="profile/Apeiron.jpg">
     <meta name="theme-color" content="#0a0a0a">
 
+    <script>document.documentElement.classList.add('js');</script>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+JP:wght@400;700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
@@ -43,10 +45,14 @@
         <a href="index.html" class="logo">
             <img src="profile/Apeiron.jpg" alt="APEIRON" width="45" height="45" fetchpriority="high">
         </a>
-        <nav aria-label="メインナビゲーション">
+        <button class="nav-toggle" type="button" aria-label="メニューを開閉" aria-expanded="false"
+            aria-controls="site-nav">
+            <span></span><span></span><span></span>
+        </button>
+        <nav id="site-nav" aria-label="メインナビゲーション">
             <ul>
                 <li><a href="index.html">TOP</a></li>
-                <li><a href="about.html" class="active">ABOUT</a></li>
+                <li><a href="about.html" class="active" aria-current="page">ABOUT</a></li>
                 <li><a href="achievements.html">ACHIEVEMENTS</a></li>
                 <li><a href="members.html">MEMBERS</a></li>
             </ul>
@@ -55,14 +61,12 @@
 
     <main id="main" tabindex="-1">
 
-    <div style="margin-top: 100px;"></div>
-
     <section class="section-container about-us">
         <h1 class="section-title">TEAM <span>HISTORY</span></h1>
 
         <div class="timeline">
             <!-- 2021.06 -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <span class="timeline-date">2021.06</span>
                 <div class="timeline-content history-log">
                     <div class="log-item">
@@ -78,7 +82,7 @@
             </div>
 
             <!-- 2021.09 -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <span class="timeline-date">2021.09</span>
                 <div class="timeline-content history-log">
                     <div class="log-item">
@@ -93,7 +97,7 @@
             </div>
 
             <!-- 2021.11 -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <span class="timeline-date">2021.11</span>
                 <div class="timeline-content history-log">
                     <div class="log-item">
@@ -104,7 +108,7 @@
             </div>
 
             <!-- 2022.03 -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <span class="timeline-date">2022.03</span>
                 <div class="timeline-content history-log">
                     <div class="log-item">
@@ -119,7 +123,7 @@
             </div>
 
             <!-- 2022.06 -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <span class="timeline-date">2022.06</span>
                 <div class="timeline-content history-log">
                     <div class="log-item">
@@ -130,7 +134,7 @@
             </div>
 
             <!-- 2022.08 -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <span class="timeline-date">2022.08</span>
                 <div class="timeline-content history-log">
                     <div class="log-item">
@@ -141,7 +145,7 @@
             </div>
 
             <!-- 2022.12 -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <span class="timeline-date">2022.12</span>
                 <div class="timeline-content history-log">
                     <div class="log-item">
@@ -152,7 +156,7 @@
             </div>
 
             <!-- 2023.01 -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <span class="timeline-date">2023.01</span>
                 <div class="timeline-content history-log">
                     <div class="log-item">
@@ -163,7 +167,7 @@
             </div>
 
             <!-- 2023.12 -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <span class="timeline-date">2023.12</span>
                 <div class="timeline-content history-log">
                     <div class="log-item">
@@ -174,7 +178,7 @@
             </div>
 
             <!-- 2025.06 -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <span class="timeline-date">2025.06</span>
                 <div class="timeline-content history-log">
                     <div class="log-item">
@@ -189,7 +193,7 @@
             </div>
 
             <!-- 2025.07 -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <span class="timeline-date">2025.07</span>
                 <div class="timeline-content history-log">
                     <div class="log-item">
@@ -204,7 +208,7 @@
             </div>
 
             <!-- 2025.10 -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <span class="timeline-date">2025.10</span>
                 <div class="timeline-content history-log">
                     <div class="log-item">
@@ -215,7 +219,7 @@
             </div>
 
             <!-- 2026.1 -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <span class="timeline-date">2026.1</span>
                 <div class="timeline-content history-log">
                     <div class="log-item">
@@ -226,7 +230,7 @@
             </div>
 
             <!-- 2026.3 -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <span class="timeline-date">2026.3</span>
                 <div class="timeline-content history-log">
                     <div class="log-item">
@@ -237,7 +241,7 @@
             </div>
 
             <!-- 2026.4 -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <span class="timeline-date">2026.4</span>
                 <div class="timeline-content history-log">
                     <div class="log-item">
@@ -248,7 +252,7 @@
             </div>
 
             <!-- 2026.5 -->
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <span class="timeline-date">2026.5</span>
                 <div class="timeline-content history-log">
                     <div class="log-item">
@@ -263,14 +267,22 @@
     </main>
 
     <footer>
-        &copy; 2021&ndash;<span id="footer-year">2026</span> APEIRON Shadowverse Team.<br>
-        Contact: <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer"
-            style="color:#D4AF37;">@Apeiron_SV0629</a>
+        <div class="footer-inner">
+            <p class="footer-copy">&copy; 2021&ndash;<span data-year>2026</span> APEIRON Shadowverse Team.</p>
+            <nav class="footer-links" aria-label="フッターナビゲーション">
+                <a href="index.html">TOP</a>
+                <a href="about.html">ABOUT</a>
+                <a href="achievements.html">ACHIEVEMENTS</a>
+                <a href="members.html">MEMBERS</a>
+            </nav>
+            <p class="footer-social">
+                <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer"
+                    aria-label="公式X（@Apeiron_SV0629）"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+            </p>
+        </div>
     </footer>
 
-    <script>
-        document.getElementById('footer-year').textContent = new Date().getFullYear();
-    </script>
+    <script src="main.js" defer></script>
 
 </body>
 
