@@ -141,6 +141,14 @@
     font-weight: 700;
 }
 
+.window-caption {
+    text-align: center;
+    color: var(--text-tertiary);
+    font-size: 0.85rem;
+    margin: calc(-1 * var(--spacing-md)) 0 var(--spacing-lg);
+    min-height: 1em;
+}
+
 /* ============================================================================
    サマリーカード
    ============================================================================ */

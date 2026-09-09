@@ -16,7 +16,7 @@ const CLASS_ABBR = {
 };
 
 const WINDOW_LABELS = {
-    today: "今日", "3d": "直近3日", "7d": "直近7日", "30d": "直近30日", all: "全期間"
+    "3d": "直近3日", "7d": "直近7日", season: "今環境", all: "全期間"
 };
 
 let statsData = null;
@@ -68,12 +68,22 @@ function renderWindow() {
     const w = statsData.windows[currentWindow];
     if (!w) return;
 
+    renderCaption();
     renderSummary(w);
 
     const empty = w.total_games === 0;
+    const suppressed = !empty && (w.detail_suppressed || !w.by_class);
+
     document.getElementById("empty-window").hidden = !empty;
-    document.getElementById("detail-sections").hidden = empty;
-    if (empty) return;
+    const supNote = document.getElementById("suppressed-note");
+    supNote.hidden = !suppressed;
+    if (suppressed) {
+        const min = statsData.meta?.min_recorders_for_detail || 3;
+        supNote.textContent =
+            `この期間の記録者が ${min} 名未満のため、個人の特定を避ける目的で詳細集計は非表示にしています（全体の勝敗のみ表示）。`;
+    }
+    document.getElementById("detail-sections").hidden = empty || suppressed;
+    if (empty || suppressed) return;
 
     renderByClass(w);
     renderVsClass(w);
@@ -81,14 +91,26 @@ function renderWindow() {
     renderArchetype(w);
 }
 
+function renderCaption() {
+    const el = document.getElementById("window-caption");
+    if (currentWindow !== "season") {
+        el.textContent = "";
+        return;
+    }
+    const s = statsData.meta?.season_start;
+    if (!s) { el.textContent = ""; return; }
+    const [, mm, dd] = s.split("-");
+    const isDefault = statsData.meta?.season_start_is_default;
+    el.textContent =
+        `今環境: ${Number(mm)}/${Number(dd)} 〜` +
+        (isDefault ? "（未設定のため26日区切りで自動判定）" : "（/season_start 設定値）");
+}
+
 function renderSummary(w) {
-    const firstTurn = w.by_turn["先攻"];
-    const secondTurn = w.by_turn["後攻"];
     const cards = [
         { h: "総試合数", v: w.total_games.toLocaleString(), sub: `記録者 ${w.recorder_count} 名` },
         { h: "勝率", v: fmtRate(w.win_rate), sub: `${w.wins}勝 ${w.losses}敗` },
-        { h: "先攻 勝率", v: firstTurn ? fmtRate(firstTurn.win_rate) : "—", sub: firstTurn ? `${firstTurn.games}戦` : "記録なし" },
-        { h: "後攻 勝率", v: secondTurn ? fmtRate(secondTurn.win_rate) : "—", sub: secondTurn ? `${secondTurn.games}戦` : "記録なし" }
+        { h: "記録者数", v: String(w.recorder_count), sub: "この期間に記録した人数" }
     ];
     document.getElementById("summary-cards").innerHTML = cards.map(c => `
         <div class="summary-card">

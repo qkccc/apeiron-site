@@ -43,12 +43,12 @@
 
         <!-- ===== 期間タブ ===== -->
         <div class="window-navigation" id="window-navigation">
-            <button class="window-button" data-window="today">今日</button>
             <button class="window-button" data-window="3d">直近3日</button>
             <button class="window-button active" data-window="7d">直近7日</button>
-            <button class="window-button" data-window="30d">直近30日</button>
+            <button class="window-button" data-window="season">今環境</button>
             <button class="window-button" data-window="all">全期間</button>
         </div>
+        <p class="window-caption" id="window-caption"></p>
 
         <!-- ===== 状態表示 ===== -->
         <div id="state-box" class="state-box">
@@ -66,6 +66,9 @@
             <div class="empty-window" id="empty-window" hidden>
                 この期間に記録された対戦はありません。
             </div>
+
+            <!-- 記録者が少なく詳細を伏せているとき -->
+            <div class="empty-window" id="suppressed-note" hidden></div>
 
             <div id="detail-sections">
                 <!-- 自クラス別 -->
