@@ -9,6 +9,9 @@
 
 const DATA_URL = "data/sv-stats.json";
 
+// 対面マトリクス: この試合数未満のセルは色付けしない（少数サンプルのノイズ回避）
+const MIN_HEAT_GAMES = 5;
+
 // クラス名 -> アイコン略称（icon/class_*.png）
 const CLASS_ABBR = {
     "エルフ": "E", "ロイヤル": "R", "ウィッチ": "W", "ドラゴン": "D",
@@ -43,6 +46,26 @@ async function init() {
         showError("データの読み込みに失敗しました: " + err.message);
         return;
     }
+
+    // JSON に無い期間タブは隠す（古い sv-stats.json でも壊れないように）
+    const windows = statsData.windows || {};
+    let firstAvailable = null;
+    document.querySelectorAll(".window-button").forEach(btn => {
+        const key = btn.dataset.window;
+        if (windows[key]) {
+            btn.hidden = false;
+            if (!firstAvailable) firstAvailable = key;
+        } else {
+            btn.hidden = true;
+            btn.classList.remove("active");
+        }
+    });
+    if (!windows[currentWindow]) {
+        currentWindow = firstAvailable || currentWindow;
+    }
+    document.querySelectorAll(".window-button").forEach(b => {
+        b.classList.toggle("active", b.dataset.window === currentWindow);
+    });
 
     document.getElementById("state-box").hidden = true;
     document.getElementById("content").hidden = false;
@@ -172,7 +195,9 @@ function renderMatrix(w) {
             }
             const losses = cell.games - cell.wins;
             const diag = my === opp ? " diagonal" : "";
-            body += `<td class="has-data ${heatClass(cell.win_rate)}${diag}">
+            const lowN = cell.games < MIN_HEAT_GAMES;
+            const style = lowN ? "" : matrixCellStyle(cell.win_rate);
+            body += `<td class="has-data${lowN ? " low-n" : ""}${diag}"${style ? ` style="${style}"` : ""}>
                 <span class="cell-rate">${Math.round(cell.win_rate)}%</span>
                 <span class="cell-wl">${cell.wins}-${losses}</span>
             </td>`;
@@ -289,13 +314,18 @@ function wrClass(rate) {
     return "wr-mid";
 }
 
-function heatClass(rate) {
-    if (rate == null) return "heat-3";
-    if (rate >= 60) return "heat-5";
-    if (rate >= 53) return "heat-4";
-    if (rate > 47) return "heat-3";
-    if (rate > 40) return "heat-2";
-    return "heat-1";
+// 対面マトリクスのセル背景色（インラインstyle文字列）。
+// 50% = 白、100%に近づくほど濃い青、0%に近づくほど濃い赤。
+function matrixCellStyle(rate) {
+    if (rate == null) return "";
+    const t = (rate - 50) / 50;                      // -1..+1
+    const mag = Math.pow(Math.min(1, Math.abs(t)), 0.75);  // 中間域も少し色づける
+    const target = t >= 0 ? [31, 111, 235] : [220, 38, 38]; // 青 / 赤
+    const mix = i => Math.round(255 + (target[i] - 255) * mag);
+    const r = mix(0), g = mix(1), b = mix(2);
+    const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    const fg = lum > 0.62 ? "#14181c" : "#ffffff";
+    return `background:rgb(${r},${g},${b});color:${fg}`;
 }
 
 function iconImg(className) {

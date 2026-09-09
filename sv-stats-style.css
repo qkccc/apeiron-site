@@ -358,19 +358,23 @@
 .matchup-matrix td .cell-wl {
     display: block;
     font-size: 0.68rem;
-    color: var(--text-tertiary);
+    color: inherit;
+    opacity: 0.72;
 }
 
 .matchup-matrix td.diagonal {
     outline: 1px dashed var(--border-accent);
 }
 
-/* 勝率ヒートマップ背景 */
-.heat-5 { background: #1d6a3a; color: #fff; }
-.heat-4 { background: #276b3f33; }
-.heat-3 { background: var(--bg-table-row-alt); }
-.heat-2 { background: #6b272733; }
-.heat-1 { background: #7a2525; color: #fff; }
+/* 試合数が少ないセルは色付けせず、控えめに表示 */
+.matchup-matrix td.low-n {
+    background: var(--bg-table-row-alt);
+    color: var(--text-tertiary);
+}
+
+.matchup-matrix td.low-n .cell-rate {
+    font-weight: 400;
+}
 
 /* ============================================================================
    トレンドチャート
