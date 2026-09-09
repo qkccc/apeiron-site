@@ -64,6 +64,19 @@ main:focus {
     outline: none;
 }
 
+/* アニメーション控えめ設定のユーザーへ配慮 */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
 /* --- ヘッダー --- */
 header {
     position: fixed;
@@ -106,6 +119,37 @@ nav a {
 nav a:hover,
 nav a.active {
     color: var(--accent);
+}
+
+/* --- モバイル用メニュー開閉ボタン（デスクトップでは非表示） --- */
+.nav-toggle {
+    display: none;
+    background: none;
+    border: 0;
+    padding: 8px;
+    cursor: pointer;
+    line-height: 0;
+}
+
+.nav-toggle-bar {
+    display: block;
+    width: 26px;
+    height: 2px;
+    background: var(--text-main);
+    margin: 6px 0;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
 }
 
 /* --- ヒーローセクション --- */
@@ -188,6 +232,24 @@ nav a.active {
     border-bottom: 1px solid var(--accent);
     padding-bottom: 10px;
     display: inline-block;
+}
+
+/* 情報カード内の説明文 */
+.info-card-note {
+    color: #ccc;
+    margin-top: 10px;
+}
+
+/* 情報カード内のテキストリンク（「公式Xへ連絡する →」など） */
+.card-link {
+    display: inline-block;
+    margin-top: 15px;
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+}
+
+.card-link:hover {
+    opacity: 0.8;
 }
 
 .status-badge {
@@ -275,6 +337,11 @@ nav a.active {
 
 
 /* --- 共通セクション --- */
+/* 固定ヘッダー分の余白を確保するスペーサー（下層ページ用） */
+.header-spacer {
+    height: 100px;
+}
+
 .section-container {
     padding: 100px 10%;
 }
@@ -602,10 +669,44 @@ nav a.active {
     z-index: 1;
 }
 
+/* --- トップページ：ハイライト（実績抜粋） --- */
+.top-spotlight-section {
+    padding: 60px 10% 0;
+}
+
+/* スポットライトをリンクとして使う場合（トップページ） */
+a.achievement-spotlight {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+a.achievement-spotlight:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 0 60px rgba(212, 175, 55, 0.30), inset 0 0 30px rgba(212, 175, 55, 0.07);
+}
+
+.spotlight-cta {
+    display: inline-block;
+    margin-top: 18px;
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
+}
+
 @media (max-width: 768px) {
     .achievement-spotlight {
         padding: 30px 22px;
         margin-bottom: 40px;
+    }
+
+    .top-spotlight-section {
+        padding: 40px 5% 0;
     }
 }
 
@@ -633,6 +734,16 @@ nav a.active {
     font-size: 1.5rem;
 }
 
+/* 実績リスト内の小見出し（「個人実績」など） */
+.achievements li.achievements-subhead {
+    margin-top: 30px;
+    border-top: 1px solid #333;
+    border-bottom: none;
+    padding-top: 30px;
+    font-weight: bold;
+    color: var(--accent);
+}
+
 /* --- フッター --- */
 footer {
     text-align: center;
@@ -644,24 +755,62 @@ footer {
     margin-top: 50px;
 }
 
+footer a {
+    color: var(--accent);
+}
+
+footer a:hover {
+    opacity: 0.8;
+}
+
 @media (max-width: 768px) {
     header {
-        padding: 15px 20px;
-        flex-direction: column;
-        gap: 15px;
+        padding: 12px 20px;
+    }
+
+    /* モバイル: ハンバーガーメニュー表示 */
+    .nav-toggle {
+        display: block;
+    }
+
+    /* モバイル: ナビはヘッダー下に開くドロップダウン */
+    nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(10, 10, 10, 0.98);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    nav.open {
+        max-height: 80vh;
     }
 
     nav ul {
-        gap: 15px;
-        flex-wrap: wrap;
-        justify-content: center;
+        flex-direction: column;
+        gap: 0;
+        padding: 8px 0;
+    }
+
+    nav ul li {
+        width: 100%;
+    }
+
+    nav ul li a {
+        display: block;
+        padding: 14px 24px;
     }
 
     .hero {
-        padding-top: 160px;
+        padding-top: 110px;
         height: auto;
         min-height: 60vh;
-        font-size: 3rem;
     }
 
     .section-container {
@@ -670,6 +819,14 @@ footer {
     }
 
     .top-info-section {
+        padding: 40px 5%;
+    }
+
+    .top-nav-section {
+        padding: 0 5% 60px;
+    }
+
+    .info-grid {
         grid-template-columns: 1fr;
     }
 

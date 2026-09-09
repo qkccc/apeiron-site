@@ -72,8 +72,15 @@
             <img src="profile/Apeiron.jpg" alt="APEIRON" width="45" height="45" fetchpriority="high">
         </a>
 
+        <!-- モバイル用メニュー開閉ボタン（768px以下で表示） -->
+        <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="メニューを開く">
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+        </button>
+
         <!-- メインナビゲーションメニュー -->
-        <nav aria-label="メインナビゲーション">
+        <nav id="primary-nav" aria-label="メインナビゲーション">
             <ul>
                 <li><a href="index.html" class="active">TOP</a></li>
                 <li><a href="about.html">ABOUT</a></li>
@@ -92,6 +99,25 @@
         <p>SHADOWVERSE AMATEUR TEAM</p>
     </section>
 
+    <!-- ===== ハイライト（実績抜粋） ===== -->
+    <!-- 初見の訪問者向けに主な実績を1つだけ大きく表示。クリックで実績ページへ -->
+    <section class="top-spotlight-section" aria-labelledby="spotlight-heading">
+        <h2 id="spotlight-heading" class="top-section-label">HIGHLIGHT <span>主な実績</span></h2>
+        <a href="achievements.html" class="achievement-spotlight">
+            <span class="spotlight-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M3 6l4.5 3.2L12 3l4.5 6.2L21 6l-2 13H5L3 6zm2 15h14v2H5v-2z" />
+                </svg>
+                HIGHLIGHT
+            </span>
+            <h3 class="spotlight-title">
+                RAGE Shadowverse JCS 2026 Season2
+                <span>準優勝 ＆ プレーオフ決勝進出</span>
+            </h3>
+            <span class="spotlight-cta">その他の実績を見る &rarr;</span>
+        </a>
+    </section>
+
     <!-- ===== お知らせセクション ===== -->
     <!-- メンバー募集と対抗戦募集の情報を表示 -->
     <section class="top-info-section" aria-labelledby="news-heading">
@@ -106,7 +132,7 @@
                 <!-- ステータスバッジ: open（募集中）/ closed（募集終了） -->
                 <span class="status-badge open">OPEN</span>
             </div>
-            <p style="color:#ccc; margin-top:10px;">
+            <p class="info-card-note">
                 公募を開始いたしました。<br>
                 詳細は下記の公式Xのポストをご確認ください。
             </p>
@@ -126,13 +152,12 @@
                 <!-- ステータスバッジ: open（募集中）/ closed（募集終了） -->
                 <span class="status-badge open">ACCEPTING</span>
             </div>
-            <p style="color:#ccc; margin-top:10px;">
+            <p class="info-card-note">
                 対抗戦（チーム戦）のお申し込みを随時受け付けております。<br>
                 チーム公式XのDMにご連絡ください。
             </p>
             <!-- 公式Xアカウントへのリンク -->
-            <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer"
-                style="display:inline-block; margin-top:15px; color:var(--accent); border-bottom:1px solid var(--accent);">
+            <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer" class="card-link">
                 公式Xへ連絡する &rarr;
             </a>
         </div>
@@ -168,16 +193,13 @@
     <!-- サイト下部の著作権表記と連絡先 -->
     <footer>
         &copy; 2021&ndash;<span id="footer-year">2026</span> APEIRON Shadowverse Team.<br>
-        Contact: <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer"
-            style="color:#D4AF37;">@Apeiron_SV0629</a>
+        Contact: <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer">@Apeiron_SV0629</a>
     </footer>
 
     <!-- ===== X (Twitter) 埋め込みウィジェット ===== -->
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    <script>
-        // フッターの著作権年を自動更新
-        document.getElementById('footer-year').textContent = new Date().getFullYear();
-    </script>
+    <!-- ===== 全ページ共通スクリプト（モバイルナビ・年号更新） ===== -->
+    <script src="site.js" defer></script>
 
 </body>
 

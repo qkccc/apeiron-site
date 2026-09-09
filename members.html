@@ -83,7 +83,12 @@
         <a href="index.html" class="logo">
             <img src="profile/Apeiron.jpg" alt="APEIRON" width="45" height="45" fetchpriority="high">
         </a>
-        <nav aria-label="メインナビゲーション">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="メニューを開く">
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+        </button>
+        <nav id="primary-nav" aria-label="メインナビゲーション">
             <ul>
                 <li><a href="index.html">TOP</a></li>
                 <li><a href="about.html">ABOUT</a></li>
@@ -95,7 +100,7 @@
 
     <main id="main" tabindex="-1">
 
-    <div style="margin-top: 100px;"></div>
+    <div class="header-spacer" aria-hidden="true"></div>
 
     <section class="section-container members">
         <h1 class="section-title">TEAM <span>ROSTER</span></h1>
@@ -427,13 +432,10 @@
 
     <footer>
         &copy; 2021&ndash;<span id="footer-year">2026</span> APEIRON Shadowverse Team.<br>
-        Contact: <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer"
-            style="color:#D4AF37;">@Apeiron_SV0629</a>
+        Contact: <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer">@Apeiron_SV0629</a>
     </footer>
 
-    <script>
-        document.getElementById('footer-year').textContent = new Date().getFullYear();
-    </script>
+    <script src="site.js" defer></script>
 
 </body>
 
