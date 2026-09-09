@@ -22,8 +22,11 @@ const WINDOW_LABELS = {
     "3d": "直近3日", "7d": "直近7日", season: "今環境", all: "全期間"
 };
 
+// ページを開いたときに選択されるタブ
+const DEFAULT_WINDOW = "7d";
+
 let statsData = null;
-let currentWindow = "7d";
+let currentWindow = DEFAULT_WINDOW;
 
 document.addEventListener("DOMContentLoaded", init);
 
@@ -57,12 +60,12 @@ async function init() {
             if (!firstAvailable) firstAvailable = key;
         } else {
             btn.hidden = true;
-            btn.classList.remove("active");
         }
     });
-    if (!windows[currentWindow]) {
-        currentWindow = firstAvailable || currentWindow;
-    }
+    // 既定は直近7日。無ければ利用可能な最初のタブ。
+    currentWindow = windows[DEFAULT_WINDOW]
+        ? DEFAULT_WINDOW
+        : (windows[currentWindow] ? currentWindow : firstAvailable) || DEFAULT_WINDOW;
     document.querySelectorAll(".window-button").forEach(b => {
         b.classList.toggle("active", b.dataset.window === currentWindow);
     });
