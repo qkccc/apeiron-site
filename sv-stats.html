@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- ===== 基本設定 ===== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APEIRON | SV Team Stats</title>
+    <meta name="description" content="APEIRON メンバーが記録した Shadowverse: Worlds Beyond の対戦データを、チーム全体・匿名で集計したページ。">
+
+    <!-- ===== スタイルシート ===== -->
+    <link rel="stylesheet" href="sv-stats-style.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ===== フォント読み込み ===== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/web-analytics/script.js"></script>
+</head>
+
+<body>
+
+    <!-- ===== メインコンテンツ ===== -->
+    <main class="sv-stats-main">
+
+        <!-- ===== ヘッダー ===== -->
+        <div class="sv-stats-header">
+            <h1>SV Team Stats</h1>
+            <p>メンバーの対戦記録・チーム全体の匿名集計</p>
+        </div>
+
+        <!-- ===== ページナビゲーション ===== -->
+        <nav class="page-navigation">
+            <a href="dashboard.html" class="nav-link">SCL Team Results →</a>
+            <a href="player-stats.html" class="nav-link">Player Statistics →</a>
+        </nav>
+
+        <!-- ===== 期間タブ ===== -->
+        <div class="window-navigation" id="window-navigation">
+            <button class="window-button" data-window="today">今日</button>
+            <button class="window-button" data-window="3d">直近3日</button>
+            <button class="window-button active" data-window="7d">直近7日</button>
+            <button class="window-button" data-window="30d">直近30日</button>
+            <button class="window-button" data-window="all">全期間</button>
+        </div>
+
+        <!-- ===== 状態表示 ===== -->
+        <div id="state-box" class="state-box">
+            <p>データを読み込み中...</p>
+            <div class="spinner"></div>
+        </div>
+
+        <!-- ===== コンテンツ本体（JSで表示切替） ===== -->
+        <div id="content" hidden>
+
+            <!-- サマリーカード -->
+            <div class="summary-cards" id="summary-cards"></div>
+
+            <!-- 期間内にデータが無いとき -->
+            <div class="empty-window" id="empty-window" hidden>
+                この期間に記録された対戦はありません。
+            </div>
+
+            <div id="detail-sections">
+                <!-- 自クラス別 -->
+                <section class="stats-section">
+                    <h2>自クラス別成績</h2>
+                    <p class="section-note">使用率 = その期間の全試合に占める割合</p>
+                    <div class="table-container">
+                        <table class="stats-table" id="by-class-table">
+                            <thead>
+                                <tr>
+                                    <th>クラス</th>
+                                    <th class="num">使用率</th>
+                                    <th class="num">試合</th>
+                                    <th class="num">勝</th>
+                                    <th class="num">敗</th>
+                                    <th class="num">勝率</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 相手クラス分布 -->
+                <section class="stats-section">
+                    <h2>相手クラス分布</h2>
+                    <p class="section-note">遭遇率 = 相手クラスの出現割合 ／ 勝率 = その相手に対する自分の勝率</p>
+                    <div class="table-container">
+                        <table class="stats-table" id="vs-class-table">
+                            <thead>
+                                <tr>
+                                    <th>相手クラス</th>
+                                    <th class="num">遭遇率</th>
+                                    <th class="num">試合</th>
+                                    <th class="num">勝</th>
+                                    <th class="num">敗</th>
+                                    <th class="num">勝率</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 対面マトリクス -->
+                <section class="stats-section">
+                    <h2>対面マトリクス</h2>
+                    <p class="section-note">行 = 自分のクラス ／ 列 = 相手のクラス ／ セル = 勝率（下段は 勝-敗）</p>
+                    <div class="matrix-container">
+                        <table class="matchup-matrix" id="matchup-matrix"></table>
+                    </div>
+                </section>
+
+                <!-- 相手アーキタイプ環境 -->
+                <section class="stats-section" id="archetype-section" hidden>
+                    <h2>相手アーキタイプ環境</h2>
+                    <p class="section-note">3戦以上・遭遇数の多い順（上位15）</p>
+                    <div class="table-container">
+                        <table class="stats-table" id="archetype-table">
+                            <thead>
+                                <tr>
+                                    <th>アーキタイプ</th>
+                                    <th class="num">遭遇</th>
+                                    <th class="num">勝</th>
+                                    <th class="num">勝率</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 直近30日の推移（期間タブに関わらず常に全体を表示） -->
+            <section class="stats-section">
+                <h2>直近30日の推移</h2>
+                <p class="section-note">日別（朝5時区切り）の勝率と試合数。期間タブの影響を受けません。</p>
+                <div class="trend-chart" id="trend-chart"></div>
+                <div class="trend-legend">
+                    <span class="lg-rate">勝率</span>
+                    <span class="lg-games">試合数</span>
+                </div>
+            </section>
+
+            <p class="update-footer" id="update-footer"></p>
+        </div>
+
+    </main>
+
+    <!-- ===== JavaScriptファイル読み込み ===== -->
+    <script src="sv-stats.js"></script>
+
+</body>
+
+</html>

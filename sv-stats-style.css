@@ -1,0 +1,452 @@
+/**
+ * ============================================================================
+ * sv-stats-style.css - SVチーム統計ページ（sv-stats.html）
+ * ============================================================================
+ * データ元: data/sv-stats.json（Discord Bot が1日1回生成・push）
+ * ============================================================================
+ */
+
+:root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #1a1a1a;
+    --bg-card: #151515;
+    --bg-table-header: #1f1f1f;
+    --bg-table-row: #181818;
+    --bg-table-row-alt: #121212;
+
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --text-tertiary: #707070;
+
+    --accent-gold: #D4AF37;
+    --accent-red: #ef4444;
+    --accent-blue: #3b82f6;
+    --accent-green: #4ade80;
+
+    --border-light: rgba(255, 255, 255, 0.1);
+    --border-accent: rgba(212, 175, 55, 0.3);
+
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+}
+
+/* ============================================================================
+   レイアウト
+   ============================================================================ */
+
+.sv-stats-main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+    .sv-stats-main {
+        padding: var(--spacing-sm);
+    }
+}
+
+.sv-stats-header {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+    border: 1px solid var(--border-accent);
+    border-radius: 8px;
+}
+
+.sv-stats-header h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--accent-gold) 0%, #8a6e18 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
+
+.sv-stats-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin: var(--spacing-sm) 0 0 0;
+}
+
+.page-navigation {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-lg);
+    gap: var(--spacing-sm);
+}
+
+.nav-link {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    color: var(--accent-gold);
+    background-color: transparent;
+    border: 2px solid var(--accent-gold);
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.nav-link:hover {
+    background-color: var(--accent-gold);
+    color: #000;
+    transform: translateY(-2px);
+}
+
+/* ============================================================================
+   期間タブ
+   ============================================================================ */
+
+.window-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+}
+
+.window-button {
+    flex: 1;
+    min-width: 110px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.25s ease;
+}
+
+.window-button:hover {
+    background-color: var(--bg-table-header);
+    color: var(--text-primary);
+    border-color: var(--border-accent);
+}
+
+.window-button.active {
+    background-color: var(--accent-gold);
+    color: #000;
+    border-color: var(--accent-gold);
+    font-weight: 700;
+}
+
+/* ============================================================================
+   サマリーカード
+   ============================================================================ */
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+}
+
+.summary-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: var(--spacing-md);
+    text-align: center;
+}
+
+.summary-card h4 {
+    margin: 0 0 var(--spacing-xs) 0;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+.summary-card .value {
+    font-size: 1.9rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    line-height: 1.1;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.summary-card .sub {
+    margin-top: 4px;
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+}
+
+/* ============================================================================
+   セクション
+   ============================================================================ */
+
+.stats-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.stats-section h2 {
+    font-size: 1.5rem;
+    color: var(--accent-gold);
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--accent-gold);
+    padding-bottom: var(--spacing-sm);
+    margin: 0 0 var(--spacing-xs) 0;
+}
+
+.section-note {
+    color: var(--text-tertiary);
+    font-size: 0.85rem;
+    margin: 0 0 var(--spacing-md) 0;
+}
+
+.table-container {
+    overflow-x: auto;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+}
+
+.stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.stats-table thead {
+    background: var(--bg-table-header);
+}
+
+.stats-table th {
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: left;
+    color: var(--accent-gold);
+    border-bottom: 2px solid var(--accent-gold);
+    white-space: nowrap;
+}
+
+.stats-table th.num,
+.stats-table td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.stats-table tbody tr {
+    background: var(--bg-table-row);
+}
+
+.stats-table tbody tr:nth-child(even) {
+    background: var(--bg-table-row-alt);
+}
+
+.stats-table tbody tr:hover {
+    background: rgba(212, 175, 55, 0.08);
+}
+
+.stats-table td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.stats-table td.class-name {
+    color: var(--accent-gold);
+    white-space: nowrap;
+}
+
+.stats-table td.class-name img {
+    height: 18px;
+    width: auto;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+.stats-table td.class-name span {
+    vertical-align: middle;
+}
+
+/* 勝率カラー */
+.wr-good {
+    color: var(--accent-green);
+    font-weight: 700;
+}
+
+.wr-bad {
+    color: var(--accent-red);
+    font-weight: 700;
+}
+
+.wr-mid {
+    color: var(--text-secondary);
+}
+
+.muted {
+    color: var(--text-tertiary);
+}
+
+/* ============================================================================
+   対面マトリクス
+   ============================================================================ */
+
+.matrix-container {
+    overflow-x: auto;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    padding: var(--spacing-sm);
+}
+
+.matchup-matrix {
+    border-collapse: separate;
+    border-spacing: 3px;
+    margin: 0 auto;
+    font-size: 0.85rem;
+}
+
+.matchup-matrix th {
+    color: var(--text-secondary);
+    font-weight: 400;
+    padding: 4px;
+    white-space: nowrap;
+}
+
+.matchup-matrix th.corner {
+    color: var(--text-tertiary);
+    font-size: 0.75rem;
+}
+
+.matchup-matrix thead th img,
+.matchup-matrix tbody th img {
+    height: 22px;
+    width: auto;
+    vertical-align: middle;
+}
+
+.matchup-matrix td {
+    width: 62px;
+    height: 46px;
+    text-align: center;
+    border-radius: 4px;
+    background: var(--bg-table-row-alt);
+    color: var(--text-secondary);
+    line-height: 1.2;
+}
+
+.matchup-matrix td.has-data {
+    color: var(--text-primary);
+}
+
+.matchup-matrix td .cell-rate {
+    display: block;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.matchup-matrix td .cell-wl {
+    display: block;
+    font-size: 0.68rem;
+    color: var(--text-tertiary);
+}
+
+.matchup-matrix td.diagonal {
+    outline: 1px dashed var(--border-accent);
+}
+
+/* 勝率ヒートマップ背景 */
+.heat-5 { background: #1d6a3a; color: #fff; }
+.heat-4 { background: #276b3f33; }
+.heat-3 { background: var(--bg-table-row-alt); }
+.heat-2 { background: #6b272733; }
+.heat-1 { background: #7a2525; color: #fff; }
+
+/* ============================================================================
+   トレンドチャート
+   ============================================================================ */
+
+.trend-chart {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: var(--spacing-md);
+}
+
+.trend-chart svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.trend-legend {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin-top: var(--spacing-sm);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.trend-legend span::before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.trend-legend .lg-rate::before { background: var(--accent-gold); }
+.trend-legend .lg-games::before { background: #3b4a6b; }
+
+/* ============================================================================
+   状態表示
+   ============================================================================ */
+
+.state-box {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-secondary);
+}
+
+.state-box .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-light);
+    border-top-color: var(--accent-gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: var(--spacing-md) auto 0;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.empty-window {
+    text-align: center;
+    padding: var(--spacing-lg);
+    color: var(--text-tertiary);
+}
+
+.update-footer {
+    text-align: center;
+    color: var(--text-tertiary);
+    font-size: 0.85rem;
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--border-light);
+}
+
+@media (max-width: 768px) {
+    .window-button { min-width: 0; }
+    .summary-card .value { font-size: 1.5rem; }
+    .stats-table { font-size: 0.85rem; }
+    .stats-table th,
+    .stats-table td { padding: var(--spacing-xs) var(--spacing-sm); }
+    .matchup-matrix td { width: 48px; height: 40px; font-size: 0.78rem; }
+}
