@@ -278,16 +278,7 @@ nav a.active {
 
 .status-badge.closed {
     background: #444;
-    color: #888;
-}
-
-/* X（Twitter）ポスト埋め込み */
-.x-embed {
-    margin-top: 20px;
-}
-
-.x-embed .twitter-tweet {
-    margin: 0 !important;
+    color: #bbb;
 }
 
 .top-nav-section {

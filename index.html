@@ -141,19 +141,17 @@
             <h3>RECRUITMENT</h3>
             <div>
                 <!-- ステータスバッジ: open（募集中）/ closed（募集終了） -->
-                <span class="status-badge open">OPEN</span>
+                <span class="status-badge closed">CLOSED</span>
             </div>
             <p class="info-card__body">
-                公募を開始いたしました。<br>
-                詳細は下記の公式Xのポストをご確認ください。
+                今シーズンのメンバー公募は終了いたしました。<br>
+                次回の募集情報は公式Xでお知らせします。
             </p>
-            <!-- 公式Xポスト埋め込み（widgets.js 未読込時はテキストリンクを表示） -->
-            <div class="x-embed">
-                <blockquote class="twitter-tweet" data-theme="dark" data-dnt="true">
-                    <a href="https://twitter.com/Apeiron_SV0629/status/2093896493019119687" target="_blank"
-                        rel="noopener noreferrer">公募開始のお知らせ（公式Xのポストを見る）</a>
-                </blockquote>
-            </div>
+            <!-- 公式Xアカウントへのリンク -->
+            <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer"
+                class="info-card__link">
+                公式Xをフォローする &rarr;
+            </a>
         </div>
 
         <!-- 対抗戦募集カード -->
@@ -228,8 +226,6 @@
         </div>
     </footer>
 
-    <!-- ===== X (Twitter) 埋め込みウィジェット ===== -->
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <!-- ===== 共通スクリプト（ナビ・スクロール演出・年号更新） ===== -->
     <script src="main.js" defer></script>
 
