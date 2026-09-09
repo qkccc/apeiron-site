@@ -32,6 +32,9 @@
     <link rel="apple-touch-icon" href="profile/Apeiron.jpg">
     <meta name="theme-color" content="#0a0a0a">
 
+    <!-- JS 有効時のみ入場アニメの初期状態を適用（無効時はコンテンツをそのまま表示） -->
+    <script>document.documentElement.classList.add('js');</script>
+
     <!-- ===== スタイルシート ===== -->
     <link rel="stylesheet" href="style.css">
 
@@ -42,6 +45,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+JP:wght@400;700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <!-- ===== 構造化データ（Organization） ===== -->
     <script type="application/ld+json">
@@ -57,6 +61,11 @@
         "sameAs": ["https://twitter.com/Apeiron_SV0629"]
     }
     </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/web-analytics/script.js"></script>
 </head>
 
 <body>
@@ -72,20 +81,19 @@
             <img src="profile/Apeiron.jpg" alt="APEIRON" width="45" height="45" fetchpriority="high">
         </a>
 
-        <!-- モバイル用メニュー開閉ボタン（768px以下で表示） -->
-        <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="メニューを開く">
-            <span class="nav-toggle-bar"></span>
-            <span class="nav-toggle-bar"></span>
-            <span class="nav-toggle-bar"></span>
+        <!-- ハンバーガーボタン（モバイルのみ表示 / main.js で開閉） -->
+        <button class="nav-toggle" type="button" aria-label="メニューを開閉" aria-expanded="false"
+            aria-controls="site-nav">
+            <span></span><span></span><span></span>
         </button>
 
         <!-- メインナビゲーションメニュー -->
-        <nav id="primary-nav" aria-label="メインナビゲーション">
+        <nav id="site-nav" aria-label="メインナビゲーション">
             <ul>
-                <li><a href="index.html" class="active">TOP</a></li>
-                <li><a href="about.html">ABOUT</a></li>
-                <li><a href="achievements.html">ACHIEVEMENTS</a></li>
-                <li><a href="members.html">MEMBERS</a></li>
+                <li><a href="index.html" class="active" aria-current="page">トップ</a></li>
+                <li><a href="about.html">沿革</a></li>
+                <li><a href="achievements.html">実績</a></li>
+                <li><a href="members.html">メンバー</a></li>
             </ul>
         </nav>
     </header>
@@ -97,24 +105,27 @@
     <section class="hero">
         <h1>APEIRON</h1>
         <p>SHADOWVERSE AMATEUR TEAM</p>
-    </section>
 
-    <!-- ===== ハイライト（実績抜粋） ===== -->
-    <!-- 初見の訪問者向けに主な実績を1つだけ大きく表示。クリックで実績ページへ -->
-    <section class="top-spotlight-section" aria-labelledby="spotlight-heading">
-        <h2 id="spotlight-heading" class="top-section-label">HIGHLIGHT <span>主な実績</span></h2>
-        <a href="achievements.html" class="achievement-spotlight">
-            <span class="spotlight-label">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M3 6l4.5 3.2L12 3l4.5 6.2L21 6l-2 13H5L3 6zm2 15h14v2H5v-2z" />
-                </svg>
-                HIGHLIGHT
-            </span>
-            <h3 class="spotlight-title">
-                RAGE Shadowverse JCS 2026 Season2
-                <span>準優勝 ＆ プレーオフ決勝進出</span>
-            </h3>
-            <span class="spotlight-cta">その他の実績を見る &rarr;</span>
+        <!-- 直近のハイライト実績（achievements へ誘導） -->
+        <p class="hero-highlight">
+            <i class="fa-solid fa-trophy" aria-hidden="true"></i>
+            <span>RAGE JCS 2026 Season2 <strong>準優勝</strong></span>
+        </p>
+
+        <!-- 主要導線（メンバー募集 / 対抗戦） -->
+        <!-- <div class="hero-actions">
+            <a href="#news-heading" class="btn btn-primary">
+                <i class="fa-solid fa-user-plus" aria-hidden="true"></i> メンバー募集を見る
+            </a>
+            <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer"
+                class="btn btn-ghost">
+                <i class="fa-brands fa-x-twitter" aria-hidden="true"></i> 対抗戦を申し込む
+            </a>
+        </div> -->
+
+        <!-- スクロール誘導 -->
+        <a href="#news-heading" class="hero-scroll" aria-label="コンテンツへスクロール">
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
         </a>
     </section>
 
@@ -126,13 +137,13 @@
         <div class="info-grid">
 
         <!-- メンバー募集カード -->
-        <div class="info-card">
+        <div class="info-card reveal">
             <h3>RECRUITMENT</h3>
             <div>
                 <!-- ステータスバッジ: open（募集中）/ closed（募集終了） -->
                 <span class="status-badge open">OPEN</span>
             </div>
-            <p class="info-card-note">
+            <p class="info-card__body">
                 公募を開始いたしました。<br>
                 詳細は下記の公式Xのポストをご確認ください。
             </p>
@@ -146,18 +157,19 @@
         </div>
 
         <!-- 対抗戦募集カード -->
-        <div class="info-card">
+        <div class="info-card reveal">
             <h3>SCRIM MATCH</h3>
             <div>
                 <!-- ステータスバッジ: open（募集中）/ closed（募集終了） -->
                 <span class="status-badge open">ACCEPTING</span>
             </div>
-            <p class="info-card-note">
+            <p class="info-card__body">
                 対抗戦（チーム戦）のお申し込みを随時受け付けております。<br>
                 チーム公式XのDMにご連絡ください。
             </p>
             <!-- 公式Xアカウントへのリンク -->
-            <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer" class="card-link">
+            <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer"
+                class="info-card__link">
                 公式Xへ連絡する &rarr;
             </a>
         </div>
@@ -171,18 +183,27 @@
         <h2 id="menu-heading" class="top-section-label">MENU <span>ページ一覧</span></h2>
         <div class="nav-grid">
             <!-- チーム紹介ページへのリンク -->
-            <a href="about.html" class="nav-card">
+            <a href="about.html" class="nav-card reveal">
+                <i class="fa-solid fa-shield-halved nav-card__icon" aria-hidden="true"></i>
                 <h3>ABOUT</h3>
+                <span class="nav-card__desc">チームの沿革</span>
+                <span class="nav-card__arrow"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </a>
 
             <!-- 戦績ページへのリンク -->
-            <a href="achievements.html" class="nav-card">
+            <a href="achievements.html" class="nav-card reveal">
+                <i class="fa-solid fa-trophy nav-card__icon" aria-hidden="true"></i>
                 <h3>ACHIEVEMENTS</h3>
+                <span class="nav-card__desc">活動実績・戦績</span>
+                <span class="nav-card__arrow"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </a>
 
             <!-- メンバー紹介ページへのリンク -->
-            <a href="members.html" class="nav-card">
+            <a href="members.html" class="nav-card reveal">
+                <i class="fa-solid fa-users nav-card__icon" aria-hidden="true"></i>
                 <h3>MEMBERS</h3>
+                <span class="nav-card__desc">メンバー紹介</span>
+                <span class="nav-card__arrow"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </a>
         </div>
     </section>
@@ -190,16 +211,27 @@
     </main>
 
     <!-- ===== フッター ===== -->
-    <!-- サイト下部の著作権表記と連絡先 -->
+    <!-- サイト下部の著作権表記・サイト内リンク・SNS -->
     <footer>
-        &copy; 2021&ndash;<span id="footer-year">2026</span> APEIRON Shadowverse Team.<br>
-        Contact: <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer">@Apeiron_SV0629</a>
+        <div class="footer-inner">
+            <p class="footer-copy">&copy; 2021&ndash;<span data-year>2026</span> APEIRON Shadowverse Team.</p>
+            <nav class="footer-links" aria-label="フッターナビゲーション">
+                <a href="index.html">TOP</a>
+                <a href="about.html">ABOUT</a>
+                <a href="achievements.html">ACHIEVEMENTS</a>
+                <a href="members.html">MEMBERS</a>
+            </nav>
+            <p class="footer-social">
+                <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer"
+                    aria-label="公式X（@Apeiron_SV0629）"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+            </p>
+        </div>
     </footer>
 
     <!-- ===== X (Twitter) 埋め込みウィジェット ===== -->
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    <!-- ===== 全ページ共通スクリプト（モバイルナビ・年号更新） ===== -->
-    <script src="site.js" defer></script>
+    <!-- ===== 共通スクリプト（ナビ・スクロール演出・年号更新） ===== -->
+    <script src="main.js" defer></script>
 
 </body>
 

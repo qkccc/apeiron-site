@@ -27,6 +27,7 @@
     <link rel="apple-touch-icon" href="profile/Apeiron.jpg">
     <meta name="theme-color" content="#0a0a0a">
 
+    <script>document.documentElement.classList.add('js');</script>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,6 +35,10 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+JP:wght@400;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/web-analytics/script.js"></script>
 </head>
 
 <body>
@@ -44,70 +49,105 @@
         <a href="index.html" class="logo">
             <img src="profile/Apeiron.jpg" alt="APEIRON" width="45" height="45" fetchpriority="high">
         </a>
-        <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="メニューを開く">
-            <span class="nav-toggle-bar"></span>
-            <span class="nav-toggle-bar"></span>
-            <span class="nav-toggle-bar"></span>
+        <button class="nav-toggle" type="button" aria-label="メニューを開閉" aria-expanded="false"
+            aria-controls="site-nav">
+            <span></span><span></span><span></span>
         </button>
-        <nav id="primary-nav" aria-label="メインナビゲーション">
+        <nav id="site-nav" aria-label="メインナビゲーション">
             <ul>
-                <li><a href="index.html">TOP</a></li>
-                <li><a href="about.html">ABOUT</a></li>
-                <li><a href="achievements.html" class="active">ACHIEVEMENTS</a></li>
-                <li><a href="members.html">MEMBERS</a></li>
+                <li><a href="index.html">トップ</a></li>
+                <li><a href="about.html">沿革</a></li>
+                <li><a href="achievements.html" class="active" aria-current="page">実績</a></li>
+                <li><a href="members.html">メンバー</a></li>
             </ul>
         </nav>
     </header>
 
     <main id="main" tabindex="-1">
 
-    <div class="header-spacer" aria-hidden="true"></div>
-
     <section class="section-container achievements">
         <h1 class="section-title">TEAM <span>ACHIEVEMENTS</span></h1>
 
-        <div class="achievement-spotlight">
+        <div class="achievement-spotlight reveal">
             <div class="spotlight-label"><i class="fas fa-crown" aria-hidden="true"></i> HIGHLIGHT</div>
             <h3 class="spotlight-title">
                 RAGE Shadowverse JCS 2026 Season2
                 <span>準優勝 ＆ プレーオフ決勝進出</span>
             </h3>
+            <div class="spotlight-meta">
+                <span>2nd Place</span>
+                <span>Playoff Finalist</span>
+            </div>
         </div>
 
-        <ul>
-            <!-- チーム実績 -->
-            <li><i class="fas fa-medal" aria-hidden="true"></i> SCL 第2回, 第5回,第15回 Playoff 進出</li>
-            <li><i class="fas fa-medal" aria-hidden="true"></i> SCL 第13回, 第14回 前半戦グループ2位通過</li>
-            <li><i class="fas fa-star" aria-hidden="true"></i> SLL Season1 Bブロック 2位</li>
-            <li><i class="fas fa-star" aria-hidden="true"></i> SLL Season2 Aブロック 1位</li>
+        <!-- アイコンの意味 -->
+        <!-- <div class="ach-legend reveal">
+            <span><i class="fas fa-crown" aria-hidden="true"></i> 優勝</span>
+            <span><i class="fas fa-award" aria-hidden="true"></i> 準優勝</span>
+            <span><i class="fas fa-medal" aria-hidden="true"></i> 入賞・通過</span>
+            <span><i class="fas fa-star" aria-hidden="true"></i> ブロック上位</span>
+            <span><i class="fas fa-trophy" aria-hidden="true"></i> 本戦・Day2 進出</span>
+        </div> -->
 
-            <!-- 個人実績 -->
-            <li class="achievements-subhead">個人実績</li>
-            <li><i class="fas fa-award" aria-hidden="true"></i> RAGE Shadowverse 準優勝 ＆ プレーオフ出場</li>
-            <li><i class="fas fa-trophy" aria-hidden="true"></i> OCS Day2 進出 多数</li>
-            <li><i class="fas fa-trophy" aria-hidden="true"></i> RAGE Shadowverse Day2 進出 多数</li>
-            <li><i class="fas fa-trophy" aria-hidden="true"></i> RAGE Shadowverse JCS 2025 Day2</li>
-            <li><i class="fas fa-trophy" aria-hidden="true"></i> RAGE Shadowverse JCS 2026 ファイナリスト</li>
-            <li><i class="fas fa-trophy" aria-hidden="true"></i> RAGE Shadowverse JCS 2026 プレーオフ 2名</li>
-            <li><i class="fas fa-crown" aria-hidden="true"></i> JCG Rotation 優勝</li>
-            <li><i class="fas fa-crown" aria-hidden="true"></i> JCG 2pick 優勝</li>
-            <li><i class="fas fa-award" aria-hidden="true"></i> JCG ミリオンカップ 準優勝</li>
-            <li><i class="fas fa-award" aria-hidden="true"></i> ES千葉地方大会 準優勝</li>
-            <li><i class="fas fa-award" aria-hidden="true"></i> BO1トーナメント βテスト大会 優勝</li>
-            <li><i class="fas fa-award" aria-hidden="true"></i> ガクシャド 1DAYバトル個人戦 準優勝</li>
-            <li><i class="fas fa-award" aria-hidden="true"></i> シティトーナメント東京 優勝</li>
-            <li><i class="fas fa-award" aria-hidden="true"></i> CRランキング 最終BEYOND 多数</li>
-        </ul>
+        <div class="ach-group reveal">
+            <h2>チーム実績</h2>
+            <ul>
+                <li><i class="fas fa-medal" aria-hidden="true"></i> SCL 第2回, 第5回, 第15回 Playoff 進出</li>
+                <li><i class="fas fa-medal" aria-hidden="true"></i> SCL 第13回, 第14回 前半戦グループ2位通過</li>
+                <li><i class="fas fa-star" aria-hidden="true"></i> SLL Season1 Bブロック 2位</li>
+                <li><i class="fas fa-star" aria-hidden="true"></i> SLL Season2 Aブロック 1位</li>
+            </ul>
+        </div>
+
+        <div class="ach-group reveal">
+            <h2>個人実績</h2>
+
+            <h3 class="ach-subhead">RAGE JCS・OCS</h3>
+            <ul>
+                <li><i class="fas fa-trophy" aria-hidden="true"></i> RAGE Shadowverse JCS 2025 Day2進出 多数</li>
+                <li><i class="fas fa-trophy" aria-hidden="true"></i> RAGE Shadowverse JCS 2026 ファイナリスト・準優勝</li>
+                <li><i class="fas fa-trophy" aria-hidden="true"></i> RAGE Shadowverse JCS 2026 プレーオフ進出 2名</li>
+                <li><i class="fas fa-trophy" aria-hidden="true"></i> OCS Day2進出 多数</li>
+            </ul>
+
+            <h3 class="ach-subhead">その他（シャドバWB）</h3>
+            <ul>
+                <li><i class="fas fa-crown" aria-hidden="true"></i> シティトーナメント東京 優勝</li>
+                <li><i class="fas fa-crown" aria-hidden="true"></i> BO1トーナメント βテスト大会 優勝</li>
+                <li><i class="fas fa-award" aria-hidden="true"></i> ガクシャド 1DAYバトル個人戦 準優勝</li>
+                <li><i class="fas fa-medal" aria-hidden="true"></i> CRランキング 最終BEYOND 多数</li>
+            </ul>
+
+            <h3 class="ach-subhead">その他（旧シャドバ）</h3>
+            <ul>
+                <li><i class="fas fa-trophy" aria-hidden="true"></i> RAGE Shadowverse Day2進出 多数</li>
+                <li><i class="fas fa-crown" aria-hidden="true"></i> JCG Rotation 優勝</li>
+                <li><i class="fas fa-crown" aria-hidden="true"></i> JCG 2pick 優勝</li>
+                <li><i class="fas fa-award" aria-hidden="true"></i> JCG ミリオンカップ 準優勝</li>
+                <li><i class="fas fa-award" aria-hidden="true"></i> ES千葉地方大会 準優勝</li>
+            </ul>
+        </div>
     </section>
 
     </main>
 
     <footer>
-        &copy; 2021&ndash;<span id="footer-year">2026</span> APEIRON Shadowverse Team.<br>
-        Contact: <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer">@Apeiron_SV0629</a>
+        <div class="footer-inner">
+            <p class="footer-copy">&copy; 2021&ndash;<span data-year>2026</span> APEIRON Shadowverse Team.</p>
+            <nav class="footer-links" aria-label="フッターナビゲーション">
+                <a href="index.html">TOP</a>
+                <a href="about.html">ABOUT</a>
+                <a href="achievements.html">ACHIEVEMENTS</a>
+                <a href="members.html">MEMBERS</a>
+            </nav>
+            <p class="footer-social">
+                <a href="https://twitter.com/Apeiron_SV0629" target="_blank" rel="noopener noreferrer"
+                    aria-label="公式X（@Apeiron_SV0629）"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+            </p>
+        </div>
     </footer>
 
-    <script src="site.js" defer></script>
+    <script src="main.js" defer></script>
 
 </body>
 
