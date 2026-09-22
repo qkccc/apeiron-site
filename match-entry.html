@@ -29,7 +29,7 @@
         <h1>戦績登録</h1>
         <p class="entry-lede">スマホからそのまま試合結果をスプレッドシートへ追記します。</p>
 
-        <!-- ===== トークン設定（初回のみ表示） ===== -->
+        <!-- ===== 設定（初回のみ表示） ===== -->
         <section class="entry-card" id="token-card">
             <h2>登録用の合言葉</h2>
             <p class="entry-hint">この端末に一度だけ保存します。GAS側に設定した合言葉と同じものを入力してください。</p>
@@ -40,6 +40,21 @@
         </section>
         <div class="entry-token-saved" id="token-saved-row" hidden>
             合言葉を保存済みです。 <button type="button" class="link-btn" id="token-change-btn">変更する</button>
+        </div>
+
+        <section class="entry-card" id="github-token-card">
+            <h2>GitHubトークン（デッキ画像アップロード用）</h2>
+            <p class="entry-hint">
+                qkccc/apeiron-site の Contents 権限のみを持つ Fine-grained token をこの端末に一度だけ保存します。
+                <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">トークン発行ページ</a>
+            </p>
+            <div class="entry-row">
+                <input type="password" id="github-token-input" placeholder="github_pat_...">
+                <button type="button" class="btn btn-primary entry-btn-inline" id="github-token-save-btn">保存</button>
+            </div>
+        </section>
+        <div class="entry-token-saved" id="github-token-saved-row" hidden>
+            GitHubトークンを保存済みです。 <button type="button" class="link-btn" id="github-token-change-btn">変更する</button>
         </div>
 
         <!-- ===== 試合情報 ===== -->
@@ -93,12 +108,45 @@
             </div>
         </section>
 
+        <!-- ===== デッキ画像 ===== -->
+        <section class="entry-card">
+            <h2>デッキ画像</h2>
+            <p class="entry-hint">上の試合情報からファイル名を組み立てて、GitHubの deck-images/ に直接コミットします。</p>
+            <div class="deck-slots">
+                <div class="deck-slot" data-side="my">
+                    <span class="entry-label">自分のデッキ</span>
+                    <label class="deck-dropzone" for="deck-my-input">
+                        <img class="deck-thumb" id="deck-my-thumb" hidden alt="">
+                        <span class="deck-dropzone-text" id="deck-my-placeholder">タップして画像を選択</span>
+                        <input type="file" id="deck-my-input" accept="image/*" hidden>
+                    </label>
+                    <code class="deck-filename" id="deck-my-filename"></code>
+                    <div class="deck-slot-actions">
+                        <span class="status-pill idle" id="deck-my-status">未アップロード</span>
+                        <button type="button" class="btn btn-ghost entry-btn-inline" id="deck-my-upload-btn" disabled>アップロード</button>
+                    </div>
+                </div>
+
+                <div class="deck-slot" data-side="enemy">
+                    <span class="entry-label">相手のデッキ</span>
+                    <label class="deck-dropzone" for="deck-enemy-input">
+                        <img class="deck-thumb" id="deck-enemy-thumb" hidden alt="">
+                        <span class="deck-dropzone-text" id="deck-enemy-placeholder">タップして画像を選択</span>
+                        <input type="file" id="deck-enemy-input" accept="image/*" hidden>
+                    </label>
+                    <code class="deck-filename" id="deck-enemy-filename"></code>
+                    <div class="deck-slot-actions">
+                        <span class="status-pill idle" id="deck-enemy-status">未アップロード</span>
+                        <button type="button" class="btn btn-ghost entry-btn-inline" id="deck-enemy-upload-btn" disabled>アップロード</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- ===== ゲーム記録 ===== -->
         <section class="entry-card">
-            <div class="entry-card-head">
-                <h2>ゲーム記録</h2>
-                <button type="button" class="btn btn-ghost entry-btn-inline" id="add-game-btn">＋ ゲームを追加</button>
-            </div>
+            <h2>ゲーム記録</h2>
+            <p class="entry-hint">プレーした分だけ入力してください。自選手名が空欄のGAMEは自動的に無視されます。</p>
             <div id="games-list"></div>
         </section>
 
@@ -109,8 +157,6 @@
         </div>
         <p class="entry-status" id="status-msg"></p>
     </main>
-
-    <datalist id="roster-list"></datalist>
 
     <script type="module" src="match-entry.js"></script>
 </body>
