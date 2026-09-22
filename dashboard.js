@@ -374,9 +374,33 @@ function createDeckLinksSection(match) {
 }
 
 /**
+ * シーズン文字列からチームトークンを取得
+ * 第16回は∞チームと∞AEチームの2チームが出場しているため、
+ * season文字列に含まれる「∞」「∞AE」からファイル名用トークン(ap/ae)を判定する
+ * @param {String} season - シーズン文字列
+ * @returns {"ap"|"ae"|null} チームトークン
+ */
+function getSeasonTeamToken(season) {
+    if (!season) return null;
+
+    const normalized = String(season);
+
+    if (normalized.includes("∞AE")) {
+        return "ae";
+    }
+
+    if (normalized.includes("∞")) {
+        return "ap";
+    }
+
+    return null;
+}
+
+/**
  * 命名規則からデッキ画像リンクを解決
- * 規則: deck-images/s{season}-{first|second}-r{round}-{my|enemy}.png
+ * 規則: deck-images/s{season}-{first|second}-r{round}-{my|enemy}[-{team}].png
  * 例: deck-images/s14-second-r2-my.png
+ * 例(第16回、複数チーム): deck-images/s16-first-r1-my-ap.png
  * @param {Object} match - 試合データ
  * @returns {{my: String, enemy: String}} デッキ画像リンク
  */
@@ -389,11 +413,13 @@ function resolveDeckLinksByFileName(match) {
         return { my: "", enemy: "" };
     }
 
+    const teamToken = getSeasonTeamToken(match.season);
+    const teamSuffix = teamToken ? `-${teamToken}` : "";
     const base = `deck-images/s${seasonNumber}-${seasonHalf}-r${roundNumber}`;
 
     return {
-        my: `${base}-my.png`,
-        enemy: `${base}-enemy.png`
+        my: `${base}-my${teamSuffix}.png`,
+        enemy: `${base}-enemy${teamSuffix}.png`
     };
 }
 
