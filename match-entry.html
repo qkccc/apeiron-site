@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APEIRON | Match Entry</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="match-entry-style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/web-analytics/script.js"></script>
+</head>
+
+<body>
+
+    <!-- ===== ヘッダー ===== -->
+    <header class="admin-header">
+        <a href="admin.html" class="entry-back-link">&larr; Admin</a>
+        <div class="entry-wordmark">MATCH <span>ENTRY</span></div>
+        <button id="logoutBtn" class="entry-logout-btn">LOGOUT</button>
+    </header>
+
+    <main class="entry-container">
+        <h1>戦績登録</h1>
+        <p class="entry-lede">スマホからそのまま試合結果をスプレッドシートへ追記します。</p>
+
+        <!-- ===== トークン設定（初回のみ表示） ===== -->
+        <section class="entry-card" id="token-card">
+            <h2>登録用の合言葉</h2>
+            <p class="entry-hint">この端末に一度だけ保存します。GAS側に設定した合言葉と同じものを入力してください。</p>
+            <div class="entry-row">
+                <input type="password" id="token-input" placeholder="合言葉">
+                <button type="button" class="btn btn-primary entry-btn-inline" id="token-save-btn">保存</button>
+            </div>
+        </section>
+        <div class="entry-token-saved" id="token-saved-row" hidden>
+            合言葉を保存済みです。 <button type="button" class="link-btn" id="token-change-btn">変更する</button>
+        </div>
+
+        <!-- ===== 試合情報 ===== -->
+        <section class="entry-card">
+            <h2>試合情報</h2>
+            <div class="entry-grid">
+                <label class="entry-field">
+                    <span class="entry-label">シーズン</span>
+                    <div class="entry-season-input">
+                        <span>第</span>
+                        <input type="number" id="season-input" min="1" value="16">
+                        <span>回</span>
+                    </div>
+                </label>
+
+                <div class="entry-field">
+                    <span class="entry-label">期間</span>
+                    <div class="segmented" id="half-toggle">
+                        <button type="button" data-value="first" class="active">前半</button>
+                        <button type="button" data-value="second">後半</button>
+                    </div>
+                </div>
+
+                <div class="entry-field">
+                    <span class="entry-label">チーム</span>
+                    <div class="segmented" id="team-toggle">
+                        <button type="button" data-value="none">なし</button>
+                        <button type="button" data-value="ap" class="active">∞</button>
+                        <button type="button" data-value="ae">∞AE</button>
+                    </div>
+                </div>
+
+                <label class="entry-field">
+                    <span class="entry-label">ラウンド</span>
+                    <input type="text" id="round-input" value="1">
+                </label>
+
+                <label class="entry-field">
+                    <span class="entry-label">日付</span>
+                    <input type="date" id="date-input">
+                </label>
+
+                <label class="entry-field entry-field-wide">
+                    <span class="entry-label">対戦相手チーム名</span>
+                    <input type="text" id="enemy-input" placeholder="例: HIT">
+                </label>
+            </div>
+
+            <div class="entry-season-preview">
+                登録される Season 列: <code id="season-preview">第16回前半∞</code>
+            </div>
+        </section>
+
+        <!-- ===== ゲーム記録 ===== -->
+        <section class="entry-card">
+            <div class="entry-card-head">
+                <h2>ゲーム記録</h2>
+                <button type="button" class="btn btn-ghost entry-btn-inline" id="add-game-btn">＋ ゲームを追加</button>
+            </div>
+            <div id="games-list"></div>
+        </section>
+
+        <!-- ===== 送信 ===== -->
+        <div class="entry-submit-bar">
+            <button type="button" class="btn btn-primary entry-submit-btn" id="submit-btn">登録する</button>
+            <button type="button" class="btn btn-ghost entry-submit-btn" id="continue-btn" hidden>続けて次を登録</button>
+        </div>
+        <p class="entry-status" id="status-msg"></p>
+    </main>
+
+    <datalist id="roster-list"></datalist>
+
+    <script type="module" src="match-entry.js"></script>
+</body>
+
+</html>

@@ -163,6 +163,84 @@ function parseMatches(dbData, classMap) {
 
 /**
  * =====================================================================
+ * GAS側の実装コード（doPost・戦績登録ページ用）
+ * =====================================================================
+ *
+ * 【概要】
+ * match-entry.html / match-entry.js から送られてくる1試合分のJSONを
+ * DBシートに1行追記するエンドポイント。doGetと同じWebアプリ・同じURLに
+ * doPostとして追加する（再デプロイが必要、URLは変わらない）。
+ *
+ * 【セットアップ手順】
+ * 1. 既存のdoGetはそのままに、下記コードを追記する
+ * 2. スプレッドシート > 拡張機能 > Apps Script > 左メニュー「プロジェクトの設定」
+ *    > 「スクリプト プロパティ」で ENTRY_TOKEN に好きな合言葉を設定
+ * 3. 「デプロイ」>「デプロイを管理」> 既存デプロイの鉛筆アイコン > 新バージョンとしてデプロイ
+ * 4. match-entry.html を開き、初回だけ同じ合言葉をトークンとして入力
+ *
+ * 【送信元が期待するレスポンス】
+ * 成功: { "success": true, "id": <新規行のID> }
+ * 失敗: { "success": false, "error": "<エラー内容>" }
+ */
+
+/*
+// Google Apps Script エディタに追記するコード（doGetと同じファイルでよい）
+
+function doPost(e) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+
+  try {
+    const payload = JSON.parse(e.postData.contents);
+
+    // 合言葉チェック（誰でも叩けるURLなので必須）
+    const expectedToken = PropertiesService.getScriptProperties().getProperty("ENTRY_TOKEN");
+    if (!expectedToken || payload.token !== expectedToken) {
+      return jsonResponse({ success: false, error: "invalid token" });
+    }
+
+    const ss = SpreadsheetApp.openById(SHEET_ID);
+    const sheet = ss.getSheetByName(DB_SHEET_NAME);
+
+    // 既存の最終行のID列（C列）を見て次のIDを採番
+    const lastRow = sheet.getLastRow();
+    const lastId = lastRow >= 2 ? Number(sheet.getRange(lastRow, 3).getValue()) || 0 : 0;
+    const newId = lastId + 1;
+
+    // Game1~9ぶんの列を組み立て（未入力のゲームは空欄で埋める）
+    const gameCols = [];
+    for (let i = 0; i < 9; i++) {
+      const g = payload.games[i];
+      if (g) {
+        gameCols.push(g.myPlayer || "", g.myClass || "", g.result || "", g.enemyClass || "", g.enemyPlayer || "");
+      } else {
+        gameCols.push("", "", "", "", "");
+      }
+    }
+
+    // DBシートの列順: Season, Round, ID, Date, Enemy, Game1(5列) x 9
+    const row = [payload.season, payload.round, newId, payload.date, payload.enemy].concat(gameCols);
+    sheet.appendRow(row);
+
+    return jsonResponse({ success: true, id: newId });
+  } catch (err) {
+    return jsonResponse({ success: false, error: String(err) });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function jsonResponse(obj) {
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// このファイル終了
+*/
+
+/**
+ * =====================================================================
  * レスポンス例
  * =====================================================================
  */

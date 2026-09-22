@@ -1,0 +1,365 @@
+/* ============================================================================
+   match-entry-style.css - 戦績登録ページ専用スタイル
+   style.css の :root トークン（--bg-color, --card-bg, --accent, --text-main, --text-sub）を利用
+   ============================================================================ */
+
+body {
+    padding-top: 70px;
+    padding-bottom: 60px;
+}
+
+/* ===== ヘッダー ===== */
+.admin-header {
+    background: #1a1a1a;
+    border-bottom: 1px solid var(--accent);
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+.entry-back-link {
+    color: var(--text-sub);
+    text-decoration: none;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.entry-back-link:hover {
+    color: var(--accent);
+}
+
+.entry-wordmark {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 1px;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.entry-wordmark span {
+    color: var(--accent);
+}
+
+.entry-logout-btn {
+    background: none;
+    border: 1px solid #666;
+    color: #ccc;
+    padding: 5px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.entry-logout-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* ===== コンテナ ===== */
+.entry-container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 24px 16px 0;
+}
+
+.entry-container h1 {
+    font-size: 1.6rem;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.entry-lede {
+    color: var(--text-sub);
+    font-size: 0.9rem;
+    margin: 0 0 22px;
+}
+
+/* ===== カード ===== */
+.entry-card {
+    background: var(--card-bg);
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 18px 18px 20px;
+    margin-bottom: 16px;
+}
+
+.entry-card h2 {
+    font-size: 1rem;
+    color: var(--accent);
+    margin: 0 0 12px;
+    letter-spacing: 0.5px;
+}
+
+.entry-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.entry-card-head h2 {
+    margin: 0;
+}
+
+.entry-hint {
+    color: var(--text-sub);
+    font-size: 0.8rem;
+    margin: 0 0 12px;
+}
+
+/* ===== フォームグリッド ===== */
+.entry-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 16px;
+}
+
+.entry-field-wide {
+    grid-column: 1 / -1;
+}
+
+.entry-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.entry-label {
+    font-size: 0.72rem;
+    color: var(--text-sub);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.entry-row {
+    display: flex;
+    gap: 10px;
+}
+
+.entry-row input {
+    flex: 1;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="password"] {
+    background: #0a0a0a;
+    border: 1px solid #3a3a3a;
+    color: #fff;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 42px;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+}
+
+.entry-season-input {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.entry-season-input span {
+    color: var(--text-sub);
+    font-size: 0.9rem;
+}
+
+.entry-season-input input {
+    width: 80px;
+    text-align: center;
+}
+
+.entry-season-preview {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed #2a2a2a;
+    font-size: 0.82rem;
+    color: var(--text-sub);
+}
+
+.entry-season-preview code {
+    color: var(--accent);
+    background: rgba(212, 175, 55, 0.12);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-family: 'Consolas', monospace;
+}
+
+/* ===== セグメントトグル ===== */
+.segmented {
+    display: inline-flex;
+    border: 1px solid #3a3a3a;
+    border-radius: 7px;
+    overflow: hidden;
+    width: fit-content;
+}
+
+.segmented button {
+    background: #0a0a0a;
+    color: var(--text-sub);
+    border: none;
+    border-right: 1px solid #3a3a3a;
+    padding: 9px 14px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    min-height: 40px;
+}
+
+.segmented button:last-child {
+    border-right: none;
+}
+
+.segmented button:hover {
+    color: #fff;
+}
+
+.segmented button.active {
+    background: var(--accent);
+    color: #000;
+    font-weight: 700;
+}
+
+.segmented.side-toggle button.active.result-w {
+    background: #4ade80;
+    color: #000;
+}
+
+.segmented.side-toggle button.active.result-l {
+    background: #ef4444;
+    color: #fff;
+}
+
+/* ===== ゲーム行 ===== */
+.game-row {
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 12px;
+    background: #101010;
+}
+
+.game-row:last-child {
+    margin-bottom: 0;
+}
+
+.game-row-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.game-row-head span {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 0.9rem;
+}
+
+.game-row-remove {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 2px 6px;
+}
+
+.game-row-remove:hover {
+    color: #ef4444;
+}
+
+.game-row-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 12px;
+}
+
+.game-row-grid .entry-field-wide {
+    grid-column: 1 / -1;
+}
+
+.entry-empty {
+    color: var(--text-sub);
+    font-size: 0.85rem;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* ===== トークン保存済み表示 ===== */
+.entry-token-saved {
+    color: var(--text-sub);
+    font-size: 0.82rem;
+    margin: -8px 0 16px;
+}
+
+.link-btn {
+    background: none;
+    border: none;
+    color: var(--accent);
+    text-decoration: underline;
+    font-size: 0.82rem;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* ===== 送信バー ===== */
+.entry-submit-bar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.entry-submit-btn {
+    flex: 1;
+    min-width: 140px;
+    justify-content: center;
+    min-height: 46px;
+}
+
+.entry-status {
+    margin-top: 12px;
+    font-size: 0.88rem;
+    min-height: 1.4em;
+}
+
+.entry-status.success {
+    color: #4ade80;
+}
+
+.entry-status.error {
+    color: #ef4444;
+}
+
+.entry-status.pending {
+    color: var(--text-sub);
+}
+
+@media (max-width: 480px) {
+    .entry-grid,
+    .game-row-grid {
+        grid-template-columns: 1fr;
+    }
+}
