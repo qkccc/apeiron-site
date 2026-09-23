@@ -25,7 +25,7 @@
 // GAS側で「デプロイ > ウェブアプリ」として取得したURLを設定
 const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxZhLQ38hytU05NimDksu1Y23fEhrYBJulyOMTB30qWPIov02-Zxgx4rYe60eJHk2g8eA/exec";
 // API取得時のタイムアウト(ミリ秒)
-const API_TIMEOUT = 10000;
+const API_TIMEOUT = 20000;
 
 // デバッグモード(ローカルテスト時はtrueに変更)
 const DEBUG_MODE = false;
@@ -111,7 +111,7 @@ async function dashboardInit() {
  * GAS APIからデータを取得
  * @returns {Promise<Object>} APIレスポンス（JSON）
  */
-async function fetchDataFromGAS() {
+async function fetchDataFromGAS(attempt = 0) {
     console.log(`Fetching from GAS: ${GAS_API_URL}`);
 
     // ダミーデータ使用モード（デバッグ用）
@@ -162,6 +162,10 @@ async function fetchDataFromGAS() {
         }
 
         if (error.name === "AbortError") {
+            // GASのコールドスタートで稀にタイムアウトすることがあるため1回だけ自動リトライする
+            if (attempt < 1) {
+                return fetchDataFromGAS(attempt + 1);
+            }
             throw new Error("APIリクエストがタイムアウトしました（" + API_TIMEOUT + "ms）");
         }
 

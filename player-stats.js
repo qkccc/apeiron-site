@@ -15,7 +15,7 @@
  */
 
 const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxZhLQ38hytU05NimDksu1Y23fEhrYBJulyOMTB30qWPIov02-Zxgx4rYe60eJHk2g8eA/exec";
-const API_TIMEOUT = 10000;
+const API_TIMEOUT = 20000;
 
 const CLASS_ICONS = {
     "E": "icon/class_E.png", "R": "icon/class_R.png", "W": "icon/class_W.png",
@@ -45,7 +45,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     } catch (error) {
         console.error("Error:", error);
-        showError("データ取得失敗: " + error.message);
+        const message = error.name === "AbortError"
+            ? "データ取得がタイムアウトしました。電波の良い環境で再読み込みしてください。"
+            : "データ取得失敗: " + error.message;
+        showError(message);
     }
 });
 
@@ -55,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 // データ取得
 // ============================================================================
 
-async function fetchDataFromGAS() {
+async function fetchDataFromGAS(attempt = 0) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), API_TIMEOUT);
     try {
@@ -65,6 +68,10 @@ async function fetchDataFromGAS() {
         return await response.json();
     } catch (error) {
         clearTimeout(timeoutId);
+        // GASのコールドスタートで稀にタイムアウトすることがあるため1回だけ自動リトライする
+        if (error.name === "AbortError" && attempt < 1) {
+            return fetchDataFromGAS(attempt + 1);
+        }
         throw error;
     }
 }
