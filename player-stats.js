@@ -37,13 +37,39 @@ function seasonSortKey(season) {
     return matched ? parseInt(matched[0], 10) : Infinity;
 }
 
+// ===== 対象期間（era）判定 =====
+// 対抗戦: シーズン文字列に「対抗戦」を含む
+// 旧シャドバ: 第11回まで（第12回は実施なし）
+// BEYOND: 第13回前半以降
+const ERA_ALL = "all";
+const ERA_KOTAI = "kotai";
+const ERA_OLD = "old";
+const ERA_BEYOND = "beyond";
+
+let currentEra = ERA_ALL;
+
+function getEra(season) {
+    const str = String(season);
+    if (str.includes("対抗戦")) return ERA_KOTAI;
+    const num = seasonSortKey(str);
+    if (num === Infinity) return ERA_KOTAI;
+    return num <= 11 ? ERA_OLD : ERA_BEYOND;
+}
+
 let allMatchesData = [];
+
+function getFilteredMatches() {
+    if (currentEra === ERA_ALL) return allMatchesData;
+    return allMatchesData.filter(m => getEra(m.season) === currentEra);
+}
 
 document.addEventListener("DOMContentLoaded", async function () {
     try {
         const apiData = await fetchDataFromGAS();
         if (apiData && apiData.success && apiData.matches) {
             allMatchesData = apiData.matches;
+            attachFilterListeners();
+            attachEraListeners();
             initializeAllFilters();
             renderAllStats();
         } else {
@@ -87,12 +113,13 @@ async function fetchDataFromGAS(attempt = 0) {
 // ============================================================================
 
 function initializeAllFilters() {
-    const seasons = [...new Set(allMatchesData.map(m => m.season))].sort((a, b) => seasonSortKey(a) - seasonSortKey(b));
+    const matches = getFilteredMatches();
+    const seasons = [...new Set(matches.map(m => m.season))].sort((a, b) => seasonSortKey(a) - seasonSortKey(b));
 
     const players = new Set();
     const classes = new Set();
     const playerAppearances = {};
-    allMatchesData.forEach(match => {
+    matches.forEach(match => {
         match.games.forEach(game => {
             if (game.myPlayer) {
                 players.add(game.myPlayer);
@@ -118,27 +145,42 @@ function initializeAllFilters() {
         const latestSeason = seasons[seasons.length - 1];
         document.getElementById("season-player-filter").value = latestSeason;
         document.getElementById("season-class-filter").value = latestSeason;
-        if (classOptions.length > 0) document.getElementById("class-player-filter").value = classOptions[0].value;
-        if (classOptions.length > 0) document.getElementById("class-season-filter").value = classOptions[0].value;
-        if (sortedPlayers.length > 0) document.getElementById("player-class-filter").value = sortedPlayers[0];
-        if (sortedPlayers.length > 0) document.getElementById("player-season-filter").value = sortedPlayers[0];
     }
-
-    document.getElementById("season-player-filter").addEventListener("change", renderAllStats);
-    document.getElementById("season-class-filter").addEventListener("change", renderAllStats);
-    document.getElementById("class-player-filter").addEventListener("change", renderAllStats);
-    document.getElementById("class-season-filter").addEventListener("change", renderAllStats);
-    document.getElementById("player-class-filter").addEventListener("change", renderAllStats);
-    document.getElementById("player-season-filter").addEventListener("change", renderAllStats);
+    if (classOptions.length > 0) {
+        document.getElementById("class-player-filter").value = classOptions[0].value;
+        document.getElementById("class-season-filter").value = classOptions[0].value;
+    }
+    if (sortedPlayers.length > 0) {
+        document.getElementById("player-class-filter").value = sortedPlayers[0];
+        document.getElementById("player-season-filter").value = sortedPlayers[0];
+    }
 }
 
 function addFilterOptions(elementId, options) {
     const element = document.getElementById(elementId);
+    element.innerHTML = "";
     options.forEach(opt => {
         const option = document.createElement("option");
         option.value = opt.value;
         option.textContent = opt.text;
         element.appendChild(option);
+    });
+}
+
+function attachFilterListeners() {
+    ["season-player-filter", "season-class-filter", "class-player-filter", "class-season-filter", "player-class-filter", "player-season-filter"]
+        .forEach(id => document.getElementById(id).addEventListener("change", renderAllStats));
+}
+
+function attachEraListeners() {
+    document.querySelectorAll("#era-navigation .sub-nav-button").forEach(button => {
+        button.addEventListener("click", function () {
+            currentEra = this.getAttribute("data-era");
+            document.querySelectorAll("#era-navigation .sub-nav-button").forEach(b => b.classList.remove("active"));
+            this.classList.add("active");
+            initializeAllFilters();
+            renderAllStats();
+        });
     });
 }
 
@@ -162,7 +204,7 @@ function renderAllStats() {
 
 function render1OverallStats() {
     const stats = {};
-    allMatchesData.forEach(match => {
+    getFilteredMatches().forEach(match => {
         const playersInMatch = new Set();
         match.games.forEach(game => {
             if (!game.myPlayer) return;
@@ -203,14 +245,11 @@ function render1OverallStats() {
 function render2SeasonPlayerStats() {
     const selectedSeason = document.getElementById("season-player-filter").value;
     const stats = {};
+    const matches = getFilteredMatches();
 
     // 全シーズンとプレイヤーの組み合わせを初期化
-    const allSeasons = [...new Set(allMatchesData.map(m => m.season))].sort((a, b) => {
-        const numA = parseInt(a.replace(/[^\d]/g, ""));
-        const numB = parseInt(b.replace(/[^\d]/g, ""));
-        return numA - numB;
-    });
-    const allPlayers = [...new Set(allMatchesData.flatMap(m => m.games.map(g => g.myPlayer).filter(p => p)))];
+    const allSeasons = [...new Set(matches.map(m => m.season))].sort((a, b) => seasonSortKey(a) - seasonSortKey(b));
+    const allPlayers = [...new Set(matches.flatMap(m => m.games.map(g => g.myPlayer).filter(p => p)))];
 
     // 全組み合わせを0で初期化
     allSeasons.forEach(season => {
@@ -221,7 +260,7 @@ function render2SeasonPlayerStats() {
     });
 
     // 実データで上書き
-    allMatchesData.forEach(match => {
+    matches.forEach(match => {
         const playersInMatch = new Set();
         match.games.forEach(game => {
             if (!game.myPlayer) return;
@@ -266,15 +305,12 @@ function render2SeasonPlayerStats() {
 function render3SeasonClassStats() {
     const selectedSeason = document.getElementById("season-class-filter").value;
     const stats = {};
+    const matches = getFilteredMatches();
 
     // 全シーズンとクラスの組み合わせを初期化
-    const allSeasons = [...new Set(allMatchesData.map(m => m.season))].sort((a, b) => {
-        const numA = parseInt(a.replace(/[^\d]/g, ""));
-        const numB = parseInt(b.replace(/[^\d]/g, ""));
-        return numA - numB;
-    });
+    const allSeasons = [...new Set(matches.map(m => m.season))].sort((a, b) => seasonSortKey(a) - seasonSortKey(b));
     const allClasses = new Set();
-    allMatchesData.forEach(match => {
+    matches.forEach(match => {
         match.games.forEach(game => {
             if (game.myClass) allClasses.add(game.myClass);
         });
@@ -289,7 +325,7 @@ function render3SeasonClassStats() {
     });
 
     // 実データで上書き
-    allMatchesData.forEach(match => {
+    matches.forEach(match => {
         const classesInMatch = new Set();
         match.games.forEach(game => {
             if (!game.myClass) return;
@@ -334,7 +370,7 @@ function render4ClassPlayerStats() {
     const selectedClass = document.getElementById("class-player-filter").value;
     const stats = {};
 
-    allMatchesData.forEach(match => {
+    getFilteredMatches().forEach(match => {
         const playersInMatch = new Set();
         match.games.forEach(game => {
             if (!game.myClass || game.myClass !== selectedClass || !game.myPlayer) return;
@@ -377,13 +413,10 @@ function render4ClassPlayerStats() {
 function render5ClassSeasonStats() {
     const selectedClass = document.getElementById("class-season-filter").value;
     const stats = {};
+    const matches = getFilteredMatches();
 
     // 全シーズンを初期化
-    const allSeasons = [...new Set(allMatchesData.map(m => m.season))].sort((a, b) => {
-        const numA = parseInt(a.replace(/[^\d]/g, ""));
-        const numB = parseInt(b.replace(/[^\d]/g, ""));
-        return numA - numB;
-    });
+    const allSeasons = [...new Set(matches.map(m => m.season))].sort((a, b) => seasonSortKey(a) - seasonSortKey(b));
 
     // 全シーズンを0で初期化
     allSeasons.forEach(season => {
@@ -391,7 +424,7 @@ function render5ClassSeasonStats() {
     });
 
     // 実データで上書き
-    allMatchesData.forEach(match => {
+    matches.forEach(match => {
         const classInMatch = new Set();
         match.games.forEach(game => {
             if (!game.myClass || game.myClass !== selectedClass) return;
@@ -439,7 +472,7 @@ function render6PlayerClassStats() {
         stats[className] = { class: className, participated: 0, wins: 0, losses: 0 };
     });
 
-    allMatchesData.forEach(match => {
+    getFilteredMatches().forEach(match => {
         const classInMatch = new Set();
         match.games.forEach(game => {
             if (!game.myPlayer || game.myPlayer !== selectedPlayer) return;
@@ -480,18 +513,15 @@ function render6PlayerClassStats() {
 function render7PlayerSeasonStats() {
     const selectedPlayer = document.getElementById("player-season-filter").value;
     const stats = {};
+    const matches = getFilteredMatches();
 
-    const allSeasons = [...new Set(allMatchesData.map(m => m.season))].sort((a, b) => {
-        const numA = parseInt(a.replace(/[^\d]/g, ""));
-        const numB = parseInt(b.replace(/[^\d]/g, ""));
-        return numA - numB;
-    });
+    const allSeasons = [...new Set(matches.map(m => m.season))].sort((a, b) => seasonSortKey(a) - seasonSortKey(b));
 
     allSeasons.forEach(season => {
         stats[season] = { season: season, participated: 0, wins: 0, losses: 0 };
     });
 
-    allMatchesData.forEach(match => {
+    matches.forEach(match => {
         const playerInMatch = new Set();
         match.games.forEach(game => {
             if (!game.myPlayer || game.myPlayer !== selectedPlayer) return;
