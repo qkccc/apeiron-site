@@ -31,6 +31,12 @@ const CLASS_NAMES = {
 
 const CLASS_ORDER = ["E", "R", "W", "D", "Ni", "B", "Nm", "Nc", "V"];
 
+// シーズン文字列から並び替え用の数値を取得（"対抗戦"のように数字を含まないシーズンは末尾に回す）
+function seasonSortKey(season) {
+    const matched = String(season).match(/\d+/);
+    return matched ? parseInt(matched[0], 10) : Infinity;
+}
+
 let allMatchesData = [];
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -81,11 +87,7 @@ async function fetchDataFromGAS(attempt = 0) {
 // ============================================================================
 
 function initializeAllFilters() {
-    const seasons = [...new Set(allMatchesData.map(m => m.season))].sort((a, b) => {
-        const numA = parseInt(a.replace(/[^\d]/g, ""));
-        const numB = parseInt(b.replace(/[^\d]/g, ""));
-        return numA - numB;
-    });
+    const seasons = [...new Set(allMatchesData.map(m => m.season))].sort((a, b) => seasonSortKey(a) - seasonSortKey(b));
 
     const players = new Set();
     const classes = new Set();
@@ -408,8 +410,8 @@ function render5ClassSeasonStats() {
     });
 
     const statsList = Object.values(stats).sort((a, b) => {
-        const numA = parseInt(a.season.match(/\d+/)[0]);
-        const numB = parseInt(b.season.match(/\d+/)[0]);
+        const numA = seasonSortKey(a.season);
+        const numB = seasonSortKey(b.season);
         return numA - numB;
     });
 
@@ -507,8 +509,8 @@ function render7PlayerSeasonStats() {
     });
 
     const statsList = Object.values(stats).sort((a, b) => {
-        const numA = parseInt(a.season.match(/\d+/)[0]);
-        const numB = parseInt(b.season.match(/\d+/)[0]);
+        const numA = seasonSortKey(a.season);
+        const numB = seasonSortKey(b.season);
         return numA - numB;
     });
 
