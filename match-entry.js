@@ -267,8 +267,10 @@ function githubHeaders(token) {
 }
 
 async function githubJson(url, token, options = {}) {
+    // GitHub APIのGET応答は約60秒ブラウザにキャッシュされ、直前のコミット前のブランチ位置を読んでしまうため無効化する
     const response = await fetch(url, {
         ...options,
+        cache: "no-store",
         headers: { ...githubHeaders(token), ...(options.headers || {}) }
     });
     const data = await response.json().catch(() => null);
