@@ -200,7 +200,27 @@
     }
 
     .stat-card {
+        padding: 8px;
+    }
+
+    .statistics-section h2,
+    .matches-section h2 {
+        font-size: 1.3rem;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .statistics-section,
+    .matches-section {
+        margin-bottom: var(--spacing-md);
+    }
+
+    .dashboard-header {
+        margin-bottom: var(--spacing-sm);
         padding: var(--spacing-sm);
+    }
+
+    .page-navigation {
+        margin-bottom: var(--spacing-md);
     }
 
     .stat-card h4 {
@@ -209,8 +229,9 @@
     }
 
     .stat-card .stat-value {
-        font-size: 1.5rem;
+        font-size: 1.05rem;
         margin: var(--spacing-xs) 0;
+        white-space: nowrap;
     }
 
     .stat-card .stat-detail {
@@ -376,54 +397,71 @@
     gap: 6px;
 }
 
-/* スマホ対応: ゲームセル */
+/* スマホ対応: ゲームセル（縦を詰める） */
 @media (max-width: 768px) {
+    .match-card-header {
+        padding: 8px 10px;
+    }
+
+    .match-card-body {
+        padding: 6px 8px;
+    }
+
     .games-grid {
         grid-template-columns: 1fr !important;
-        gap: 6px;
+        gap: 3px;
     }
 
     .game-cell {
-        padding: 8px 10px;
-        gap: 8px;
+        padding: 3px 8px;
+        gap: 6px;
         flex-wrap: nowrap;
-        min-height: 44px;
+        min-height: 0;
     }
 
     .game-header {
-        min-width: 52px;
-        font-size: 0.85rem;
-        gap: 6px;
+        min-width: 44px;
+        font-size: 0.8rem;
+        gap: 4px;
     }
 
     .game-result {
         font-size: 1rem;
+        min-width: 20px;
+    }
+
+    .result-icon {
+        height: 16px;
+        width: 16px;
     }
 
     .game-body {
-        gap: 6px;
+        gap: 4px;
         font-size: 0.85rem;
         flex-wrap: nowrap;
-        overflow: hidden;
+        min-width: 0;
     }
 
     .player-name {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         max-width: none;
     }
 
     .player-class {
-        height: 24px;
-        min-width: 24px;
+        height: 22px;
+        min-width: 22px;
+        overflow: visible;
     }
 
     .class-icon {
-        height: 24px;
+        height: 22px;
+        width: 22px;
+        object-fit: contain;
     }
 
     .vs-text {
-        font-size: 0.7rem;
-        margin: 0 4px;
+        font-size: 0.65rem;
+        margin: 0 3px;
     }
 }
 
@@ -648,8 +686,8 @@
     .deck-link-badge {
         flex: 1 1 0;
         width: auto;
-        font-size: 0.8rem;
-        padding: 10px 8px;
+        font-size: 0.75rem;
+        padding: 6px 8px;
     }
 }
 
@@ -791,7 +829,7 @@
     }
 
     .stats-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .game-stats {
@@ -940,5 +978,23 @@
     .deck-link-badge:hover {
         transform: none;
         box-shadow: none;
+    }
+}
+
+/* 統計カードのスマホ用サイズ（基本ルールより後ろに置いて確実に上書きする） */
+@media (max-width: 768px) {
+    .stat-card .stat-value {
+        font-size: 1.2rem;
+        margin: 4px 0;
+        white-space: nowrap;
+    }
+
+    .stat-card h4 {
+        font-size: 0.75rem;
+        margin-bottom: 4px;
+    }
+
+    .stat-card .stat-detail {
+        font-size: 0.7rem;
     }
 }
