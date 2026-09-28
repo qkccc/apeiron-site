@@ -290,39 +290,52 @@ async function uploadDeckImageToGithub(file, path, token) {
         body: JSON.stringify({ content: base64, encoding: "base64" })
     });
 
-    const ref = await githubJson(`${repoBase}/git/ref/heads/${GITHUB_BRANCH}`, token);
-    const parentCommitSha = ref.object.sha;
+    // 直前のコミットがまだ反映されていない/他のコミットと競合した場合に備え、ref取得からやり直して最大4回リトライ
+    let lastError;
+    for (let attempt = 0; attempt < 4; attempt++) {
+        try {
+            const ref = await githubJson(`${repoBase}/git/ref/heads/${GITHUB_BRANCH}`, token);
+            const parentCommitSha = ref.object.sha;
 
-    const parentCommit = await githubJson(`${repoBase}/git/commits/${parentCommitSha}`, token);
-    const baseTreeSha = parentCommit.tree.sha;
+            const parentCommit = await githubJson(`${repoBase}/git/commits/${parentCommitSha}`, token);
+            const baseTreeSha = parentCommit.tree.sha;
 
-    const tree = await githubJson(`${repoBase}/git/trees`, token, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            base_tree: baseTreeSha,
-            tree: [{ path, mode: "100644", type: "blob", sha: blob.sha }]
-        })
-    });
+            const tree = await githubJson(`${repoBase}/git/trees`, token, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    base_tree: baseTreeSha,
+                    tree: [{ path, mode: "100644", type: "blob", sha: blob.sha }]
+                })
+            });
 
-    const newCommit = await githubJson(`${repoBase}/git/commits`, token, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            message: `deck: add ${path}`,
-            tree: tree.sha,
-            parents: [parentCommitSha]
-        })
-    });
+            const newCommit = await githubJson(`${repoBase}/git/commits`, token, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    message: `deck: add ${path}`,
+                    tree: tree.sha,
+                    parents: [parentCommitSha]
+                })
+            });
 
-    await githubJson(`${repoBase}/git/refs/heads/${GITHUB_BRANCH}`, token, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sha: newCommit.sha })
-    });
+            await githubJson(`${repoBase}/git/refs/heads/${GITHUB_BRANCH}`, token, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ sha: newCommit.sha })
+            });
 
-    return newCommit.sha;
+            return newCommit.sha;
+        } catch (err) {
+            lastError = err;
+            await new Promise((resolve) => setTimeout(resolve, 800 * (attempt + 1)));
+        }
+    }
+    throw lastError;
 }
+
+// 敵味方を続けて押しても1件ずつ順番に処理する（同時に走ると同じ親コミットから分岐して競合するため）
+let deckUploadQueue = Promise.resolve();
 
 async function uploadDeckSlot(side) {
     const slot = deckState[side];
@@ -340,15 +353,20 @@ async function uploadDeckSlot(side) {
     slot.error = "";
     renderDeckSlot(side);
 
-    try {
-        const path = deckImagePath(side, deckExtOf(slot.file));
-        await uploadDeckImageToGithub(slot.file, path, token);
-        slot.status = "done";
-    } catch (err) {
-        slot.status = "error";
-        slot.error = err.message;
-    }
-    renderDeckSlot(side);
+    const path = deckImagePath(side, deckExtOf(slot.file));
+    const file = slot.file;
+
+    deckUploadQueue = deckUploadQueue.then(async () => {
+        try {
+            await uploadDeckImageToGithub(file, path, token);
+            slot.status = "done";
+        } catch (err) {
+            slot.status = "error";
+            slot.error = err.message;
+        }
+        renderDeckSlot(side);
+    });
+    await deckUploadQueue;
 }
 
 ["my", "enemy"].forEach((side) => {
