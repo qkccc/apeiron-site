@@ -285,6 +285,7 @@
 /* ===== マッチカード基本スタイル ===== */
 
 .match-card {
+    min-width: 0;
     background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
     border: 1px solid var(--border-light);
     border-radius: 8px;
@@ -379,19 +380,20 @@
 @media (max-width: 768px) {
     .games-grid {
         grid-template-columns: 1fr !important;
-        gap: 4px;
+        gap: 6px;
     }
 
     .game-cell {
-        padding: 4px 6px;
-        gap: 4px;
-        flex-wrap: wrap;
+        padding: 8px 10px;
+        gap: 8px;
+        flex-wrap: nowrap;
+        min-height: 44px;
     }
 
     .game-header {
-        min-width: 50px;
-        font-size: 0.8rem;
-        gap: 4px;
+        min-width: 52px;
+        font-size: 0.85rem;
+        gap: 6px;
     }
 
     .game-result {
@@ -399,29 +401,29 @@
     }
 
     .game-body {
-        gap: 2px;
-        font-size: 0.75rem;
+        gap: 6px;
+        font-size: 0.85rem;
         flex-wrap: nowrap;
         overflow: hidden;
     }
 
     .player-name {
-        font-size: 0.75rem;
-        max-width: 80px;
+        font-size: 0.9rem;
+        max-width: none;
     }
 
     .player-class {
-        height: 16px;
-        min-width: 16px;
+        height: 24px;
+        min-width: 24px;
     }
 
     .class-icon {
-        height: 14px;
+        height: 24px;
     }
 
     .vs-text {
-        font-size: 0.65rem;
-        margin: 0;
+        font-size: 0.7rem;
+        margin: 0 4px;
     }
 }
 
@@ -644,9 +646,10 @@
     }
 
     .deck-link-badge {
-        width: 100%;
+        flex: 1 1 0;
+        width: auto;
         font-size: 0.8rem;
-        padding: 7px 10px;
+        padding: 10px 8px;
     }
 }
 
@@ -766,25 +769,25 @@
     }
 
     .match-card-header {
-        flex-direction: column;
         gap: var(--spacing-sm);
     }
 
-    .match-result {
-        text-align: left;
+    .match-title {
+        font-size: 1.15rem;
+    }
+
+    .match-date {
+        font-size: 0.85rem;
+    }
+
+    .result-badge {
+        font-size: 0.95rem;
+        white-space: nowrap;
     }
 
     .games-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: var(--spacing-xs);
-    }
-
-    .game-cell {
-        padding: var(--spacing-xs);
-    }
-
-    .game-body {
-        font-size: 0.65rem;
     }
 
     .stats-container {
@@ -926,5 +929,16 @@
         width: 36px;
         height: 36px;
         font-size: 24px;
+    }
+}
+/* タッチ端末ではhoverが残ってカードが浮いたままになるため無効化 */
+@media (hover: none) {
+    .match-card:hover,
+    .game-cell:hover,
+    .stat-card:hover,
+    .nav-link:hover,
+    .deck-link-badge:hover {
+        transform: none;
+        box-shadow: none;
     }
 }
