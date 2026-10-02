@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- ===== 基本設定 ===== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APEIRON | BO1 投げ分けツール</title>
+
+    <!-- ===== スタイルシート ===== -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ===== フォント読み込み ===== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/web-analytics/script.js"></script>
+
+    <style>
+        /* ===== このページ専用スタイル ===== */
+        :root {
+            --pick-a: #D4AF37;
+            /* 自分のクラスA（ゴールド） */
+            --pick-b: #4FA3E0;
+            /* 自分のクラスB（ブルー） */
+            --pick-x: #6b6b6b;
+            /* どちらでも・迷う */
+            --line: #2c2c2c;
+        }
+
+        main.bo1-main {
+            /* ヘッダーを置かないページなので固定ヘッダー分の余白は不要 */
+            padding: 32px 16px 64px;
+            max-width: 760px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .bo1-title {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .bo1-title h1 {
+            font-size: clamp(1.4rem, 5vw, 2rem);
+            letter-spacing: 0.06em;
+        }
+
+        .bo1-title h1 span {
+            color: var(--accent);
+        }
+
+        .bo1-title p {
+            color: var(--text-sub);
+            margin: 6px 0 0;
+            font-size: 0.9rem;
+        }
+
+        .bo1-card {
+            background: var(--card-bg);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 24px 20px;
+        }
+
+        .bo1-card h2 {
+            font-size: 1rem;
+            color: var(--accent);
+            letter-spacing: 0.08em;
+            margin-bottom: 14px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- 共通ボタン --- */
+        .btn {
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            background: #222;
+            color: var(--text-main);
+            padding: 12px 18px;
+            transition: background 0.2s, border-color 0.2s, transform 0.1s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn:hover {
+            border-color: #555;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            border-color: #f0cc55;
+            background: #e2bd45;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-sub);
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* --- セットアップ：クラス選択 --- */
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+        }
+
+        .class-btn {
+            position: relative;
+            padding: 16px 10px;
+            border-left: 4px solid var(--cls);
+        }
+
+        .class-btn[aria-pressed="true"] {
+            background: color-mix(in srgb, var(--cls) 22%, #1f1f1f);
+            border-color: var(--cls);
+        }
+
+        .class-btn .slot {
+            position: absolute;
+            top: 4px;
+            right: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 900;
+            padding: 1px 6px;
+            border-radius: 4px;
+            color: #000;
+        }
+
+        .setup-note {
+            color: var(--text-sub);
+            font-size: 0.85rem;
+            margin: 14px 0 0;
+            text-align: center;
+        }
+
+        /* --- 出題画面 --- */
+        .progress {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 6px;
+            background: #2a2a2a;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar>div {
+            height: 100%;
+            background: var(--accent);
+            transition: width 0.25s;
+        }
+
+        .progress-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            min-width: 4.5em;
+            text-align: right;
+        }
+
+        .opp-label {
+            text-align: center;
+            color: var(--text-sub);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+        }
+
+        .opp-pair {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 10px 0 28px;
+        }
+
+        .opp-chip {
+            flex: 1;
+            max-width: 220px;
+            text-align: center;
+            font-size: clamp(1.15rem, 5vw, 1.5rem);
+            font-weight: 700;
+            padding: 18px 8px;
+            border-radius: 10px;
+            background: color-mix(in srgb, var(--cls) 16%, #141414);
+            border: 1px solid color-mix(in srgb, var(--cls) 60%, transparent);
+        }
+
+        .opp-vs {
+            color: var(--text-sub);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        .choice-label {
+            text-align: center;
+            color: var(--text-sub);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+        }
+
+        .choice-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .choice-btn {
+            padding: 20px 8px;
+            font-size: 1.1rem;
+        }
+
+        .choice-btn.a {
+            border-color: var(--pick-a);
+            color: var(--pick-a);
+        }
+
+        .choice-btn.b {
+            border-color: var(--pick-b);
+            color: var(--pick-b);
+        }
+
+        .choice-btn.a:hover {
+            background: color-mix(in srgb, var(--pick-a) 18%, #222);
+        }
+
+        .choice-btn.b:hover {
+            background: color-mix(in srgb, var(--pick-b) 18%, #222);
+        }
+
+        .choice-btn.x {
+            grid-column: 1 / -1;
+            padding: 12px 8px;
+            font-size: 0.95rem;
+            color: var(--text-sub);
+        }
+
+        .key-hint {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 400;
+            opacity: 0.6;
+            margin-top: 2px;
+        }
+
+        @media (hover: none) {
+            .key-hint {
+                display: none;
+            }
+        }
+
+        /* --- 結果画面 --- */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 0.85rem;
+        }
+
+        .legend span::before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            margin-right: 6px;
+            vertical-align: -1px;
+            background: var(--c);
+        }
+
+        .matrix-wrap {
+            overflow-x: auto;
+        }
+
+        table.matrix {
+            border-collapse: separate;
+            border-spacing: 3px;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 620px;
+            table-layout: fixed;
+        }
+
+        .matrix th {
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 6px 2px;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .matrix thead th {
+            border-bottom: 2px solid var(--cls);
+        }
+
+        .matrix tbody th {
+            text-align: center;
+            padding-right: 4px;
+            border-right: 2px solid var(--cls);
+        }
+
+        .matrix thead th:first-child {
+            border: none;
+            width: 40px;
+        }
+
+        .matrix td {
+            height: 40px;
+            text-align: center;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .matrix td.diag {
+            background: #141414;
+            color: #3a3a3a;
+        }
+
+        .matrix td.empty {
+            background: #181818;
+        }
+
+        .matrix td.pick {
+            cursor: pointer;
+            color: #000;
+        }
+
+        .matrix td.pick.a {
+            background: var(--pick-a);
+        }
+
+        .matrix td.pick.b {
+            background: var(--pick-b);
+        }
+
+        .matrix td.pick.x {
+            background: var(--pick-x);
+            color: #fff;
+        }
+
+        .matrix td.pick:hover {
+            outline: 2px solid #fff;
+        }
+
+        /* --- クラスアイコン --- */
+        .cls-icon {
+            width: 1.5em;
+            height: 1.5em;
+            object-fit: contain;
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+
+        .class-btn,
+        .opp-chip,
+        .choice-btn.a,
+        .choice-btn.b {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .opp-chip {
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .opp-chip .cls-icon {
+            width: 56px;
+            height: 56px;
+        }
+
+        .choice-btn .cls-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .choice-btn .key-hint {
+            flex-basis: 100%;
+        }
+
+        .matrix th .cls-icon {
+            width: 28px;
+            height: 28px;
+        }
+
+        .matrix td .cls-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .legend span,
+        .per-class td:first-child {
+            white-space: nowrap;
+        }
+
+        .legend .cls-icon,
+        .per-class .cls-icon,
+        .stat .cls-icon {
+            width: 22px;
+            height: 22px;
+            margin-right: 4px;
+        }
+
+        @media (max-width: 520px) {
+            .matrix thead th:first-child {
+                width: 32px;
+            }
+
+            .matrix th .cls-icon {
+                width: 22px;
+                height: 22px;
+            }
+
+            .matrix td .cls-icon {
+                width: 20px;
+                height: 20px;
+            }
+
+            .matrix td {
+                height: 34px;
+            }
+        }
+
+        .result-note {
+            color: var(--text-sub);
+            font-size: 0.8rem;
+            text-align: center;
+            margin: 10px 0 0;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .stat {
+            background: #141414;
+            border-radius: 10px;
+            padding: 14px 8px;
+            text-align: center;
+            border-top: 3px solid var(--c);
+        }
+
+        .stat .num {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            line-height: 1.1;
+        }
+
+        .stat .lbl {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+        }
+
+        table.per-class {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 24px;
+            font-size: 0.9rem;
+        }
+
+        .per-class th,
+        .per-class td {
+            padding: 8px 6px;
+            border-bottom: 1px solid var(--line);
+            text-align: center;
+        }
+
+        .per-class th {
+            color: var(--text-sub);
+            font-weight: 400;
+            font-size: 0.8rem;
+        }
+
+        .per-class td:first-child {
+            text-align: left;
+            font-weight: 700;
+            border-left: 3px solid var(--cls);
+            padding-left: 10px;
+        }
+
+        .per-class .lean {
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 24px;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: #000;
+            font-weight: 700;
+            padding: 10px 18px;
+            border-radius: 8px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="bo1-main">
+
+        <!-- ===== ページタイトル ===== -->
+        <section class="bo1-title">
+            <h1>BO1 <span>PICK</span> TOOL</h1>
+            <p>2デッキBO1で、相手の2クラスに対してどちらを投げるかを決める</p>
+        </section>
+
+        <!-- ===== ① セットアップ ===== -->
+        <section id="screen-setup" class="bo1-card">
+            <h2>自分の2クラスを選択</h2>
+            <div id="class-grid" class="class-grid"></div>
+            <p class="setup-note">相手の2クラスの組み合わせ（全21通り）が順番に出題されます</p>
+            <div class="btn-row">
+                <button id="start-btn" class="btn btn-primary" disabled>スタート</button>
+            </div>
+        </section>
+
+        <!-- ===== ② 出題 ===== -->
+        <section id="screen-quiz" class="bo1-card hidden">
+            <div class="progress">
+                <div class="progress-bar">
+                    <div id="progress-fill"></div>
+                </div>
+                <div id="progress-text" class="progress-text"></div>
+            </div>
+
+            <div class="opp-label">相手のクラス</div>
+            <div class="opp-pair">
+                <div id="opp-1" class="opp-chip"></div>
+                <div class="opp-vs">&amp;</div>
+                <div id="opp-2" class="opp-chip"></div>
+            </div>
+
+            <div class="choice-label">どちらを投げる？</div>
+            <div class="choice-row">
+                <button id="choice-a" class="btn choice-btn a" data-pick="a"></button>
+                <button id="choice-b" class="btn choice-btn b" data-pick="b"></button>
+                <button id="choice-x" class="btn choice-btn x" data-pick="x">どちらでも・迷う<span class="key-hint">[3]</span></button>
+            </div>
+
+            <div class="btn-row">
+                <button id="undo-btn" class="btn btn-ghost">← 1つ戻る</button>
+                <button id="quit-btn" class="btn btn-ghost">最初からやり直す</button>
+            </div>
+        </section>
+
+        <!-- ===== ③ 結果 ===== -->
+        <section id="screen-result" class="bo1-card hidden">
+            <h2>結果</h2>
+            <div id="legend" class="legend"></div>
+            <div class="matrix-wrap">
+                <table id="matrix" class="matrix"></table>
+            </div>
+            <p class="result-note">マスをタップすると選択を切り替えられます</p>
+
+            <div id="summary" class="summary"></div>
+
+            <table id="per-class" class="per-class"></table>
+
+            <div class="btn-row">
+                <button id="copy-btn" class="btn">テキストでコピー</button>
+                <button id="retry-btn" class="btn">同じクラスでもう一度</button>
+                <button id="reset-btn" class="btn btn-primary">クラスを選び直す</button>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            // ===== 定数 =====
+            var CLASSES = [
+                { id: 'elf', icon: 'icon/class_E.png', name: 'エルフ', short: 'エ', color: '#4caf50' },
+                { id: 'royal', icon: 'icon/class_R.png', name: 'ロイヤル', short: 'ロ', color: '#e6c34a' },
+                { id: 'witch', icon: 'icon/class_W.png', name: 'ウィッチ', short: 'ウ', color: '#5b7cf0' },
+                { id: 'dragon', icon: 'icon/class_D.png', name: 'ドラゴン', short: 'ド', color: '#f08a3a' },
+                { id: 'nightmare', icon: 'icon/class_Ni.png', name: 'ナイトメア', short: 'ナ', color: '#c0457a' },
+                { id: 'bishop', icon: 'icon/class_B.png', name: 'ビショップ', short: 'ビ', color: '#e8e2c8' },
+                { id: 'nemesis', icon: 'icon/class_Nm.png', name: 'ネメシス', short: 'ネ', color: '#3cc6d6' }
+            ];
+            var STORAGE_KEY = 'apeiron-bo1-pick';
+            var PICK_COLOR = { a: 'var(--pick-a)', b: 'var(--pick-b)', x: 'var(--pick-x)' };
+
+            // ===== 状態 =====
+            // mine: 自分の2クラス（CLASSES の index）
+            // order: 出題順（ペアのキー "i-j" の配列）
+            // picks: { "i-j": "a" | "b" | "x" }
+            var state = { mine: [], order: [], picks: {} };
+
+            function save() {
+                try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) { }
+            }
+
+            function load() {
+                try {
+                    var s = JSON.parse(localStorage.getItem(STORAGE_KEY));
+                    if (s && Array.isArray(s.mine) && Array.isArray(s.order) && s.picks) state = s;
+                } catch (e) { }
+            }
+
+            // ===== ヘルパー =====
+            function $(id) { return document.getElementById(id); }
+
+            function iconImg(c) {
+                return '<img class="cls-icon" src="' + c.icon + '" alt="' + c.name + '" title="' + c.name + '">';
+            }
+
+            function pairKey(i, j) { return Math.min(i, j) + '-' + Math.max(i, j); }
+
+            function allPairs() {
+                var keys = [];
+                for (var i = 0; i < CLASSES.length; i++) {
+                    for (var j = i + 1; j < CLASSES.length; j++) keys.push(pairKey(i, j));
+                }
+                return keys;
+            }
+
+            function shuffle(arr) {
+                for (var i = arr.length - 1; i > 0; i--) {
+                    var r = Math.floor(Math.random() * (i + 1));
+                    var t = arr[i]; arr[i] = arr[r]; arr[r] = t;
+                }
+                return arr;
+            }
+
+            function pickName(p) {
+                if (p === 'a') return CLASSES[state.mine[0]].name;
+                if (p === 'b') return CLASSES[state.mine[1]].name;
+                return 'どちらでも';
+            }
+
+            function answeredCount() { return Object.keys(state.picks).length; }
+
+            function showScreen(name) {
+                ['setup', 'quiz', 'result'].forEach(function (n) {
+                    $('screen-' + n).classList.toggle('hidden', n !== name);
+                });
+                window.scrollTo(0, 0);
+            }
+
+            function toast(msg) {
+                var t = $('toast');
+                t.textContent = msg;
+                t.classList.add('show');
+                clearTimeout(toast.timer);
+                toast.timer = setTimeout(function () { t.classList.remove('show'); }, 1600);
+            }
+
+            // ===== ① セットアップ =====
+            function renderSetup() {
+                var grid = $('class-grid');
+                grid.innerHTML = '';
+                CLASSES.forEach(function (c, i) {
+                    var btn = document.createElement('button');
+                    btn.className = 'btn class-btn';
+                    btn.style.setProperty('--cls', c.color);
+                    btn.innerHTML = iconImg(c) + '<span>' + c.name + '</span>';
+                    var slot = state.mine.indexOf(i);
+                    btn.setAttribute('aria-pressed', slot >= 0 ? 'true' : 'false');
+                    if (slot >= 0) {
+                        var tag = document.createElement('span');
+                        tag.className = 'slot';
+                        tag.textContent = slot === 0 ? 'A' : 'B';
+                        tag.style.background = slot === 0 ? 'var(--pick-a)' : 'var(--pick-b)';
+                        btn.appendChild(tag);
+                    }
+                    btn.addEventListener('click', function () {
+                        var k = state.mine.indexOf(i);
+                        if (k >= 0) state.mine.splice(k, 1);
+                        else if (state.mine.length < 2) state.mine.push(i);
+                        else state.mine = [state.mine[1], i];
+                        renderSetup();
+                    });
+                    grid.appendChild(btn);
+                });
+                $('start-btn').disabled = state.mine.length !== 2;
+            }
+
+            function startQuiz() {
+                state.order = shuffle(allPairs());
+                state.picks = {};
+                save();
+                renderQuiz();
+                showScreen('quiz');
+            }
+
+            // ===== ② 出題 =====
+            function currentKey() {
+                for (var i = 0; i < state.order.length; i++) {
+                    if (!state.picks[state.order[i]]) return state.order[i];
+                }
+                return null;
+            }
+
+            function renderQuiz() {
+                var key = currentKey();
+                if (!key) { renderResult(); showScreen('result'); return; }
+
+                var done = answeredCount(), total = state.order.length;
+                $('progress-fill').style.width = (done / total * 100) + '%';
+                $('progress-text').textContent = (done + 1) + ' / ' + total;
+
+                var ij = key.split('-').map(Number);
+                // 左右の表示順はランダムにして位置の偏りを避ける
+                if (Math.random() < 0.5) ij.reverse();
+                [$('opp-1'), $('opp-2')].forEach(function (el, n) {
+                    var c = CLASSES[ij[n]];
+                    el.innerHTML = iconImg(c) + '<span>' + c.name + '</span>';
+                    el.style.setProperty('--cls', c.color);
+                });
+
+                $('choice-a').innerHTML = iconImg(CLASSES[state.mine[0]]) + CLASSES[state.mine[0]].name + '<span class="key-hint">[1]</span>';
+                $('choice-b').innerHTML = iconImg(CLASSES[state.mine[1]]) + CLASSES[state.mine[1]].name + '<span class="key-hint">[2]</span>';
+                $('undo-btn').disabled = done === 0;
+            }
+
+            function choose(p) {
+                var key = currentKey();
+                if (!key) return;
+                state.picks[key] = p;
+                save();
+                renderQuiz();
+            }
+
+            function undo() {
+                // 出題順で最後に回答したものを取り消す
+                for (var i = state.order.length - 1; i >= 0; i--) {
+                    if (state.picks[state.order[i]]) {
+                        delete state.picks[state.order[i]];
+                        break;
+                    }
+                }
+                save();
+                renderQuiz();
+                showScreen('quiz');
+            }
+
+            // ===== ③ 結果 =====
+            function classLabel(c) {
+                return iconImg(c);
+            }
+
+            function renderResult() {
+                var a = CLASSES[state.mine[0]], b = CLASSES[state.mine[1]];
+
+                // 凡例
+                $('legend').innerHTML =
+                    '<span style="--c:var(--pick-a)">' + iconImg(a) + a.name + '</span>' +
+                    '<span style="--c:var(--pick-b)">' + iconImg(b) + b.name + '</span>' +
+                    '<span style="--c:var(--pick-x)">どちらでも・迷う</span>';
+
+                // 7×7 マトリクス（対称）
+                var html = '<thead><tr><th></th>';
+                CLASSES.forEach(function (c) {
+                    html += '<th style="--cls:' + c.color + '">' + classLabel(c) + '</th>';
+                });
+                html += '</tr></thead><tbody>';
+                CLASSES.forEach(function (r, i) {
+                    html += '<tr><th style="--cls:' + r.color + '">' + classLabel(r) + '</th>';
+                    CLASSES.forEach(function (c, j) {
+                        if (i === j) { html += '<td class="diag">—</td>'; return; }
+                        var key = pairKey(i, j), p = state.picks[key];
+                        if (!p) { html += '<td class="empty"></td>'; return; }
+                        var label = p === 'x' ? '?' : iconImg(p === 'a' ? a : b);
+                        html += '<td class="pick ' + p + '" data-key="' + key + '" title="' +
+                            r.name + ' & ' + c.name + ' → ' + pickName(p) + '">' + label + '</td>';
+                    });
+                    html += '</tr>';
+                });
+                $('matrix').innerHTML = html + '</tbody>';
+
+                // 合計
+                var count = { a: 0, b: 0, x: 0 };
+                Object.keys(state.picks).forEach(function (k) { count[state.picks[k]]++; });
+                $('summary').innerHTML = ['a', 'b', 'x'].map(function (p) {
+                    return '<div class="stat" style="--c:' + PICK_COLOR[p] + '"><div class="num">' + count[p] +
+                        '</div><div class="lbl">' + (p === 'x' ? 'どちらでも・迷う' : iconImg(p === 'a' ? a : b) + pickName(p)) + '</div></div>';
+                }).join('');
+
+                // 相手クラス別（そのクラスを含む6通りの内訳）
+                var rows = '<thead><tr><th>相手クラスを含む6通り</th><th>' + iconImg(a) + '</th><th>' + iconImg(b) +
+                    '</th><th>迷う</th><th>傾向</th></tr></thead><tbody>';
+                CLASSES.forEach(function (c, i) {
+                    var n = { a: 0, b: 0, x: 0 };
+                    CLASSES.forEach(function (_, j) {
+                        if (i !== j && state.picks[pairKey(i, j)]) n[state.picks[pairKey(i, j)]]++;
+                    });
+                    var lean = n.a > n.b ? '<span class="lean" style="color:var(--pick-a)">' + a.name + '寄り</span>'
+                        : n.b > n.a ? '<span class="lean" style="color:var(--pick-b)">' + b.name + '寄り</span>'
+                            : '<span class="lean" style="color:var(--text-sub)">互角</span>';
+                    rows += '<tr><td style="--cls:' + c.color + '">' + iconImg(c) + c.name + '</td><td>' + n.a + '</td><td>' +
+                        n.b + '</td><td>' + n.x + '</td><td>' + lean + '</td></tr>';
+                });
+                $('per-class').innerHTML = rows + '</tbody>';
+            }
+
+            function copyText() {
+                var a = CLASSES[state.mine[0]], b = CLASSES[state.mine[1]];
+                var lines = ['【BO1 投げ分け】自分: ' + a.name + ' / ' + b.name, ''];
+                allPairs().forEach(function (key) {
+                    var ij = key.split('-').map(Number);
+                    lines.push(CLASSES[ij[0]].name + ' & ' + CLASSES[ij[1]].name + ' → ' + pickName(state.picks[key]));
+                });
+                var text = lines.join('\n');
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function () { toast('コピーしました'); },
+                        function () { toast('コピーに失敗しました'); });
+                } else {
+                    toast('このブラウザではコピーできません');
+                }
+            }
+
+            // ===== イベント =====
+            $('start-btn').addEventListener('click', startQuiz);
+            ['choice-a', 'choice-b', 'choice-x'].forEach(function (id) {
+                $(id).addEventListener('click', function () { choose(this.dataset.pick); });
+            });
+            $('undo-btn').addEventListener('click', undo);
+            $('quit-btn').addEventListener('click', function () {
+                if (answeredCount() && !confirm('途中の回答を破棄して最初に戻りますか？')) return;
+                state.order = []; state.picks = {};
+                save(); renderSetup(); showScreen('setup');
+            });
+            $('matrix').addEventListener('click', function (e) {
+                var td = e.target.closest('td.pick');
+                if (!td) return;
+                var next = { a: 'b', b: 'x', x: 'a' };
+                state.picks[td.dataset.key] = next[state.picks[td.dataset.key]];
+                save(); renderResult();
+            });
+            $('copy-btn').addEventListener('click', copyText);
+            $('retry-btn').addEventListener('click', startQuiz);
+            $('reset-btn').addEventListener('click', function () {
+                state = { mine: [], order: [], picks: {} };
+                save(); renderSetup(); showScreen('setup');
+            });
+
+            // キーボード: 1 / 2 / 3 で選択、Backspace で戻る
+            document.addEventListener('keydown', function (e) {
+                if ($('screen-quiz').classList.contains('hidden')) return;
+                if (e.key === '1') choose('a');
+                else if (e.key === '2') choose('b');
+                else if (e.key === '3') choose('x');
+                else if (e.key === 'Backspace' && answeredCount()) { e.preventDefault(); undo(); }
+            });
+
+            // ===== 初期表示（途中経過があれば再開） =====
+            load();
+            if (state.mine.length === 2 && state.order.length) {
+                renderQuiz();
+                showScreen(currentKey() ? 'quiz' : 'result');
+            } else {
+                state.order = []; state.picks = {};
+                renderSetup();
+            }
+        })();
+    </script>
+
+</body>
+
+</html>
