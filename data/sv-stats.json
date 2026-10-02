@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-02T05:15:00+09:00",
+  "generated_at": "2026-10-03T05:15:00+09:00",
   "meta": {
     "class_order": [
       "エルフ",
@@ -17,7 +17,7 @@
       "season",
       "all"
     ],
-    "total_records": 10183,
+    "total_records": 10246,
     "season_start": "2026-09-29",
     "season_start_is_default": false,
     "min_recorders_for_detail": 3,
@@ -25,211 +25,191 @@
   },
   "windows": {
     "3d": {
-      "total_games": 243,
-      "wins": 142,
-      "losses": 101,
-      "win_rate": 58.4,
+      "total_games": 215,
+      "wins": 112,
+      "losses": 103,
+      "win_rate": 52.1,
       "recorder_count": 7,
       "by_turn": {},
       "by_class": [
         {
           "class": "エルフ",
-          "games": 58,
-          "wins": 37,
-          "win_rate": 63.8,
-          "usage_rate": 23.9
+          "games": 5,
+          "wins": 2,
+          "win_rate": 40.0,
+          "usage_rate": 2.3
         },
         {
           "class": "ロイヤル",
-          "games": 43,
-          "wins": 28,
-          "win_rate": 65.1,
-          "usage_rate": 17.7
+          "games": 73,
+          "wins": 40,
+          "win_rate": 54.8,
+          "usage_rate": 34.0
         },
         {
           "class": "ウィッチ",
-          "games": 56,
-          "wins": 31,
-          "win_rate": 55.4,
-          "usage_rate": 23.0
+          "games": 51,
+          "wins": 26,
+          "win_rate": 51.0,
+          "usage_rate": 23.7
         },
         {
           "class": "ドラゴン",
-          "games": 35,
-          "wins": 23,
-          "win_rate": 65.7,
-          "usage_rate": 14.4
+          "games": 43,
+          "wins": 26,
+          "win_rate": 60.5,
+          "usage_rate": 20.0
         },
         {
           "class": "ナイトメア",
+          "games": 7,
+          "wins": 4,
+          "win_rate": 57.1,
+          "usage_rate": 3.3
+        },
+        {
+          "class": "ビショップ",
           "games": 0,
           "wins": 0,
           "win_rate": null,
           "usage_rate": 0.0
         },
         {
-          "class": "ビショップ",
-          "games": 6,
-          "wins": 4,
-          "win_rate": 66.7,
-          "usage_rate": 2.5
-        },
-        {
           "class": "ネメシス",
-          "games": 45,
-          "wins": 19,
-          "win_rate": 42.2,
-          "usage_rate": 18.5
+          "games": 36,
+          "wins": 14,
+          "win_rate": 38.9,
+          "usage_rate": 16.7
         }
       ],
       "vs_class": [
         {
           "class": "エルフ",
-          "games": 20,
-          "wins": 8,
-          "win_rate": 40.0
+          "games": 25,
+          "wins": 14,
+          "win_rate": 56.0
         },
         {
           "class": "ロイヤル",
-          "games": 62,
-          "wins": 34,
-          "win_rate": 54.8
+          "games": 49,
+          "wins": 17,
+          "win_rate": 34.7
         },
         {
           "class": "ウィッチ",
-          "games": 21,
-          "wins": 14,
-          "win_rate": 66.7
+          "games": 22,
+          "wins": 13,
+          "win_rate": 59.1
         },
         {
           "class": "ドラゴン",
           "games": 36,
-          "wins": 22,
-          "win_rate": 61.1
+          "wins": 20,
+          "win_rate": 55.6
         },
         {
           "class": "ナイトメア",
-          "games": 24,
-          "wins": 15,
-          "win_rate": 62.5
+          "games": 18,
+          "wins": 12,
+          "win_rate": 66.7
         },
         {
           "class": "ビショップ",
-          "games": 20,
+          "games": 18,
           "wins": 11,
-          "win_rate": 55.0
+          "win_rate": 61.1
         },
         {
           "class": "ネメシス",
-          "games": 60,
-          "wins": 38,
-          "win_rate": 63.3
+          "games": 47,
+          "wins": 25,
+          "win_rate": 53.2
         }
       ],
       "matchup": {
         "エルフ": {
-          "エルフ": {
+          "ナイトメア": {
             "games": 1,
-            "wins": 1,
-            "win_rate": 100.0
-          },
-          "ロイヤル": {
-            "games": 12,
-            "wins": 8,
-            "win_rate": 66.7
-          },
-          "ウィッチ": {
-            "games": 7,
-            "wins": 5,
-            "win_rate": 71.4
-          },
-          "ドラゴン": {
-            "games": 6,
-            "wins": 4,
-            "win_rate": 66.7
-          },
-          "ナイトメア": {
-            "games": 6,
-            "wins": 4,
-            "win_rate": 66.7
-          },
-          "ビショップ": {
-            "games": 6,
-            "wins": 3,
-            "win_rate": 50.0
-          },
-          "ネメシス": {
-            "games": 20,
-            "wins": 12,
-            "win_rate": 60.0
-          }
-        },
-        "ロイヤル": {
-          "エルフ": {
-            "games": 2,
-            "wins": 1,
-            "win_rate": 50.0
-          },
-          "ロイヤル": {
-            "games": 10,
-            "wins": 5,
-            "win_rate": 50.0
-          },
-          "ウィッチ": {
-            "games": 4,
-            "wins": 3,
-            "win_rate": 75.0
-          },
-          "ドラゴン": {
-            "games": 8,
-            "wins": 6,
-            "win_rate": 75.0
-          },
-          "ナイトメア": {
-            "games": 5,
-            "wins": 3,
-            "win_rate": 60.0
-          },
-          "ビショップ": {
-            "games": 2,
             "wins": 0,
             "win_rate": 0.0
           },
-          "ネメシス": {
-            "games": 12,
-            "wins": 10,
-            "win_rate": 83.3
-          }
-        },
-        "ウィッチ": {
-          "エルフ": {
-            "games": 9,
-            "wins": 4,
-            "win_rate": 44.4
-          },
-          "ロイヤル": {
-            "games": 15,
-            "wins": 8,
-            "win_rate": 53.3
-          },
-          "ウィッチ": {
+          "ビショップ": {
             "games": 3,
             "wins": 2,
             "win_rate": 66.7
           },
-          "ドラゴン": {
+          "ネメシス": {
+            "games": 1,
+            "wins": 0,
+            "win_rate": 0.0
+          }
+        },
+        "ロイヤル": {
+          "エルフ": {
             "games": 7,
-            "wins": 4,
-            "win_rate": 57.1
+            "wins": 6,
+            "win_rate": 85.7
+          },
+          "ロイヤル": {
+            "games": 14,
+            "wins": 2,
+            "win_rate": 14.3
+          },
+          "ウィッチ": {
+            "games": 10,
+            "wins": 7,
+            "win_rate": 70.0
+          },
+          "ドラゴン": {
+            "games": 15,
+            "wins": 10,
+            "win_rate": 66.7
+          },
+          "ナイトメア": {
+            "games": 6,
+            "wins": 3,
+            "win_rate": 50.0
+          },
+          "ビショップ": {
+            "games": 5,
+            "wins": 3,
+            "win_rate": 60.0
+          },
+          "ネメシス": {
+            "games": 16,
+            "wins": 9,
+            "win_rate": 56.2
+          }
+        },
+        "ウィッチ": {
+          "エルフ": {
+            "games": 5,
+            "wins": 2,
+            "win_rate": 40.0
+          },
+          "ロイヤル": {
+            "games": 15,
+            "wins": 6,
+            "win_rate": 40.0
+          },
+          "ウィッチ": {
+            "games": 3,
+            "wins": 1,
+            "win_rate": 33.3
+          },
+          "ドラゴン": {
+            "games": 5,
+            "wins": 2,
+            "win_rate": 40.0
           },
           "ナイトメア": {
             "games": 8,
-            "wins": 6,
-            "win_rate": 75.0
+            "wins": 7,
+            "win_rate": 87.5
           },
           "ビショップ": {
-            "games": 2,
-            "wins": 2,
+            "games": 3,
+            "wins": 3,
             "win_rate": 100.0
           },
           "ネメシス": {
@@ -240,29 +220,29 @@
         },
         "ドラゴン": {
           "エルフ": {
-            "games": 3,
-            "wins": 1,
-            "win_rate": 33.3
+            "games": 8,
+            "wins": 5,
+            "win_rate": 62.5
           },
           "ロイヤル": {
-            "games": 5,
-            "wins": 3,
-            "win_rate": 60.0
+            "games": 8,
+            "wins": 4,
+            "win_rate": 50.0
           },
           "ウィッチ": {
-            "games": 3,
-            "wins": 2,
-            "win_rate": 66.7
+            "games": 2,
+            "wins": 1,
+            "win_rate": 50.0
           },
           "ドラゴン": {
             "games": 9,
-            "wins": 6,
-            "win_rate": 66.7
+            "wins": 5,
+            "win_rate": 55.6
           },
           "ナイトメア": {
-            "games": 3,
+            "games": 2,
             "wins": 2,
-            "win_rate": 66.7
+            "win_rate": 100.0
           },
           "ビショップ": {
             "games": 2,
@@ -270,31 +250,31 @@
             "win_rate": 50.0
           },
           "ネメシス": {
-            "games": 10,
+            "games": 12,
             "wins": 8,
-            "win_rate": 80.0
+            "win_rate": 66.7
           }
         },
-        "ビショップ": {
+        "ナイトメア": {
           "ロイヤル": {
-            "games": 2,
-            "wins": 2,
+            "games": 1,
+            "wins": 1,
             "win_rate": 100.0
+          },
+          "ウィッチ": {
+            "games": 2,
+            "wins": 1,
+            "win_rate": 50.0
           },
           "ドラゴン": {
-            "games": 1,
-            "wins": 0,
-            "win_rate": 0.0
-          },
-          "ビショップ": {
             "games": 2,
-            "wins": 2,
-            "win_rate": 100.0
+            "wins": 1,
+            "win_rate": 50.0
           },
           "ネメシス": {
-            "games": 1,
-            "wins": 0,
-            "win_rate": 0.0
+            "games": 2,
+            "wins": 1,
+            "win_rate": 50.0
           }
         },
         "ネメシス": {
@@ -304,14 +284,14 @@
             "win_rate": 20.0
           },
           "ロイヤル": {
-            "games": 18,
-            "wins": 8,
-            "win_rate": 44.4
+            "games": 11,
+            "wins": 4,
+            "win_rate": 36.4
           },
           "ウィッチ": {
-            "games": 4,
-            "wins": 2,
-            "win_rate": 50.0
+            "games": 5,
+            "wins": 3,
+            "win_rate": 60.0
           },
           "ドラゴン": {
             "games": 5,
@@ -319,268 +299,268 @@
             "win_rate": 40.0
           },
           "ナイトメア": {
-            "games": 2,
+            "games": 1,
             "wins": 0,
             "win_rate": 0.0
           },
           "ビショップ": {
-            "games": 6,
-            "wins": 3,
-            "win_rate": 50.0
+            "games": 5,
+            "wins": 2,
+            "win_rate": 40.0
           },
           "ネメシス": {
-            "games": 5,
-            "wins": 3,
-            "win_rate": 60.0
+            "games": 4,
+            "wins": 2,
+            "win_rate": 50.0
           }
         }
       },
       "archetype_meta": [],
       "range": {
-        "start": "2026-09-30T05:00:00+09:00",
-        "end": "2026-10-03T05:00:00+09:00"
+        "start": "2026-10-01T05:00:00+09:00",
+        "end": "2026-10-04T05:00:00+09:00"
       },
       "detail_suppressed": false
     },
     "7d": {
-      "total_games": 665,
-      "wins": 348,
-      "losses": 317,
-      "win_rate": 52.3,
-      "recorder_count": 10,
+      "total_games": 664,
+      "wins": 352,
+      "losses": 312,
+      "win_rate": 53.0,
+      "recorder_count": 9,
       "by_turn": {},
       "by_class": [
         {
           "class": "エルフ",
-          "games": 108,
-          "wins": 66,
-          "win_rate": 61.1,
-          "usage_rate": 16.2
+          "games": 87,
+          "wins": 52,
+          "win_rate": 59.8,
+          "usage_rate": 13.1
         },
         {
           "class": "ロイヤル",
-          "games": 109,
-          "wins": 63,
-          "win_rate": 57.8,
-          "usage_rate": 16.4
+          "games": 172,
+          "wins": 97,
+          "win_rate": 56.4,
+          "usage_rate": 25.9
         },
         {
           "class": "ウィッチ",
-          "games": 179,
-          "wins": 93,
-          "win_rate": 52.0,
-          "usage_rate": 26.9
+          "games": 151,
+          "wins": 80,
+          "win_rate": 53.0,
+          "usage_rate": 22.7
         },
         {
           "class": "ドラゴン",
-          "games": 75,
-          "wins": 45,
-          "win_rate": 60.0,
-          "usage_rate": 11.3
+          "games": 83,
+          "wins": 52,
+          "win_rate": 62.7,
+          "usage_rate": 12.5
         },
         {
           "class": "ナイトメア",
-          "games": 47,
-          "wins": 18,
-          "win_rate": 38.3,
-          "usage_rate": 7.1
+          "games": 40,
+          "wins": 17,
+          "win_rate": 42.5,
+          "usage_rate": 6.0
         },
         {
           "class": "ビショップ",
-          "games": 73,
-          "wins": 34,
-          "win_rate": 46.6,
-          "usage_rate": 11.0
+          "games": 55,
+          "wins": 24,
+          "win_rate": 43.6,
+          "usage_rate": 8.3
         },
         {
           "class": "ネメシス",
-          "games": 74,
-          "wins": 29,
-          "win_rate": 39.2,
-          "usage_rate": 11.1
+          "games": 76,
+          "wins": 30,
+          "win_rate": 39.5,
+          "usage_rate": 11.4
         }
       ],
       "vs_class": [
         {
           "class": "エルフ",
-          "games": 71,
-          "wins": 36,
-          "win_rate": 50.7
+          "games": 72,
+          "wins": 41,
+          "win_rate": 56.9
         },
         {
           "class": "ロイヤル",
-          "games": 124,
+          "games": 136,
           "wins": 65,
-          "win_rate": 52.4
+          "win_rate": 47.8
         },
         {
           "class": "ウィッチ",
-          "games": 76,
-          "wins": 43,
-          "win_rate": 56.6
+          "games": 62,
+          "wins": 34,
+          "win_rate": 54.8
         },
         {
           "class": "ドラゴン",
-          "games": 119,
-          "wins": 59,
-          "win_rate": 49.6
+          "games": 112,
+          "wins": 58,
+          "win_rate": 51.8
         },
         {
           "class": "ナイトメア",
-          "games": 69,
-          "wins": 39,
-          "win_rate": 56.5
+          "games": 64,
+          "wins": 38,
+          "win_rate": 59.4
         },
         {
           "class": "ビショップ",
-          "games": 56,
+          "games": 52,
           "wins": 31,
-          "win_rate": 55.4
+          "win_rate": 59.6
         },
         {
           "class": "ネメシス",
-          "games": 150,
-          "wins": 75,
-          "win_rate": 50.0
+          "games": 166,
+          "wins": 85,
+          "win_rate": 51.2
         }
       ],
       "matchup": {
         "エルフ": {
           "エルフ": {
-            "games": 16,
-            "wins": 13,
-            "win_rate": 81.2
+            "games": 13,
+            "wins": 10,
+            "win_rate": 76.9
           },
           "ロイヤル": {
-            "games": 16,
-            "wins": 10,
-            "win_rate": 62.5
+            "games": 13,
+            "wins": 8,
+            "win_rate": 61.5
           },
           "ウィッチ": {
-            "games": 12,
-            "wins": 10,
-            "win_rate": 83.3
+            "games": 8,
+            "wins": 6,
+            "win_rate": 75.0
           },
           "ドラゴン": {
-            "games": 14,
-            "wins": 8,
-            "win_rate": 57.1
+            "games": 9,
+            "wins": 5,
+            "win_rate": 55.6
           },
           "ナイトメア": {
-            "games": 9,
-            "wins": 7,
-            "win_rate": 77.8
+            "games": 8,
+            "wins": 6,
+            "win_rate": 75.0
           },
           "ビショップ": {
-            "games": 14,
-            "wins": 5,
-            "win_rate": 35.7
+            "games": 11,
+            "wins": 4,
+            "win_rate": 36.4
           },
           "ネメシス": {
-            "games": 27,
+            "games": 25,
             "wins": 13,
-            "win_rate": 48.1
+            "win_rate": 52.0
           }
         },
         "ロイヤル": {
           "エルフ": {
-            "games": 7,
-            "wins": 5,
-            "win_rate": 71.4
+            "games": 13,
+            "wins": 10,
+            "win_rate": 76.9
           },
           "ロイヤル": {
-            "games": 22,
-            "wins": 13,
-            "win_rate": 59.1
+            "games": 35,
+            "wins": 14,
+            "win_rate": 40.0
           },
           "ウィッチ": {
-            "games": 10,
-            "wins": 7,
-            "win_rate": 70.0
+            "games": 18,
+            "wins": 12,
+            "win_rate": 66.7
           },
           "ドラゴン": {
-            "games": 20,
-            "wins": 10,
-            "win_rate": 50.0
-          },
-          "ナイトメア": {
-            "games": 10,
-            "wins": 6,
-            "win_rate": 60.0
-          },
-          "ビショップ": {
-            "games": 6,
-            "wins": 2,
-            "win_rate": 33.3
-          },
-          "ネメシス": {
             "games": 34,
             "wins": 20,
             "win_rate": 58.8
+          },
+          "ナイトメア": {
+            "games": 15,
+            "wins": 9,
+            "win_rate": 60.0
+          },
+          "ビショップ": {
+            "games": 10,
+            "wins": 5,
+            "win_rate": 50.0
+          },
+          "ネメシス": {
+            "games": 47,
+            "wins": 27,
+            "win_rate": 57.4
           }
         },
         "ウィッチ": {
           "エルフ": {
-            "games": 21,
+            "games": 18,
             "wins": 8,
-            "win_rate": 38.1
+            "win_rate": 44.4
           },
           "ロイヤル": {
             "games": 31,
-            "wins": 17,
-            "win_rate": 54.8
+            "wins": 16,
+            "win_rate": 51.6
           },
           "ウィッチ": {
-            "games": 22,
-            "wins": 11,
-            "win_rate": 50.0
+            "games": 15,
+            "wins": 7,
+            "win_rate": 46.7
           },
           "ドラゴン": {
-            "games": 39,
-            "wins": 22,
-            "win_rate": 56.4
+            "games": 24,
+            "wins": 14,
+            "win_rate": 58.3
           },
           "ナイトメア": {
-            "games": 26,
+            "games": 21,
             "wins": 12,
-            "win_rate": 46.2
+            "win_rate": 57.1
           },
           "ビショップ": {
-            "games": 8,
-            "wins": 8,
+            "games": 7,
+            "wins": 7,
             "win_rate": 100.0
           },
           "ネメシス": {
-            "games": 32,
-            "wins": 15,
-            "win_rate": 46.9
+            "games": 35,
+            "wins": 16,
+            "win_rate": 45.7
           }
         },
         "ドラゴン": {
           "エルフ": {
-            "games": 8,
-            "wins": 4,
-            "win_rate": 50.0
+            "games": 12,
+            "wins": 8,
+            "win_rate": 66.7
           },
           "ロイヤル": {
-            "games": 10,
-            "wins": 5,
-            "win_rate": 50.0
+            "games": 13,
+            "wins": 7,
+            "win_rate": 53.8
           },
           "ウィッチ": {
-            "games": 9,
-            "wins": 6,
+            "games": 3,
+            "wins": 2,
             "win_rate": 66.7
           },
           "ドラゴン": {
-            "games": 16,
-            "wins": 9,
-            "win_rate": 56.2
+            "games": 17,
+            "wins": 10,
+            "win_rate": 58.8
           },
           "ナイトメア": {
-            "games": 5,
-            "wins": 2,
-            "win_rate": 40.0
+            "games": 6,
+            "wins": 4,
+            "win_rate": 66.7
           },
           "ビショップ": {
             "games": 10,
@@ -588,83 +568,83 @@
             "win_rate": 80.0
           },
           "ネメシス": {
-            "games": 17,
-            "wins": 11,
-            "win_rate": 64.7
+            "games": 22,
+            "wins": 13,
+            "win_rate": 59.1
           }
         },
         "ナイトメア": {
           "エルフ": {
-            "games": 6,
+            "games": 4,
             "wins": 3,
-            "win_rate": 50.0
+            "win_rate": 75.0
           },
           "ロイヤル": {
-            "games": 7,
-            "wins": 1,
-            "win_rate": 14.3
-          },
-          "ウィッチ": {
-            "games": 7,
-            "wins": 3,
-            "win_rate": 42.9
-          },
-          "ドラゴン": {
-            "games": 7,
-            "wins": 3,
-            "win_rate": 42.9
-          },
-          "ナイトメア": {
-            "games": 6,
-            "wins": 5,
-            "win_rate": 83.3
-          },
-          "ビショップ": {
-            "games": 6,
-            "wins": 1,
-            "win_rate": 16.7
-          },
-          "ネメシス": {
-            "games": 8,
-            "wins": 2,
-            "win_rate": 25.0
-          }
-        },
-        "ビショップ": {
-          "エルフ": {
             "games": 7,
             "wins": 2,
             "win_rate": 28.6
           },
-          "ロイヤル": {
-            "games": 14,
-            "wins": 9,
-            "win_rate": 64.3
-          },
           "ウィッチ": {
-            "games": 9,
-            "wins": 3,
+            "games": 6,
+            "wins": 2,
             "win_rate": 33.3
           },
           "ドラゴン": {
-            "games": 12,
-            "wins": 3,
-            "win_rate": 25.0
+            "games": 7,
+            "wins": 2,
+            "win_rate": 28.6
           },
           "ナイトメア": {
-            "games": 9,
-            "wins": 6,
-            "win_rate": 66.7
+            "games": 5,
+            "wins": 4,
+            "win_rate": 80.0
           },
           "ビショップ": {
-            "games": 6,
-            "wins": 4,
-            "win_rate": 66.7
+            "games": 4,
+            "wins": 1,
+            "win_rate": 25.0
           },
           "ネメシス": {
-            "games": 16,
-            "wins": 7,
-            "win_rate": 43.8
+            "games": 7,
+            "wins": 3,
+            "win_rate": 42.9
+          }
+        },
+        "ビショップ": {
+          "エルフ": {
+            "games": 6,
+            "wins": 1,
+            "win_rate": 16.7
+          },
+          "ロイヤル": {
+            "games": 13,
+            "wins": 8,
+            "win_rate": 61.5
+          },
+          "ウィッチ": {
+            "games": 4,
+            "wins": 1,
+            "win_rate": 25.0
+          },
+          "ドラゴン": {
+            "games": 10,
+            "wins": 3,
+            "win_rate": 30.0
+          },
+          "ナイトメア": {
+            "games": 5,
+            "wins": 2,
+            "win_rate": 40.0
+          },
+          "ビショップ": {
+            "games": 4,
+            "wins": 3,
+            "win_rate": 75.0
+          },
+          "ネメシス": {
+            "games": 13,
+            "wins": 6,
+            "win_rate": 46.2
           }
         },
         "ネメシス": {
@@ -679,9 +659,9 @@
             "win_rate": 41.7
           },
           "ウィッチ": {
-            "games": 7,
-            "wins": 3,
-            "win_rate": 42.9
+            "games": 8,
+            "wins": 4,
+            "win_rate": 50.0
           },
           "ドラゴン": {
             "games": 11,
@@ -699,119 +679,119 @@
             "win_rate": 50.0
           },
           "ネメシス": {
-            "games": 16,
+            "games": 17,
             "wins": 7,
-            "win_rate": 43.8
+            "win_rate": 41.2
           }
         }
       },
       "archetype_meta": [],
       "range": {
-        "start": "2026-09-26T05:00:00+09:00",
-        "end": "2026-10-03T05:00:00+09:00"
+        "start": "2026-09-27T05:00:00+09:00",
+        "end": "2026-10-04T05:00:00+09:00"
       },
       "detail_suppressed": false
     },
     "season": {
-      "total_games": 417,
-      "wins": 224,
-      "losses": 193,
-      "win_rate": 53.7,
+      "total_games": 536,
+      "wins": 290,
+      "losses": 246,
+      "win_rate": 54.1,
       "recorder_count": 7,
       "by_turn": {},
       "by_class": [
         {
           "class": "エルフ",
-          "games": 66,
-          "wins": 41,
-          "win_rate": 62.1,
-          "usage_rate": 15.8
+          "games": 62,
+          "wins": 39,
+          "win_rate": 62.9,
+          "usage_rate": 11.6
         },
         {
           "class": "ロイヤル",
-          "games": 109,
-          "wins": 63,
-          "win_rate": 57.8,
-          "usage_rate": 26.1
+          "games": 172,
+          "wins": 97,
+          "win_rate": 56.4,
+          "usage_rate": 32.1
         },
         {
           "class": "ウィッチ",
-          "games": 74,
-          "wins": 37,
-          "win_rate": 50.0,
-          "usage_rate": 17.7
+          "games": 101,
+          "wins": 53,
+          "win_rate": 52.5,
+          "usage_rate": 18.8
         },
         {
           "class": "ドラゴン",
-          "games": 46,
-          "wins": 30,
-          "win_rate": 65.2,
-          "usage_rate": 11.0
+          "games": 70,
+          "wins": 43,
+          "win_rate": 61.4,
+          "usage_rate": 13.1
         },
         {
           "class": "ナイトメア",
-          "games": 19,
-          "wins": 8,
-          "win_rate": 42.1,
-          "usage_rate": 4.6
+          "games": 26,
+          "wins": 12,
+          "win_rate": 46.2,
+          "usage_rate": 4.9
         },
         {
           "class": "ビショップ",
           "games": 29,
           "wins": 16,
           "win_rate": 55.2,
-          "usage_rate": 7.0
+          "usage_rate": 5.4
         },
         {
           "class": "ネメシス",
-          "games": 74,
-          "wins": 29,
-          "win_rate": 39.2,
-          "usage_rate": 17.7
+          "games": 76,
+          "wins": 30,
+          "win_rate": 39.5,
+          "usage_rate": 14.2
         }
       ],
       "vs_class": [
         {
           "class": "エルフ",
-          "games": 34,
-          "wins": 16,
-          "win_rate": 47.1
+          "games": 47,
+          "wins": 26,
+          "win_rate": 55.3
         },
         {
           "class": "ロイヤル",
-          "games": 99,
-          "wins": 53,
-          "win_rate": 53.5
+          "games": 124,
+          "wins": 59,
+          "win_rate": 47.6
         },
         {
           "class": "ウィッチ",
-          "games": 36,
-          "wins": 22,
-          "win_rate": 61.1
+          "games": 48,
+          "wins": 29,
+          "win_rate": 60.4
         },
         {
           "class": "ドラゴン",
-          "games": 65,
-          "wins": 33,
-          "win_rate": 50.8
+          "games": 86,
+          "wins": 46,
+          "win_rate": 53.5
         },
         {
           "class": "ナイトメア",
-          "games": 35,
-          "wins": 22,
-          "win_rate": 62.9
+          "games": 46,
+          "wins": 30,
+          "win_rate": 65.2
         },
         {
           "class": "ビショップ",
-          "games": 30,
-          "wins": 16,
-          "win_rate": 53.3
+          "games": 38,
+          "wins": 23,
+          "win_rate": 60.5
         },
         {
           "class": "ネメシス",
-          "games": 118,
-          "wins": 62,
-          "win_rate": 52.5
+          "games": 147,
+          "wins": 77,
+          "win_rate": 52.4
         }
       ],
       "matchup": {
@@ -822,9 +802,9 @@
             "win_rate": 100.0
           },
           "ロイヤル": {
-            "games": 14,
-            "wins": 9,
-            "win_rate": 64.3
+            "games": 12,
+            "wins": 7,
+            "win_rate": 58.3
           },
           "ウィッチ": {
             "games": 8,
@@ -842,100 +822,100 @@
             "win_rate": 66.7
           },
           "ビショップ": {
-            "games": 7,
+            "games": 6,
             "wins": 3,
-            "win_rate": 42.9
+            "win_rate": 50.0
           },
           "ネメシス": {
-            "games": 22,
+            "games": 21,
             "wins": 13,
-            "win_rate": 59.1
+            "win_rate": 61.9
           }
         },
         "ロイヤル": {
           "エルフ": {
-            "games": 7,
-            "wins": 5,
-            "win_rate": 71.4
+            "games": 13,
+            "wins": 10,
+            "win_rate": 76.9
           },
           "ロイヤル": {
-            "games": 22,
-            "wins": 13,
-            "win_rate": 59.1
+            "games": 35,
+            "wins": 14,
+            "win_rate": 40.0
           },
           "ウィッチ": {
-            "games": 10,
-            "wins": 7,
-            "win_rate": 70.0
+            "games": 18,
+            "wins": 12,
+            "win_rate": 66.7
           },
           "ドラゴン": {
-            "games": 20,
-            "wins": 10,
-            "win_rate": 50.0
-          },
-          "ナイトメア": {
-            "games": 10,
-            "wins": 6,
-            "win_rate": 60.0
-          },
-          "ビショップ": {
-            "games": 6,
-            "wins": 2,
-            "win_rate": 33.3
-          },
-          "ネメシス": {
             "games": 34,
             "wins": 20,
             "win_rate": 58.8
+          },
+          "ナイトメア": {
+            "games": 15,
+            "wins": 9,
+            "win_rate": 60.0
+          },
+          "ビショップ": {
+            "games": 10,
+            "wins": 5,
+            "win_rate": 50.0
+          },
+          "ネメシス": {
+            "games": 47,
+            "wins": 27,
+            "win_rate": 57.4
           }
         },
         "ウィッチ": {
           "エルフ": {
-            "games": 12,
-            "wins": 5,
-            "win_rate": 41.7
+            "games": 14,
+            "wins": 6,
+            "win_rate": 42.9
           },
           "ロイヤル": {
-            "games": 19,
-            "wins": 10,
-            "win_rate": 52.6
+            "games": 27,
+            "wins": 14,
+            "win_rate": 51.9
           },
           "ウィッチ": {
-            "games": 4,
+            "games": 5,
             "wins": 2,
-            "win_rate": 50.0
+            "win_rate": 40.0
           },
           "ドラゴン": {
-            "games": 10,
-            "wins": 5,
+            "games": 12,
+            "wins": 6,
             "win_rate": 50.0
           },
           "ナイトメア": {
-            "games": 9,
-            "wins": 7,
-            "win_rate": 77.8
+            "games": 13,
+            "wins": 10,
+            "win_rate": 76.9
           },
           "ビショップ": {
-            "games": 2,
-            "wins": 2,
+            "games": 5,
+            "wins": 5,
             "win_rate": 100.0
           },
           "ネメシス": {
-            "games": 18,
-            "wins": 6,
-            "win_rate": 33.3
+            "games": 25,
+            "wins": 10,
+            "win_rate": 40.0
           }
         },
         "ドラゴン": {
           "エルフ": {
-            "games": 5,
-            "wins": 3,
-            "win_rate": 60.0
+            "games": 10,
+            "wins": 7,
+            "win_rate": 70.0
           },
           "ロイヤル": {
-            "games": 7,
-            "wins": 4,
-            "win_rate": 57.1
+            "games": 12,
+            "wins": 6,
+            "win_rate": 50.0
           },
           "ウィッチ": {
             "games": 3,
@@ -943,24 +923,24 @@
             "win_rate": 66.7
           },
           "ドラゴン": {
-            "games": 10,
-            "wins": 7,
-            "win_rate": 70.0
+            "games": 13,
+            "wins": 8,
+            "win_rate": 61.5
           },
           "ナイトメア": {
-            "games": 3,
-            "wins": 2,
-            "win_rate": 66.7
+            "games": 5,
+            "wins": 4,
+            "win_rate": 80.0
           },
           "ビショップ": {
-            "games": 4,
-            "wins": 3,
-            "win_rate": 75.0
+            "games": 6,
+            "wins": 4,
+            "win_rate": 66.7
           },
           "ネメシス": {
-            "games": 14,
-            "wins": 9,
-            "win_rate": 64.3
+            "games": 21,
+            "wins": 12,
+            "win_rate": 57.1
           }
         },
         "ナイトメア": {
@@ -970,19 +950,19 @@
             "win_rate": 100.0
           },
           "ロイヤル": {
-            "games": 4,
-            "wins": 1,
-            "win_rate": 25.0
+            "games": 5,
+            "wins": 2,
+            "win_rate": 40.0
           },
           "ウィッチ": {
+            "games": 5,
+            "wins": 2,
+            "win_rate": 40.0
+          },
+          "ドラゴン": {
             "games": 3,
             "wins": 1,
             "win_rate": 33.3
-          },
-          "ドラゴン": {
-            "games": 1,
-            "wins": 0,
-            "win_rate": 0.0
           },
           "ナイトメア": {
             "games": 3,
@@ -995,8 +975,8 @@
             "win_rate": 33.3
           },
           "ネメシス": {
-            "games": 4,
-            "wins": 2,
+            "games": 6,
+            "wins": 3,
             "win_rate": 50.0
           }
         },
@@ -1044,9 +1024,9 @@
             "win_rate": 41.7
           },
           "ウィッチ": {
-            "games": 7,
-            "wins": 3,
-            "win_rate": 42.9
+            "games": 8,
+            "wins": 4,
+            "win_rate": 50.0
           },
           "ドラゴン": {
             "games": 11,
@@ -1064,23 +1044,23 @@
             "win_rate": 50.0
           },
           "ネメシス": {
-            "games": 16,
+            "games": 17,
             "wins": 7,
-            "win_rate": 43.8
+            "win_rate": 41.2
           }
         }
       },
       "archetype_meta": [],
       "range": {
         "start": "2026-09-29T05:00:00+09:00",
-        "end": "2026-10-03T05:00:00+09:00"
+        "end": "2026-10-04T05:00:00+09:00"
       },
       "detail_suppressed": false
     },
     "all": {
-      "total_games": 10182,
-      "wins": 5897,
-      "losses": 4285,
+      "total_games": 10245,
+      "wins": 5930,
+      "losses": 4315,
       "win_rate": 57.9,
       "recorder_count": 28,
       "by_turn": {
@@ -1098,37 +1078,37 @@
       "by_class": [
         {
           "class": "エルフ",
-          "games": 1533,
-          "wins": 896,
-          "win_rate": 58.4,
-          "usage_rate": 15.1
+          "games": 1529,
+          "wins": 894,
+          "win_rate": 58.5,
+          "usage_rate": 14.9
         },
         {
           "class": "ロイヤル",
-          "games": 722,
-          "wins": 409,
-          "win_rate": 56.6,
-          "usage_rate": 7.1
+          "games": 785,
+          "wins": 443,
+          "win_rate": 56.4,
+          "usage_rate": 7.7
         },
         {
           "class": "ウィッチ",
-          "games": 2091,
-          "wins": 1178,
+          "games": 2062,
+          "wins": 1161,
           "win_rate": 56.3,
-          "usage_rate": 20.5
+          "usage_rate": 20.1
         },
         {
           "class": "ドラゴン",
-          "games": 2168,
-          "wins": 1311,
-          "win_rate": 60.5,
-          "usage_rate": 21.3
+          "games": 2192,
+          "wins": 1324,
+          "win_rate": 60.4,
+          "usage_rate": 21.4
         },
         {
           "class": "ナイトメア",
-          "games": 1183,
-          "wins": 701,
-          "win_rate": 59.3,
+          "games": 1190,
+          "wins": 705,
+          "win_rate": 59.2,
           "usage_rate": 11.6
         },
         {
@@ -1136,12 +1116,12 @@
           "games": 1158,
           "wins": 640,
           "win_rate": 55.3,
-          "usage_rate": 11.4
+          "usage_rate": 11.3
         },
         {
           "class": "ネメシス",
-          "games": 1327,
-          "wins": 762,
+          "games": 1329,
+          "wins": 763,
           "win_rate": 57.4,
           "usage_rate": 13.0
         }
@@ -1149,45 +1129,45 @@
       "vs_class": [
         {
           "class": "エルフ",
-          "games": 1272,
-          "wins": 722,
-          "win_rate": 56.8
+          "games": 1277,
+          "wins": 728,
+          "win_rate": 57.0
         },
         {
           "class": "ロイヤル",
-          "games": 1489,
-          "wins": 873,
-          "win_rate": 58.6
+          "games": 1509,
+          "wins": 877,
+          "win_rate": 58.1
         },
         {
           "class": "ウィッチ",
-          "games": 1735,
-          "wins": 1003,
-          "win_rate": 57.8
+          "games": 1738,
+          "wins": 1006,
+          "win_rate": 57.9
         },
         {
           "class": "ドラゴン",
-          "games": 1675,
-          "wins": 977,
-          "win_rate": 58.3
+          "games": 1683,
+          "wins": 980,
+          "win_rate": 58.2
         },
         {
           "class": "ナイトメア",
-          "games": 1620,
-          "wins": 921,
+          "games": 1621,
+          "wins": 923,
           "win_rate": 56.9
         },
         {
           "class": "ビショップ",
-          "games": 1170,
-          "wins": 724,
-          "win_rate": 61.9
+          "games": 1172,
+          "wins": 728,
+          "win_rate": 62.1
         },
         {
           "class": "ネメシス",
-          "games": 1221,
-          "wins": 677,
-          "win_rate": 55.4
+          "games": 1245,
+          "wins": 688,
+          "win_rate": 55.3
         }
       ],
       "matchup": {
@@ -1198,9 +1178,9 @@
             "win_rate": 62.3
           },
           "ロイヤル": {
-            "games": 188,
-            "wins": 111,
-            "win_rate": 59.0
+            "games": 186,
+            "wins": 109,
+            "win_rate": 58.6
           },
           "ウィッチ": {
             "games": 223,
@@ -1218,100 +1198,100 @@
             "win_rate": 54.7
           },
           "ビショップ": {
-            "games": 163,
+            "games": 162,
             "wins": 107,
-            "win_rate": 65.6
+            "win_rate": 66.0
           },
           "ネメシス": {
-            "games": 161,
+            "games": 160,
             "wins": 81,
-            "win_rate": 50.3
+            "win_rate": 50.6
           }
         },
         "ロイヤル": {
           "エルフ": {
-            "games": 93,
-            "wins": 56,
-            "win_rate": 60.2
+            "games": 99,
+            "wins": 61,
+            "win_rate": 61.6
           },
           "ロイヤル": {
-            "games": 153,
-            "wins": 93,
-            "win_rate": 60.8
+            "games": 166,
+            "wins": 94,
+            "win_rate": 56.6
           },
           "ウィッチ": {
-            "games": 106,
-            "wins": 61,
-            "win_rate": 57.5
+            "games": 114,
+            "wins": 66,
+            "win_rate": 57.9
           },
           "ドラゴン": {
-            "games": 107,
-            "wins": 58,
-            "win_rate": 54.2
+            "games": 121,
+            "wins": 68,
+            "win_rate": 56.2
           },
           "ナイトメア": {
-            "games": 97,
-            "wins": 50,
-            "win_rate": 51.5
+            "games": 102,
+            "wins": 53,
+            "win_rate": 52.0
           },
           "ビショップ": {
-            "games": 71,
-            "wins": 36,
-            "win_rate": 50.7
+            "games": 75,
+            "wins": 39,
+            "win_rate": 52.0
           },
           "ネメシス": {
-            "games": 95,
-            "wins": 55,
-            "win_rate": 57.9
+            "games": 108,
+            "wins": 62,
+            "win_rate": 57.4
           }
         },
         "ウィッチ": {
           "エルフ": {
-            "games": 324,
-            "wins": 172,
+            "games": 318,
+            "wins": 169,
             "win_rate": 53.1
           },
           "ロイヤル": {
-            "games": 275,
-            "wins": 158,
-            "win_rate": 57.5
+            "games": 278,
+            "wins": 160,
+            "win_rate": 57.6
           },
           "ウィッチ": {
-            "games": 343,
-            "wins": 174,
+            "games": 335,
+            "wins": 170,
             "win_rate": 50.7
           },
           "ドラゴン": {
-            "games": 378,
-            "wins": 227,
-            "win_rate": 60.1
+            "games": 367,
+            "wins": 218,
+            "win_rate": 59.4
           },
           "ナイトメア": {
-            "games": 319,
-            "wins": 162,
+            "games": 313,
+            "wins": 159,
             "win_rate": 50.8
           },
           "ビショップ": {
-            "games": 213,
+            "games": 210,
             "wins": 141,
-            "win_rate": 66.2
+            "win_rate": 67.1
           },
           "ネメシス": {
-            "games": 239,
+            "games": 241,
             "wins": 144,
-            "win_rate": 60.3
+            "win_rate": 59.8
           }
         },
         "ドラゴン": {
           "エルフ": {
-            "games": 230,
-            "wins": 121,
-            "win_rate": 52.6
+            "games": 235,
+            "wins": 125,
+            "win_rate": 53.2
           },
           "ロイヤル": {
-            "games": 367,
-            "wins": 215,
-            "win_rate": 58.6
+            "games": 372,
+            "wins": 217,
+            "win_rate": 58.3
           },
           "ウィッチ": {
             "games": 384,
@@ -1319,24 +1299,24 @@
             "win_rate": 61.7
           },
           "ドラゴン": {
-            "games": 322,
-            "wins": 201,
-            "win_rate": 62.4
+            "games": 325,
+            "wins": 202,
+            "win_rate": 62.2
           },
           "ナイトメア": {
-            "games": 353,
-            "wins": 217,
-            "win_rate": 61.5
+            "games": 355,
+            "wins": 219,
+            "win_rate": 61.7
           },
           "ビショップ": {
-            "games": 254,
-            "wins": 165,
-            "win_rate": 65.0
+            "games": 256,
+            "wins": 166,
+            "win_rate": 64.8
           },
           "ネメシス": {
-            "games": 258,
-            "wins": 155,
-            "win_rate": 60.1
+            "games": 265,
+            "wins": 158,
+            "win_rate": 59.6
           }
         },
         "ナイトメア": {
@@ -1346,19 +1326,19 @@
             "win_rate": 61.7
           },
           "ロイヤル": {
-            "games": 171,
-            "wins": 103,
-            "win_rate": 60.2
+            "games": 172,
+            "wins": 104,
+            "win_rate": 60.5
           },
           "ウィッチ": {
-            "games": 220,
-            "wins": 143,
-            "win_rate": 65.0
+            "games": 222,
+            "wins": 144,
+            "win_rate": 64.9
           },
           "ドラゴン": {
-            "games": 163,
-            "wins": 93,
-            "win_rate": 57.1
+            "games": 165,
+            "wins": 94,
+            "win_rate": 57.0
           },
           "ナイトメア": {
             "games": 210,
@@ -1371,8 +1351,8 @@
             "win_rate": 57.8
           },
           "ネメシス": {
-            "games": 125,
-            "wins": 64,
+            "games": 127,
+            "wins": 65,
             "win_rate": 51.2
           }
         },
@@ -1425,9 +1405,9 @@
             "win_rate": 56.3
           },
           "ウィッチ": {
-            "games": 260,
-            "wins": 161,
-            "win_rate": 61.9
+            "games": 261,
+            "wins": 162,
+            "win_rate": 62.1
           },
           "ドラゴン": {
             "games": 226,
@@ -1445,29 +1425,21 @@
             "win_rate": 63.9
           },
           "ネメシス": {
-            "games": 208,
+            "games": 209,
             "wins": 106,
-            "win_rate": 51.0
+            "win_rate": 50.7
           }
         }
       },
       "archetype_meta": [],
       "range": {
         "start": null,
-        "end": "2026-10-03T05:00:00+09:00"
+        "end": "2026-10-04T05:00:00+09:00"
       },
       "detail_suppressed": false
     }
   },
   "daily": [
-    {
-      "date": "2026-09-03",
-      "games": 105,
-      "wins": 58,
-      "win_rate": 55.2,
-      "recorder_count": 7,
-      "detail_suppressed": false
-    },
     {
       "date": "2026-09-04",
       "games": 94,
@@ -1518,17 +1490,17 @@
     },
     {
       "date": "2026-09-10",
-      "games": 266,
-      "wins": 138,
-      "win_rate": 51.9,
+      "games": 259,
+      "wins": 136,
+      "win_rate": 52.5,
       "recorder_count": 12,
       "detail_suppressed": false
     },
     {
       "date": "2026-09-11",
-      "games": 173,
-      "wins": 94,
-      "win_rate": 54.3,
+      "games": 162,
+      "wins": 87,
+      "win_rate": 53.7,
       "recorder_count": 10,
       "detail_suppressed": false
     },
@@ -1558,17 +1530,17 @@
     },
     {
       "date": "2026-09-15",
-      "games": 173,
-      "wins": 104,
-      "win_rate": 60.1,
+      "games": 168,
+      "wins": 100,
+      "win_rate": 59.5,
       "recorder_count": 10,
       "detail_suppressed": false
     },
     {
       "date": "2026-09-16",
-      "games": 147,
-      "wins": 85,
-      "win_rate": 57.8,
+      "games": 144,
+      "wins": 83,
+      "win_rate": 57.6,
       "recorder_count": 9,
       "detail_suppressed": false
     },
@@ -1598,9 +1570,9 @@
     },
     {
       "date": "2026-09-20",
-      "games": 187,
-      "wins": 100,
-      "win_rate": 53.5,
+      "games": 184,
+      "wins": 97,
+      "win_rate": 52.7,
       "recorder_count": 10,
       "detail_suppressed": false
     },
@@ -1614,9 +1586,9 @@
     },
     {
       "date": "2026-09-22",
-      "games": 146,
-      "wins": 92,
-      "win_rate": 63.0,
+      "games": 143,
+      "wins": 91,
+      "win_rate": 63.6,
       "recorder_count": 12,
       "detail_suppressed": false
     },
@@ -1638,18 +1610,18 @@
     },
     {
       "date": "2026-09-25",
-      "games": 160,
-      "wins": 75,
-      "win_rate": 46.9,
-      "recorder_count": 6,
+      "games": 154,
+      "wins": 72,
+      "win_rate": 46.8,
+      "recorder_count": 5,
       "detail_suppressed": false
     },
     {
       "date": "2026-09-26",
-      "games": 109,
-      "wins": 56,
-      "win_rate": 51.4,
-      "recorder_count": 7,
+      "games": 102,
+      "wins": 51,
+      "win_rate": 50.0,
+      "recorder_count": 6,
       "detail_suppressed": false
     },
     {
@@ -1662,11 +1634,11 @@
     },
     {
       "date": "2026-09-28",
-      "games": 41,
-      "wins": 16,
-      "win_rate": 39.0,
-      "recorder_count": 3,
-      "detail_suppressed": false
+      "games": null,
+      "wins": null,
+      "win_rate": null,
+      "recorder_count": 2,
+      "detail_suppressed": true
     },
     {
       "date": "2026-09-29",
@@ -1678,22 +1650,30 @@
     },
     {
       "date": "2026-09-30",
-      "games": 151,
-      "wins": 98,
-      "win_rate": 64.9,
+      "games": 147,
+      "wins": 96,
+      "win_rate": 65.3,
       "recorder_count": 6,
       "detail_suppressed": false
     },
     {
       "date": "2026-10-01",
-      "games": 92,
-      "wins": 44,
-      "win_rate": 47.8,
-      "recorder_count": 6,
+      "games": 112,
+      "wins": 59,
+      "win_rate": 52.7,
+      "recorder_count": 7,
       "detail_suppressed": false
     },
     {
       "date": "2026-10-02",
+      "games": 103,
+      "wins": 53,
+      "win_rate": 51.5,
+      "recorder_count": 6,
+      "detail_suppressed": false
+    },
+    {
+      "date": "2026-10-03",
       "games": 0,
       "wins": 0,
       "win_rate": null,
