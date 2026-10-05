@@ -1488,9 +1488,7 @@ footer {
 }
 
 .member-achv li {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+    display: inline-block;
     max-width: 100%;
     padding: 4px 10px;
     border-radius: 4px;
@@ -1502,10 +1500,4 @@ footer {
     line-height: 1.4;
     letter-spacing: 0.5px;
     box-sizing: border-box;
-}
-
-.member-achv i {
-    flex-shrink: 0;
-    color: var(--accent);
-    font-size: 0.8em;
 }
