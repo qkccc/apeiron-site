@@ -1351,6 +1351,23 @@ body.nav-open .nav-overlay {
     content: ")";
 }
 
+/* RAGE：大会ごとのメンバー戦績（カードは CRランキングと共通） */
+.achievements .rage-list li {
+    justify-content: space-between;
+    font-size: 0.95rem;
+    padding: 12px 0;
+}
+
+.rage-result {
+    font-size: 0.85rem;
+    color: var(--text-sub);
+}
+
+.rage-result.is-top {
+    font-weight: 700;
+    color: var(--accent);
+}
+
 @media (max-width: 600px) {
     .cr-player {
         padding: 14px 16px 4px;
