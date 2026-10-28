@@ -1273,6 +1273,99 @@ body.nav-open .nav-overlay {
     margin-top: 16px;
 }
 
+/* CRランキング */
+.cr-note {
+    font-size: 0.8rem;
+    color: var(--text-sub);
+    margin: 10px 0 18px;
+    text-align: left;
+}
+
+.cr-player {
+    background: var(--card-bg);
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 16px 20px 6px;
+    margin-bottom: 14px;
+    text-align: left;
+}
+
+.cr-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #333;
+}
+
+.cr-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.cr-meta {
+    font-size: 0.85rem;
+    color: var(--text-sub);
+}
+
+.cr-meta strong {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.05rem;
+    color: var(--accent);
+}
+
+.achievements .cr-list li {
+    display: grid;
+    grid-template-columns: 1fr auto 4.5em 3.5em;
+    gap: 12px;
+    font-size: 0.95rem;
+    padding: 12px 0;
+}
+
+.cr-class {
+    color: var(--text-sub);
+    font-size: 0.85rem;
+}
+
+.cr-rank {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: var(--accent);
+    text-align: right;
+}
+
+.cr-rate {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-sub);
+    text-align: right;
+}
+
+.cr-rate::before {
+    content: "(";
+}
+
+.cr-rate::after {
+    content: ")";
+}
+
+@media (max-width: 600px) {
+    .cr-player {
+        padding: 14px 16px 4px;
+    }
+
+    .achievements .cr-list li {
+        grid-template-columns: 1fr auto auto;
+        gap: 4px 12px;
+    }
+
+    .cr-season {
+        grid-column: 1 / -1;
+    }
+}
+
 /* --- MEMBERS：note リンクのダークテーマ化・X ボタンのハンドル表示 --- */
 .note-links {
     margin: 48px auto 0;
